@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {Select, Store} from "@ngxs/store";
+import {UserService} from "../shared/services/user.service";
+import {LoginState} from "./shared/state/login.state";
+import {Observable} from "rxjs";
+import {Location} from '@angular/common';
+import {Login, Logout, Register, UpdateLoading, UpdateLoginLoading} from "./shared/state/login.actions";
+import {LoginDto} from "./shared/dtos/login.dto";
 
 @Component({
   selector: 'app-login',
@@ -27,73 +34,50 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  loading: boolean = true;
-  loginLoad: boolean = false;
-  registerLoad: boolean = false;
+  @Select(LoginState.loading)
+  loading$: Observable<boolean> | undefined;
+
+  @Select(LoginState.loginLoading)
+  loginLoading$: Observable<boolean> | undefined;
+
+  @Select(LoginState.registerLoading)
+  registerLoading$: Observable<boolean> | undefined;
+
+  @Select(LoginState.error)
+  error$: Observable<string> |undefined
+
+  @Select(LoginState.registerError)
+  registerError$: Observable<string> |undefined
 
   saveLogin: boolean = false;
-  error: string = '';
-  registerError: string = '';
 
-  constructor(private router: Router, private authService: AuthenticationService,
-              private userService: UserService, private location: Location) { }
+  constructor(private router: Router, private store: Store, private location: Location, private userService: UserService) { }
 
   ngOnInit(): void {
 
-    this.authService.logout();
+    this.store.dispatch(new Logout());
+    const loginInfo: LoginDto = this.userService.getLoginInformation();
 
-    const loginInfo = this.authService.getLoginInformation();
     if (loginInfo !== null) {
-      this.loginForm.patchValue({
-        username: loginInfo.username,
-        password: loginInfo.password
-      });
+      this.loginForm.patchValue({username: loginInfo.username, password: loginInfo.password});
       this.saveLogin = true;
     }
-    this.loading = false;
+
+    this.store.dispatch(new UpdateLoading(false));
+    this.loading$.subscribe((loading) => {console.log("Loading is: " + loading);})
   }
 
   login(): void{
-
-    this.loginLoad = true;
-
     const loginData = this.loginForm.value;
-    const username: string = loginData.username;
-    const password: string = loginData.password;
-
-    this.authService.login(username, password).subscribe(success => {
-        if(this.saveLogin){
-          this.authService.saveLogin(username, password);
-        }
-        else{
-          this.authService.forgetLogin();
-        }},
-      error => {this.error = error.error; this.loginLoad = false;},
-      () => {this.loginLoad = false; this.router.navigate(['']);});
+    const loginDTO: LoginDto = {username: loginData.username, password: loginData.password}
+    this.store.dispatch(new Login(loginDTO, this.saveLogin));
   }
 
   register(): void{
 
-    this.registerLoad = true;
-
     const registerData = this.registerForm.value;
-    const username: string = registerData.username;
-    const password: string = registerData.password;
-
-    this.userService.register(username, password).subscribe(success => {
-
-        this.authService.login(username, password).subscribe(success => {
-            if(this.saveLogin){
-              this.authService.saveLogin(username, password);
-            }
-            else{
-              this.authService.forgetLogin();
-            }},
-          error => {this.registerError = error.error; this.loginLoad = false;},
-          () => {this.loginLoad = false; this.router.navigate([''])});
-      },
-      error => {this.registerError = error.error; this.registerLoad = false;},
-      () => {this.registerLoad = false;});
+    const registerDTO: LoginDto = {username: registerData.username, password: registerData.password}
+    this.store.dispatch(new Register(registerDTO, this.saveLogin));
   }
 
   goBack(): void{
