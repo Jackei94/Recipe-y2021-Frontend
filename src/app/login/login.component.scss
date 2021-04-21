@@ -1,0 +1,98 @@
+.jumbotron {
+  background-size: cover;
+  background-color: #1d1d1d;
+  background-position-y: center;
+  margin-bottom: 0px;
+  border-radius: 0;
+}
+
+.categories {
+  text-align: center;
+}
+
+button {
+  color: #fefefe;
+  margin: 15px;
+}
+
+label {
+  color: #f28e1c;
+}
+
+input,
+input:focus {
+  background: #3d3d3d;
+  border: none!important;
+  color: #f28e1c;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #3d3d3d inset!important;
+  -webkit-text-fill-color: #f28e1c!important;
+}
+
+select {
+  background-color: #3d3d3d!important;
+  color: #f28e1c!important;
+  border: none!important;
+}
+
+.container {
+  position: relative;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+#logindiv {
+  border-right: dashed 2px #f28e1c;
+}
+
+form button{;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+form button:disabled{
+  cursor: not-allowed;
+  border: none;
+  background-color: rgba(96,96,96,0.20);
+  height: 50px;
+}
+
+button {
+  margin: 15px;
+}
+
+h6{
+  color: red;
+}
+
+h1 {
+  color: #f28e1c;
+}
+
+input.ng-dirty.ng-invalid {
+  border: 1px solid red;
+}
+
+.form-control {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.checkbox {
+  margin-left: 27%;
+  margin-right: 15px;
+  margin-bottom: 69px;
+}
+
+progressbar{
+  width: 300px;
+  margin-left: auto;
+  margin-right:auto;
+}

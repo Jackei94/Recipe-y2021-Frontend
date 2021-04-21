@@ -24,6 +24,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.2",
     "@fortawesome/free-regular-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
+    "@ngxs/store": "^3.7.1",
     "ngx-bootstrap": "^6.2.0",
     "ngx-socket-io": "^4.0.0",
     "rxjs": "~6.6.0",
