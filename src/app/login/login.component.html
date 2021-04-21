@@ -8,7 +8,10 @@
 
 
       <div id="logindiv" class="col-sm-6" *ngIf="!(loading$ | async)">
-        <h6 align="center">{{error$ | async}}</h6>
+        <div style="padding-top: 4px; min-height: 20px; max-height: 20px;">
+          <h6 align="center">{{error$ | async}}</h6>
+        </div>
+
         <h1 align="center">Login</h1>
 
         <form [formGroup]="loginForm" (ngSubmit)="login()">
@@ -20,7 +23,9 @@
             </div>
 
             <div class="col text-center">
-              <h6 *ngIf="loginForm.get('username').invalid && loginForm.get('username').dirty">Username is required</h6>
+              <div style="padding-top: 4px; min-height: 13px; max-height: 13px">
+                <h6 *ngIf="loginForm.get('username').invalid && loginForm.get('username').dirty">Username is required</h6>
+              </div>
             </div>
           </div>
 
@@ -30,15 +35,18 @@
               <input type="password" class="form-control" formControlName="password" id="password" placeholder="Enter password">
             </div>
 
+
             <div class="col text-center">
-              <h6 id="error" *ngIf="loginForm.get('password').invalid && loginForm.get('password').dirty">Password is required</h6>
+              <div style="padding-top: 4px; min-height: 13px; max-height: 13px">
+                <h6 id="error" *ngIf="loginForm.get('password').invalid && loginForm.get('password').dirty">Password is required</h6>
+              </div>
             </div>
           </div>
 
           <input type="checkbox" class="checkbox" id="rememberMe" name="saveLogin" [checked]="saveLogin" [(ngModel)]="saveLogin" [ngModelOptions]="{standalone: true}">
           <label class="checkboxLabel" for="rememberMe">Remember me</label>
 
-          <div class="col text-center">
+          <div class="col text-center" style="position: relative; top: 9px">
             <button class="btn btn-success" type="submit" [disabled]="!loginForm.valid || (loginLoading$ | async)">Login</button>
           </div>
         </form>
@@ -48,7 +56,9 @@
 
 
       <div class="col-sm-6" *ngIf="!(loading$ | async)">
-        <h6 align="center">{{registerError$ | async}}</h6>
+        <div style="padding-top: 4px; min-height: 20px; max-height: 20px">
+          <h6 align="center">{{registerError$ | async}}</h6>
+        </div>
         <h1 align="center">Register user</h1>
 
         <form [formGroup]="registerForm" (ngSubmit)="register()">
@@ -60,7 +70,9 @@
             </div>
 
             <div class="col text-center">
-              <h6 *ngIf="registerForm.get('username').invalid && registerForm.get('username').dirty">Username is required (8-24 characters)</h6>
+              <div style="padding-top: 4px; min-height: 13px; max-height: 13px">
+                <h6 *ngIf="registerForm.get('username').invalid && registerForm.get('username').dirty">Username is required (8-24 characters)</h6>
+              </div>
             </div>
           </div>
 
@@ -71,7 +83,9 @@
             </div>
 
             <div class="col text-center">
-              <h6 *ngIf="registerForm.get('password').invalid && registerForm.get('password').dirty">Password is required (min. 8 characters)</h6>
+              <div style="padding-top: 4px; min-height: 13px; max-height: 13px">
+                <h6 *ngIf="registerForm.get('password').invalid && registerForm.get('password').dirty">Password is required (min. 8 characters)</h6>
+              </div>
             </div>
           </div>
 
@@ -82,7 +96,9 @@
             </div>
 
             <div class="col text-center">
-              <h6 *ngIf="registerForm.get('passwordConfirm').dirty && registerForm.hasError('invalid')">Password must be identical</h6>
+              <div style="padding-top: 4px; min-height: 13px; max-height: 13px">
+                <h6 *ngIf="registerForm.get('passwordConfirm').dirty && registerForm.hasError('invalid')">Password must be identical</h6>
+              </div>
             </div>
           </div>
 
