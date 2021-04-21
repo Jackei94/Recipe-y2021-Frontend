@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Select, Store} from "@ngxs/store";
@@ -6,7 +6,15 @@ import {UserService} from "../shared/services/user.service";
 import {LoginState} from "./shared/state/login.state";
 import {Observable} from "rxjs";
 import {Location} from '@angular/common';
-import {Login, Logout, Register, UpdateLoading, UpdateLoginLoading} from "./shared/state/login.actions";
+import {
+  Login,
+  Logout,
+  Register,
+  UpdateError,
+  UpdateLoading,
+  UpdateLoginLoading,
+  UpdateRegisterError
+} from "./shared/state/login.actions";
 import {LoginDto} from "./shared/dtos/login.dto";
 
 @Component({
@@ -15,7 +23,7 @@ import {LoginDto} from "./shared/dtos/login.dto";
   styleUrls: ['./login.component.scss']
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),
@@ -82,6 +90,11 @@ export class LoginComponent implements OnInit {
 
   goBack(): void{
     this.location.back();
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(new UpdateError(''));
+    this.store.dispatch(new UpdateRegisterError(''));
   }
 
 }
