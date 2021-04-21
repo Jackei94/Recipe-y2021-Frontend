@@ -1,0 +1,103 @@
+<div class="jumbotron">
+
+  <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
+
+  <div class="container">
+    <div class="row">
+
+
+
+      <div id="logindiv" class="col-sm-6" *ngIf="!loading">
+        <h6 align="center">{{error}}</h6>
+        <h1 align="center">Login</h1>
+
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+          <div class="form-group">
+            <div class="col text-center">
+              <label for="username">Brugernavn</label>
+              <input type="text" class="form-control" formControlName="username" id="username" placeholder="Indtast brugernavn">
+            </div>
+
+            <div class="col text-center">
+              <h6 *ngIf="loginForm.get('username').invalid && loginForm.get('username').dirty">Brugernavn er påkrævet</h6>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col text-center">
+              <label for="password">Kodeord</label>
+              <input type="password" class="form-control" formControlName="password" id="password" placeholder="Indtast kodeord">
+            </div>
+
+            <div class="col text-center">
+              <h6 id="error" *ngIf="loginForm.get('password').invalid && loginForm.get('password').dirty">Kodeord er påkrævet</h6>
+            </div>
+          </div>
+
+          <input type="checkbox" class="checkbox" id="rememberMe" name="saveLogin" [checked]="saveLogin" [(ngModel)]="saveLogin" [ngModelOptions]="{standalone: true}">
+          <label class="checkboxLabel" for="rememberMe">Husk mig</label>
+
+          <div class="col text-center">
+            <button class="btn btn-success" type="submit" [disabled]="!loginForm.valid || loginLoad">Login</button>
+          </div>
+        </form>
+
+      </div>
+
+
+
+      <div class="col-sm-6" *ngIf="!loading">
+        <h6 align="center">{{registerError}}</h6>
+        <h1 align="center">Opret bruger</h1>
+
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+
+          <div class="form-group">
+            <div class="col text-center">
+              <label for="usernameRegister">Brugernavn</label>
+              <input type="text" class="form-control" formControlName="username" id="usernameRegister" placeholder="Indtast brugernavn" pattern="^(?!.* {2})(?=\S)(?=.*\S$)[a-zA-Z æøåÆØÅ 0-9 ]+$">
+            </div>
+
+            <div class="col text-center">
+              <h6 *ngIf="registerForm.get('username').invalid && registerForm.get('username').dirty">Brugernavn er påkrævet (8-24 tegn)</h6>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col text-center">
+              <label for="passwordRegister">Kodeord</label>
+              <input type="password" class="form-control" formControlName="password" id="passwordRegister" placeholder="Indtast kodeord">
+            </div>
+
+            <div class="col text-center">
+              <h6 *ngIf="registerForm.get('password').invalid && registerForm.get('password').dirty">Kodeord er påkrævet (min. 8 tegn)</h6>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col text-center">
+              <label for="passwordConfirm">Gentag kodeord</label>
+              <input type="password" class="form-control" formControlName="passwordConfirm" id="passwordConfirm" placeholder="Indtast kodeord">
+            </div>
+
+            <div class="col text-center">
+              <h6 *ngIf="registerForm.get('passwordConfirm').dirty && registerForm.hasError('invalid')">Gentagende kode skal være ens</h6>
+            </div>
+          </div>
+
+          <div class="col text-center">
+            <button class="btn btn-success" type="submit" [disabled]="!registerForm.valid || registerLoad">Opret</button>
+          </div>
+        </form>
+
+      </div>
+
+
+
+    </div>
+
+    <button class="btn btn-info" (click)="goBack();">Gå tilbage</button>
+
+  </div>
+</div>
