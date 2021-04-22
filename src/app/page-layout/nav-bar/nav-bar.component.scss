@@ -1,5 +1,5 @@
 #nav-bar{
-  background-color: #0d0d0d;
+  background-color: #e1e1c8;
 }
 
 ul {
@@ -12,20 +12,16 @@ ul {
   padding: 0;
 }
 
-.nav-bar-route {
-  color: #f28e1c;
-}
-
 .nav-bar-route a {
   display: block;
-  color: #f28e1c;
+  color: #183040;
   text-align: center;
   padding: 14px 53px;
   text-decoration: none;
 }
 
 .nav-bar-route a:hover {
-  background-color: #1d1d1d;
+  background-color: beige;
   cursor: pointer;
 }
 

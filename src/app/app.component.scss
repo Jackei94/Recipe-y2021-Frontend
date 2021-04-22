@@ -1,9 +1,9 @@
 body {
-  color: #1d1d1d;
+  color: beige;
 }
 
 #page-container {
-  background-color: #1d1d1d;
+  background-color: beige;
   position: relative;
   min-height: 100vh;
 }
@@ -13,6 +13,7 @@ body {
 }
 
 app-footer {
+  background-color: #e1e1c8;
   position: absolute;
   bottom: 0;
   width: 100%;
