@@ -6,12 +6,13 @@ import { AppComponent } from './app.component';
 import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FrontpageComponent } from './frontpage/frontpage.component';
-import { HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {PageLayoutModule} from "./page-layout/page-layout.module";
 import { LoginComponent } from './login/login.component';
 import {SharedModule} from "./shared/shared.module";
 import {NgxsModule} from "@ngxs/store";
 import {environment} from "../environments/environment";
+import {AuthInterceptor} from "./auth-guards/auth.interceptor";
 
 const config: SocketIoConfig = {url: 'http://localhost:3100', options: {}}
 
@@ -31,7 +32,7 @@ const config: SocketIoConfig = {url: 'http://localhost:3100', options: {}}
 
     SharedModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

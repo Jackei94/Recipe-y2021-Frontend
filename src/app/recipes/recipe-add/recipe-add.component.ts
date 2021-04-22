@@ -121,7 +121,16 @@ export class RecipeAddComponent implements OnInit {
         ingredientEntries: recipeData.ingredients
       }
 
-      this.recipeService.addRecipe(recipe).subscribe(() => {},
+      this.recipeService.addRecipe(recipe).subscribe(() => {
+        //ADD SOCKET EMIT TO NOTIFY ABOUT RECIPE CREATED
+        //WHEN IN JOIN LISTEN FOR SOCKET CREATE FOR SPECIFIC USER ID
+
+        //ON UPDATE EMIT TO STOREPAGE, DETAILS FOR ID, LIST FOR USER ID
+        //ON CREATE EMIT TO STOREPAGE, LIST FOR USER ID
+
+        //IN CASE OF DELETE
+        //EMIT TO STOREPAGE, EMIT TO UPDATE DETAILS FOR ID
+        },
         (error) => {this.error = error.error; this.loading = false;},
         () => {this.created = true; this.router.navigate(['home']);});
     });
