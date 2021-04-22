@@ -5,12 +5,12 @@ import {
   LoadUserFromStorage,
   Login,
   Logout, Register,
-  SaveUserInStorage, UpdateError,
+  UpdateError,
   UpdateLoading,
   UpdateLoginLoading, UpdateRegisterError, UpdateRegisterLoading, UpdateUser
 } from "./login.actions";
-import {UserService} from "../../../shared/services/user.service";
 import {Router} from "@angular/router";
+import {AuthenticationService} from "../../../shared/services/authentication.service";
 
 export interface LoginStateModel{
   user: User;
@@ -36,7 +36,7 @@ export interface LoginStateModel{
 @Injectable()
 export class LoginState {
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
   @Selector()
   static user(state: LoginStateModel): User{
@@ -68,14 +68,9 @@ export class LoginState {
   }
 
 
-  @Action(SaveUserInStorage)
-  saveUserInStorage(ctx: StateContext<LoginStateModel>, suis: SaveUserInStorage): void {
-    this.userService.saveUser(suis.user);
-  }
-
   @Action(LoadUserFromStorage)
   loadUserFromStorage(ctx: StateContext<LoginStateModel>): void {
-    const user: User = this.userService.getUser();
+    const user: User = this.authService.getUserFromToken();
     ctx.dispatch(new UpdateUser(user));
   }
 
@@ -91,21 +86,20 @@ export class LoginState {
 
     ctx.dispatch(new UpdateLoginLoading(true));
 
-    this.userService.login(login.loginDTO).subscribe((user) => {
-      ctx.dispatch(new UpdateUser(user));
-      ctx.dispatch(new SaveUserInStorage(user));
-      if(login.saveLogin){this.userService.saveLogin(login.loginDTO);}
-      else{this.userService.forgetLogin();}
+    this.authService.login(login.loginDTO).subscribe((success) => {
+      console.log(success);
+      ctx.dispatch(new LoadUserFromStorage());
+      if(login.saveLogin){this.authService.saveLogin(login.loginDTO);}
+      else{this.authService.forgetLogin();}
       this.router.navigate(['']);
       ctx.dispatch(new UpdateError(''));},
       (error) => {ctx.dispatch(new UpdateError(error.error.message)); ctx.dispatch(new UpdateLoginLoading(false));},
       () => {ctx.dispatch(new UpdateLoginLoading(false));});
-
   }
 
   @Action(Logout)
   logout(ctx: StateContext<LoginStateModel>): void {
-    this.userService.removeUser();
+    this.authService.logout();
     const state = ctx.getState();
     const newState: LoginStateModel = {...state, user: null};
     ctx.setState(newState);
@@ -115,17 +109,13 @@ export class LoginState {
   register(ctx: StateContext<LoginStateModel>, register: Register): void {
 
     ctx.dispatch(new UpdateRegisterLoading(true));
-    this.userService.register(register.loginDTO).subscribe((user) => {
-      ctx.dispatch(new UpdateUser(user));
-      ctx.dispatch(new SaveUserInStorage(user));
-      if(register.saveLogin){this.userService.saveLogin(register.loginDTO);}
-      else{this.userService.forgetLogin();}
-      this.router.navigate(['']);
+
+    this.authService.register(register.loginDTO).subscribe((user) => {
+      ctx.dispatch(new Login(register.loginDTO, register.saveLogin));
       ctx.dispatch(new UpdateRegisterError(''));},
-      (error) => {console.log(error); ctx.dispatch(new UpdateRegisterError(error.error.message)); ctx.dispatch(new UpdateRegisterLoading(false));},
+      (error) => {ctx.dispatch(new UpdateRegisterError(error.error.message)); ctx.dispatch(new UpdateRegisterLoading(false));},
       () => {ctx.dispatch(new UpdateRegisterLoading(false));}
       );
-
   }
 
   @Action(UpdateLoading)

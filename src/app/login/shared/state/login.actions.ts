@@ -1,11 +1,6 @@
 import {User} from "../../../shared/models/user";
 import {LoginDto} from "../dtos/login.dto";
 
-export class SaveUserInStorage{
-  constructor(public user: User) {}
-  static readonly type = '[Login] Save User In Storage'
-}
-
 export class LoadUserFromStorage{
   constructor() {}
   static readonly type = '[Login] Load User From Storage'

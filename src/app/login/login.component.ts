@@ -16,6 +16,7 @@ import {
   UpdateRegisterError
 } from "./shared/state/login.actions";
 import {LoginDto} from "./shared/dtos/login.dto";
+import {AuthenticationService} from "../shared/services/authentication.service";
 
 @Component({
   selector: 'app-login',
@@ -59,12 +60,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   saveLogin: boolean = false;
 
-  constructor(private router: Router, private store: Store, private location: Location, private userService: UserService) { }
+  constructor(private router: Router, private store: Store, private location: Location, private authService: AuthenticationService) { }
 
   ngOnInit(): void {
-    console.log("Hello?")
     this.store.dispatch(new Logout());
-    const loginInfo: LoginDto = this.userService.getLoginInformation();
+    const loginInfo: LoginDto = this.authService.getLoginInformation();
 
     if (loginInfo !== null) {
       this.loginForm.patchValue({username: loginInfo.username, password: loginInfo.password});
@@ -82,7 +82,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   register(): void{
-
     const registerData = this.registerForm.value;
     const registerDTO: LoginDto = {username: registerData.username, password: registerData.password}
     this.store.dispatch(new Register(registerDTO, this.saveLogin));
