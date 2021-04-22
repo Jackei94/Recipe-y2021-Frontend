@@ -11,7 +11,6 @@ import {PageLayoutModule} from "./page-layout/page-layout.module";
 import { LoginComponent } from './login/login.component';
 import {SharedModule} from "./shared/shared.module";
 import {NgxsModule} from "@ngxs/store";
-import {LoginState} from "./login/shared/state/login.state";
 import {environment} from "../environments/environment";
 
 const config: SocketIoConfig = {url: 'http://localhost:3100', options: {}}
@@ -29,7 +28,8 @@ const config: SocketIoConfig = {url: 'http://localhost:3100', options: {}}
     NgxsModule.forRoot([], {developmentMode: !environment.production}),
     FontAwesomeModule,
     PageLayoutModule,
-    HttpClientModule,
+
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

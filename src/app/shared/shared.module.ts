@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProgressbarModule} from "ngx-bootstrap/progressbar";
+import {HttpClientModule} from "@angular/common/http";
 
 
 
@@ -11,7 +12,7 @@ import {ProgressbarModule} from "ngx-bootstrap/progressbar";
   imports: [
     CommonModule,FontAwesomeModule, ReactiveFormsModule, ProgressbarModule, FormsModule,
   ],
-  exports: [CommonModule,FontAwesomeModule, ReactiveFormsModule, ProgressbarModule, FormsModule],
+  exports: [CommonModule,FontAwesomeModule, ReactiveFormsModule, ProgressbarModule, FormsModule, HttpClientModule],
   providers: []
 })
 

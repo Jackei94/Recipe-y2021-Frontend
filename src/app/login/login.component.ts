@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private store: Store, private location: Location, private userService: UserService) { }
 
   ngOnInit(): void {
-
+    console.log("Hello?")
     this.store.dispatch(new Logout());
     const loginInfo: LoginDto = this.userService.getLoginInformation();
 
