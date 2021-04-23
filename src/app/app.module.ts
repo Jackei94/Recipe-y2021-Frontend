@@ -20,7 +20,7 @@ const config: SocketIoConfig = {url: 'http://localhost:3100', options: {}}
   declarations: [
     AppComponent,
     FrontpageComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
