@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RecipeAddComponent } from './recipe-add/recipe-add.component';
 import {RecipesRoutingModule} from "./recipes-routing.module";
 import {SharedModule} from "../shared/shared.module";
-
-
+import { RecipeUpdateComponent } from './recipe-update/recipe-update.component';
 
 @NgModule({
-  declarations: [RecipeAddComponent],
+  declarations: [RecipeAddComponent, RecipeUpdateComponent],
   imports: [
     CommonModule,
     RecipesRoutingModule,

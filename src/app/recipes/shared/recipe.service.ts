@@ -20,6 +20,10 @@ export class RecipeService {
     return this.http.get<Category[]>(environment.apiUrl + '/recipe/recipeCategories');
   }
 
+  getRecipeByID(ID: number): Observable<Recipe>{
+    return this.http.get<Recipe>(environment.apiUrl + 'recipe/getById' + `?ID=${ID}`)
+  }
+
   uploadImage(file: File): Observable<any>{
     const fd = new FormData();
     fd.append('image', file, file.name);
