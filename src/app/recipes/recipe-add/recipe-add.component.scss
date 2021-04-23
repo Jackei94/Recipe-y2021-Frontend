@@ -1,46 +1,48 @@
 .jumbotron {
-  background-color: #1d1d1d;
+  background-color: beige;
   margin-bottom: 0px;
   border-radius: 0;
 }
 
-h1 {
-  color: #f28e1c;
+h1, label {
+  color: #183040;
 }
 
-label {
-  color: #f28e1c;
-}
-
-input,
-input:focus {
-  background: #3d3d3d;
+input, input:focus, textarea {
+  padding: 12px 20px;
+  background: white;
   border: none!important;
-  color: #f28e1c;
+  color: #183040;
+}
+
+textarea {
+  height: 200px;
 }
 
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px #3d3d3d inset!important;
-  -webkit-text-fill-color: #f28e1c!important;
+  -webkit-box-shadow: 0 0 0 30px white inset!important;
+  -webkit-text-fill-color: #183040!important;
 }
 
 select {
-  background-color: #3d3d3d!important;
-  color: #f28e1c!important;
+  min-height: 48px;
+  background-color: white!important;
+  color: #183040!important;
   border: none!important;
 }
 
+option {
+  padding: 12px 20px;
+}
+
 .container {
-  position: relative;
   border-radius: 5px;
   padding: 20px;
 }
 
-.create{;
+.create, .add{;
   padding: 12px 20px;
-  text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 16px;
   margin: 4px 2px;
 }
@@ -48,11 +50,17 @@ select {
 form button:disabled{
   cursor: not-allowed;
   border: none;
-  background-color: rgba(96,96,96,0.20)
+  background-color: rgba(20,20,20,0.20)
 }
 
 h6{
-  color: red;
+  padding: 12px 20px;
+  color: #183040;
+}
+
+#ingredients {
+  border-left-style: dotted;
+  border-width: 2px;
 }
 
 input.ng-dirty.ng-invalid {
@@ -63,4 +71,12 @@ progressbar{
   width: 300px;
   margin-left: auto;
   margin-right:auto;
+}
+
+.row {
+  padding: 0 15px;
+}
+
+#add {
+  padding-top: 30px;
 }
