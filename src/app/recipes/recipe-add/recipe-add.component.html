@@ -104,6 +104,19 @@
       </div>
 
 
+      <div class="form-group">
+        <div class="col-sm-4 offset-sm-4">
+          <label for="category">Select category</label>
+          <select class="form-control" formControlName="category" id="category">
+            <option value="" disabled>Select category</option>
+            <option *ngFor="let category of categories" [value]="category.ID">{{category.title}}</option>
+          </select>
+        </div>
+
+        <div class="col-sm-8 offset-sm-4">
+          <h6 *ngIf="recipeForm.get('category').invalid && recipeForm.get('category').dirty">Select category</h6>
+        </div>
+      </div>
 
 
 

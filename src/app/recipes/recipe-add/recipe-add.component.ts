@@ -9,6 +9,7 @@ import {LoginState} from "../../login/shared/state/login.state";
 import {Observable} from "rxjs";
 import {User} from "../../shared/models/user";
 import {IngredientEntry} from "../../shared/models/ingredient-entry";
+import {Category} from "../../shared/models/category";
 
 @Component({
   selector: 'app-recipe-add',
@@ -26,7 +27,7 @@ export class RecipeAddComponent implements OnInit {
     description: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]),
     preparations: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]),
     imageURL: new FormControl(''),
-    categories: new FormControl([], []),
+    category: new FormControl('', [Validators.required]),
     ingredients: new FormControl([], [Validators.required, Validators.minLength(1)])
   });
 
@@ -43,6 +44,7 @@ export class RecipeAddComponent implements OnInit {
   error: string = '';
 
   ingredients: IngredientEntry[] = [];
+  categories: Category[] = [];
 
   @Select(LoginState.user)
   loggedUser$: Observable<User> | undefined;
@@ -52,12 +54,17 @@ export class RecipeAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.imageURL = (localStorage.getItem('loadedImage') !== null) ? JSON.parse(localStorage.getItem('loadedImage')).image : '';
-    this.loading = false;
+    this.getCategories();
   }
 
   ngOnDestroy(): void{
     if(!this.created && this.imageURL !== ''){localStorage.setItem('loadedImage', JSON.stringify({image: this.imageURL}))}
     else{localStorage.removeItem('loadedImage')}
+  }
+
+  getCategories(): void{
+    this.recipeService.getRecipeCategories().subscribe((categories) => {
+      this.categories = categories;}, (error) => {this.error = error.error.message; this.loading = false;}, () => {this.loading = false;})
   }
 
   onFileChange(event){
@@ -94,7 +101,7 @@ export class RecipeAddComponent implements OnInit {
     let imageToDelete = {image: imageTitle}
 
     this.recipeService.deleteImage(imageToDelete).subscribe((response) => {},
-      (error) => {this.imageLoad = false; this.error = error.error;},
+      (error) => {this.imageLoad = false; this.error = error.error.messages;},
       () => {
         this.recipeForm.patchValue({imageURL: ''});
         this.imageURL = '';
@@ -118,7 +125,8 @@ export class RecipeAddComponent implements OnInit {
         preparations: recipeData.preparations,
         imageURL: this.imageURL,
         user: user,
-        ingredientEntries: recipeData.ingredients
+        ingredientEntries: recipeData.ingredients,
+        category: {ID: recipeData.category, title: ''}
       }
 
       this.recipeService.addRecipe(recipe).subscribe(() => {
@@ -131,7 +139,7 @@ export class RecipeAddComponent implements OnInit {
         //IN CASE OF DELETE
         //EMIT TO STOREPAGE, EMIT TO UPDATE DETAILS FOR ID
         },
-        (error) => {this.error = error.error; this.loading = false;},
+        (error) => {this.error = error.error.message; this.loading = false;},
         () => {this.created = true; this.router.navigate(['home']);});
     });
   }
