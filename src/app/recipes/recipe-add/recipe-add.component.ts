@@ -160,5 +160,4 @@ export class RecipeAddComponent implements OnInit {
     this.location.back();
   }
 
-
 }
