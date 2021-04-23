@@ -33,7 +33,7 @@ export class RecipeAddComponent implements OnInit {
 
   ingredientForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(32)]),
-    amount: new FormControl('', [Validators.required, Validators.min(0), Validators.max(10000)]),
+    amount: new FormControl('', [Validators.required, Validators.min(1), Validators.max(10000)]),
     measurementUnit: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]),
   });
 

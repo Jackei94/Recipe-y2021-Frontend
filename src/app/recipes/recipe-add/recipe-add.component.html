@@ -1,52 +1,39 @@
 <div class="jumbotron">
-  <h1 align="center">Create Recipe</h1>
   <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
   <div class="container" *ngIf="!loading">
+    <h1 class="col-sm-12">Create Recipe</h1>
 
     <h6 id="errorMsg" align="center">{{error}}</h6>
 
     <form [formGroup]="recipeForm" (ngSubmit)="createRecipe()">
       <div class="form-group">
-        <div class="col-sm-4 offset-sm-4">
+        <div class="col-sm-12">
           <label for="title">Recipe Title</label>
           <input type="text" class="form-control" formControlName="title" id="title" placeholder="Enter recipe title" maxlength="32" pattern="^(?!.* {2})(?=\S)(?=.*\S$)[a-zA-Z æøåÆØÅ0-9 &]+$">
         </div>
 
-        <div class="col-sm-8 offset-sm-4">
+        <div class="col-sm-12">
           <h6 *ngIf="recipeForm.get('title').invalid && recipeForm.get('title').dirty">Recipe title must be between 5-32 characters</h6>
         </div>
       </div>
 
 
       <div class="form-group">
-        <div class="col-sm-4 offset-sm-4">
+        <div class="col-sm-12">
           <label for="description">Recipe description</label>
           <input type="text" class="form-control" formControlName="description" id="description" placeholder="Enter recipe description">
         </div>
 
-        <div class="col-sm-8 offset-sm-4">
+        <div class="col-sm-12">
           <h6 *ngIf="recipeForm.get('description').invalid && recipeForm.get('description').dirty">Recipe description must be between 10-1000 characters</h6>
         </div>
       </div>
 
 
-      <div class="form-group">
-        <div class="col-sm-4 offset-sm-4">
-          <label for="preparations">Recipe preparations</label>
-          <textarea type="text" class="form-control" formControlName="preparations" id="preparations" placeholder="Enter recipe preparations"></textarea>
-        </div>
-
-        <div class="col-sm-8 offset-sm-4">
-          <h6 *ngIf="recipeForm.get('preparations').invalid && recipeForm.get('preparations').dirty">Preparations must be between 10-1000 characters</h6>
-        </div>
-      </div>
 
 
-
-
-      <div>
-        <form class="" [formGroup]="ingredientForm" (ngSubmit)="createIngredient()">
-          <div class="row justify-content-center">
+        <form [formGroup]="ingredientForm" (ngSubmit)="createIngredient()">
+          <div class="row">
 
             <div class="form-group col-sm-3">
               <div class="">
@@ -54,16 +41,16 @@
                 <input type="text" class="form-control" formControlName="name" id="name" placeholder="Enter ingredient name">
               </div>
 
-                <h6 *ngIf="ingredientForm.get('name').invalid && ingredientForm.get('name').dirty">Ingredient name required</h6>
+              <h6 *ngIf="ingredientForm.get('name').invalid && ingredientForm.get('name').dirty">Ingredient name required</h6>
             </div>
 
             <div class="form-group col-sm-3">
               <div class="">
                 <label for="amount">Ingredient amount</label>
-                <input type="number" class="form-control" formControlName="amount" id="amount" placeholder="Enter ingredient amount" min="0" max="10000">
+                <input type="number" class="form-control" formControlName="amount" id="amount" placeholder="Enter ingredient amount" min="1" max="10000">
               </div>
 
-                <h6 *ngIf="ingredientForm.get('amount').invalid && ingredientForm.get('amount').dirty">Ingredient amount must be between 0-10000</h6>
+              <h6 *ngIf="ingredientForm.get('amount').invalid && ingredientForm.get('amount').dirty">Ingredient amount must be between 1-10000</h6>
             </div>
 
             <div class="form-group col-sm-3">
@@ -72,31 +59,34 @@
                 <input type="text" class="form-control" formControlName="measurementUnit" id="measureunit" placeholder="Enter measure unit">
               </div>
 
-                <h6 *ngIf="ingredientForm.get('measurementUnit').invalid && ingredientForm.get('measurementUnit').dirty">Ingredient measure required</h6>
+              <h6 *ngIf="ingredientForm.get('measurementUnit').invalid && ingredientForm.get('measurementUnit').dirty">Ingredient measure required</h6>
             </div>
 
+            <div align="right" id="add" class="form-group col-sm-3">
+              <button class="btn btn-success add" type="submit" [disabled]="!ingredientForm.valid">Add Ingredient</button>
+            </div>
 
-          </div>
-          <div class="col text-center">
-            <button class="btn btn-success" type="submit" [disabled]="!ingredientForm.valid">Add Ingredient</button>
           </div>
         </form>
-      </div>
 
 
 
 
-
-
-      <div id="ingredients">
+      <div>
         <section *ngFor="let ingredient of ingredients">
-          <div class="row">
+          <div id="ingredients" class="row">
 
-            <div class="col-sm-10 ">
-              <h6 style="color: white">{{ingredient.name}} {{ingredient.amount}} {{ingredient.measurementUnit}}</h6>
+            <div class="col-sm-3">
+              <h6>{{ingredient.name}}</h6>
             </div>
-            <div class="col-sm-2">
-              <button type="button" class="btn btn-outline-danger" (click)="removeIngredient(ingredient)">X</button>
+            <div class="col-sm-3">
+              <h6>{{ingredient.amount}}</h6>
+            </div>
+            <div class="col-sm-3">
+              <h6>{{ingredient.measurementUnit}}</h6>
+            </div>
+            <div align="right" class="col-sm-3">
+              <button type="button" class="btn btn-danger" (click)="removeIngredient(ingredient)">Remove Ingredient</button>
             </div>
 
           </div>
@@ -104,8 +94,24 @@
       </div>
 
 
+
+
       <div class="form-group">
-        <div class="col-sm-4 offset-sm-4">
+        <div class="col-sm-12">
+          <label for="preparations">Recipe preparations</label>
+          <textarea type="text" class="form-control" formControlName="preparations" id="preparations" placeholder="Enter recipe preparations"></textarea>
+        </div>
+
+        <div class="col-sm-12">
+          <h6 *ngIf="recipeForm.get('preparations').invalid && recipeForm.get('preparations').dirty">Preparations must be between 10-1000 characters</h6>
+        </div>
+      </div>
+
+
+
+
+      <div class="form-group">
+        <div class="col-sm-12">
           <label for="category">Select category</label>
           <select class="form-control" formControlName="category" id="category">
             <option value="" disabled>Select category</option>
@@ -113,7 +119,7 @@
           </select>
         </div>
 
-        <div class="col-sm-8 offset-sm-4">
+        <div class="col-sm-12">
           <h6 *ngIf="recipeForm.get('category').invalid && recipeForm.get('category').dirty">Select category</h6>
         </div>
       </div>
@@ -121,14 +127,14 @@
 
 
       <div class="form-group">
-        <div class="col-sm-4 offset-sm-4">
+        <div class="col-sm-12">
           <label for="image">Recipe image</label>
           <input type="file" class="form-control" formControlName="imageURL" id="image" placeholder="Select recipe image" accept="image/*" (change)="onFileChange($event)">
         </div>
 
         <progressbar class="progress" *ngIf="imageLoad" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
 
-        <div class="col-sm-8 offset-sm-4">
+        <div class="col-sm-12">
           <a href="{{imageURL}}" *ngIf="!imageLoad && imageURL !== ''">Uploaded image</a>
           <button type="button" class="btn btn-outline-danger" *ngIf="!imageLoad && imageURL !== ''" (click)="deleteImage()">X</button>
         </div>
