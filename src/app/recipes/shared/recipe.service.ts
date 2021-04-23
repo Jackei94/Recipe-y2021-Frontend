@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Recipe} from "../../shared/models/recipe";
 import {environment} from "../../../environments/environment";
+import {Category} from "../../shared/models/category";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,10 @@ export class RecipeService {
 
   addRecipe(recipe: Recipe): Observable<boolean>{
     return this.http.post<boolean>(environment.apiUrl + '/recipe/create', recipe);
+  }
+
+  getRecipeCategories(): Observable<Category[]>{
+    return this.http.get<Category[]>(environment.apiUrl + '/recipe/recipeCategories');
   }
 
   uploadImage(file: File): Observable<any>{
