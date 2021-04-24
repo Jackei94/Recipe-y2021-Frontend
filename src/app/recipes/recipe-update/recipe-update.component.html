@@ -1,6 +1,6 @@
 <div class="jumbotron">
   <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
-  <div class="container" *ngIf="!loading">
+  <div class="container" *ngIf="!loading && found">
     <h1 class="col-sm-12">Create Recipe</h1>
 
     <h6 id="errorMsg" align="center">{{error}}</h6>
@@ -147,4 +147,9 @@
     <button class="btn btn-info" (click)="goBack();">Go back</button>
 
   </div>
+
+  <div *ngIf="!found && !loading">
+    <h1 class="text-center" style="color: black">Recipe not found</h1>
+  </div>
+
 </div>
