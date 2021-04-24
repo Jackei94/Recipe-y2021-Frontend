@@ -49,19 +49,22 @@ export class AuthenticationService {
     return ((Math.floor((new Date).getTime() / 1000)) <= expiry);
   }
 
-  getUserFromToken(): User{
+  verifyToken(): Observable<LoginResponseDto>{
     const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-    if (loggedUser !== null){
+    const loginResponseDTO: LoginResponseDto = {token: loggedUser.token}
+    return this.http.post<LoginResponseDto>(environment.apiUrl + '/user/verifyToken', loginResponseDTO);
+  }
 
-      const userID: number = JSON.parse(atob(loggedUser.token.split('.')[1])).ID;
-      const username: string = JSON.parse(atob(loggedUser.token.split('.')[1])).username;
+  getUserFromToken(token: string): User{
 
+    if(token !== ''){
+      const userID: number = JSON.parse(atob(token.split('.')[1])).ID;
+      const username: string = JSON.parse(atob(token.split('.')[1])).username;
       return {ID: userID, username: username, password: '', salt: ''}
     }
-    else{
-      return null;
-    }
+    return null;
   }
+
 
   getID(): number{
     const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
