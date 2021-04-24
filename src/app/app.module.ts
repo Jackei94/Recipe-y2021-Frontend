@@ -14,8 +14,6 @@ import {NgxsModule} from "@ngxs/store";
 import {environment} from "../environments/environment";
 import {AuthInterceptor} from "./auth-guards/auth.interceptor";
 
-const config: SocketIoConfig = {url: 'http://localhost:3100', options: {}}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +23,7 @@ const config: SocketIoConfig = {url: 'http://localhost:3100', options: {}}
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SocketIoModule.forRoot(config),
+    SocketIoModule.forRoot({url: ''}),
     NgxsModule.forRoot([], {developmentMode: !environment.production}),
     FontAwesomeModule,
     PageLayoutModule,
