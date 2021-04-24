@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Recipe} from "../../shared/models/recipe";
 import {environment} from "../../../environments/environment";
 import {Category} from "../../shared/models/category";
+import {RecipeGetDto} from "./dtos/recipe.get.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +13,20 @@ export class RecipeService {
 
   constructor(private http: HttpClient) { }
 
-  addRecipe(recipe: Recipe): Observable<boolean>{
-    return this.http.post<boolean>(environment.apiUrl + '/recipe/create', recipe);
+  addRecipe(recipe: Recipe): Observable<Recipe>{
+    return this.http.post<Recipe>(environment.apiUrl + '/recipe/create', recipe);
+  }
+
+  updateRecipe(recipe: Recipe): Observable<Recipe>{
+    return this.http.put<Recipe>(environment.apiUrl + '/recipe/update', recipe);
   }
 
   getRecipeCategories(): Observable<Category[]>{
     return this.http.get<Category[]>(environment.apiUrl + '/recipe/recipeCategories');
   }
 
-  getRecipeByID(ID: number): Observable<Recipe>{
-    return this.http.get<Recipe>(environment.apiUrl + 'recipe/getById' + `?ID=${ID}`)
+  getPersonalRecipeByID(recipeGetDTO: RecipeGetDto): Observable<Recipe>{
+    return this.http.post<Recipe>(environment.apiUrl + '/recipe/getPersonalById', recipeGetDTO);
   }
 
   uploadImage(file: File): Observable<any>{

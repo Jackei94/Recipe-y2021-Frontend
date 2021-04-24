@@ -21,7 +21,6 @@ export class AuthenticationService {
   login(loginDTO: LoginDto): Observable<boolean> {
     return this.http.post<LoginResponseDto>(environment.apiUrl + '/user/login', loginDTO)
       .pipe(map((loginResponseDTO) => {
-        console.log(loginResponseDTO);
         if (loginResponseDTO !== null) {
           localStorage.setItem('loggedUser', JSON.stringify({token: loginResponseDTO.token}));
           return true;
@@ -58,6 +57,16 @@ export class AuthenticationService {
       const username: string = JSON.parse(atob(loggedUser.token.split('.')[1])).username;
 
       return {ID: userID, username: username, password: '', salt: ''}
+    }
+    else{
+      return null;
+    }
+  }
+
+  getID(): number{
+    const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+    if (loggedUser !== null){
+      return JSON.parse(atob(loggedUser.token.split('.')[1])).ID;
     }
     else{
       return null;

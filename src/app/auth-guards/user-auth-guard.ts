@@ -20,6 +20,6 @@ export class UserAuthGuard implements CanActivate{
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.loggedUser$.pipe(map((user) => {if(user != null && this.authService.validateToken()){return true;}else{this.router.navigate(['/login']); return false;}}))
+    return this.loggedUser$.pipe(take(1), map((user) => {if(user != null && this.authService.validateToken()){return true;}else{this.router.navigate(['/login']); return false;}}))
   }
 }

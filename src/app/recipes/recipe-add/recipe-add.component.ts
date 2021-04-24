@@ -10,6 +10,7 @@ import {Observable} from "rxjs";
 import {User} from "../../shared/models/user";
 import {IngredientEntry} from "../../shared/models/ingredient-entry";
 import {Category} from "../../shared/models/category";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-recipe-add',
@@ -116,7 +117,7 @@ export class RecipeAddComponent implements OnInit {
     const recipeData = this.recipeForm.value;
     this.imageURL = (this.imageURL === '') ? this.invalidImageURL : this.imageURL;
 
-    this.loggedUser$.subscribe((user) => {
+    this.loggedUser$.pipe(take(1)).subscribe((user) => {
 
       const recipe: Recipe = {
         ID: 0,

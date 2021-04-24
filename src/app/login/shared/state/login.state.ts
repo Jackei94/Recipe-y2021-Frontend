@@ -87,7 +87,6 @@ export class LoginState {
     ctx.dispatch(new UpdateLoginLoading(true));
 
     this.authService.login(login.loginDTO).subscribe((success) => {
-      console.log(success);
       ctx.dispatch(new LoadUserFromStorage());
       if(login.saveLogin){this.authService.saveLogin(login.loginDTO);}
       else{this.authService.forgetLogin();}
