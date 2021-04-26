@@ -42,8 +42,8 @@ export class AllRecipesComponent implements OnInit {
   }
 
   getRecipes(): void {
-    const filter = `?currentPage=${this.currentPage}&itemsPrPage=${this.itemsPrPage}&name=${this.searchTerm}&sortingType=${this.sortingType}
-                        &sorting=${this.sorting}&category=${this.recipeCategory}`;
+    const filter = `?currentPage=${this.currentPage}&itemsPrPage=${this.itemsPrPage}&name=${this.searchTerm}`
+                   + `&sortingType=${this.sortingType}&sorting=${this.sorting}&category=${this.recipeCategory}`;
     this.loading = true;
 
     this.recipeService.getRecipes(filter).subscribe((FilterList) => {
