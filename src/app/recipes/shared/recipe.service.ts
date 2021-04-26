@@ -33,7 +33,7 @@ export class RecipeService {
   }
 
   getRecipeByID(recipeGetDTO: RecipeGetDto): Observable<Recipe>{
-    return this.http.post<Recipe>(environment.apiUrl + '/recipe/geById', recipeGetDTO);
+    return this.http.post<Recipe>(environment.apiUrl + '/recipe/getById', recipeGetDTO);
   }
 
   uploadImage(file: File): Observable<any>{
