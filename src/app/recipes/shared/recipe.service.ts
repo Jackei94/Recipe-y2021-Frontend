@@ -8,6 +8,7 @@ import {RecipeGetDto} from "./dtos/recipe.get.dto";
 import {ListenDetailsDto} from "./dtos/listen.details.dto";
 import {Socket} from "ngx-socket-io";
 import {SocketRecipeApp} from "../../shared/shared.module";
+import {FilterList} from "../../shared/models/filterList";
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,8 @@ export class RecipeService {
     return this.http.post<Recipe>(environment.apiUrl + '/recipe/create', recipe);
   }
 
-  getRecipes(filter: string): Observable<any>{
-    return this.http.get<Observable<any>>(environment.apiUrl + '/recipe/getRecipes' + filter);
+  getRecipes(filter: string): Observable<FilterList<Recipe>>{
+    return this.http.get<FilterList<Recipe>>(environment.apiUrl + '/recipe/getRecipes' + filter);
   }
 
   updateRecipe(recipe: Recipe): Observable<Recipe>{
@@ -54,13 +55,16 @@ export class RecipeService {
     return this.socket.fromEvent<Recipe>('recipeUpdated');
   }
 
-  joinDetailsRoom(ID: string): void{
-    const listenDetailsDTO: ListenDetailsDto = {ID: ID, room: 'details'}
-    this.socket.emit('joinDetailsRoom', listenDetailsDTO);
+  listenForCreate(): Observable<Recipe>{
+    return this.socket.fromEvent<Recipe>('recipeCreated');
   }
 
   emitRecipeUpdate(recipe: Recipe): void{
     this.socket.emit('updateRecipe', recipe);
+  }
+
+  emitRecipeCreate(recipe: Recipe): void{
+    this.socket.emit('createRecipe', recipe);
   }
 
 }

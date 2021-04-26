@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
-import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {RecipeService} from '../shared/recipe.service';
 import {Recipe} from '../../shared/models/recipe';
 import {ActivatedRoute} from '@angular/router';
@@ -11,7 +11,7 @@ import {Category} from '../../shared/models/category';
   templateUrl: './all-recipes.component.html',
   styleUrls: ['./all-recipes.component.scss']
 })
-export class AllRecipesComponent implements OnInit {
+export class AllRecipesComponent implements OnInit, OnDestroy {
 
   recipes: Recipe[];
   categories: Category[];
@@ -29,16 +29,26 @@ export class AllRecipesComponent implements OnInit {
   sortingType: string = 'ADDED';
   sorting: string = 'asc';
 
+  unsubscriber$ = new Subject();
+
   constructor(private recipeService: RecipeService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.searchTerms.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-    ).subscribe((search) => {this.searchTerm = search; this.getRecipes()});
+    this.searchTerms.pipe(debounceTime(300), distinctUntilChanged(),).
+    subscribe((search) => {this.searchTerm = search; this.getRecipes()});
 
     this.getCategories();
     this.getRecipes();
+
+    this.recipeService.listenForUpdateChange().pipe(takeUntil(this.unsubscriber$)).
+    subscribe((recipe) => {
+      const placement = this.recipes.findIndex((r) => r.ID === recipe.ID)
+        if(placement !== -1){this.recipes[placement] = recipe;}},
+      (error) => {});
+
+    this.recipeService.listenForCreate().pipe(takeUntil(this.unsubscriber$)).
+    subscribe(() => {this.getRecipes();}, (error) => {});
+
   }
 
   getRecipes(): void {
@@ -72,6 +82,11 @@ export class AllRecipesComponent implements OnInit {
 
   search(term: string): void {
     this.searchTerms.next(term);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscriber$.next();
+    this.unsubscriber$.complete();
   }
 
 }
