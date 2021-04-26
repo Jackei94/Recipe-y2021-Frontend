@@ -18,7 +18,7 @@ export class RecipeDetailsComponent implements OnInit {
   recipe: Recipe = null;
 
   loading: boolean = true;
-  error: string = '';
+  found: boolean = true;
 
   constructor(private recipeService: RecipeService, private location: Location,
               private router: Router, private route: ActivatedRoute) { }
@@ -32,7 +32,7 @@ export class RecipeDetailsComponent implements OnInit {
     const recipeDTO: RecipeGetDto = {recipeID: +ID};
 
     this.recipeService.getRecipeByID(recipeDTO).subscribe(
-      (recipe) => {this.recipe = recipe},
-      () => {this.loading = false});
+      (recipe) => {this.recipe = recipe; this.loading = false;},
+      () => {this.loading = false; this.found = false;});
   }
 }
