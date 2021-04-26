@@ -2,7 +2,7 @@
   <div class="container">
     <ul class= "col-sm-12">
       <li class="nav-bar-route"><a routerLink="/home"><b>Home</b></a></li>
-      <li class="nav-bar-route"><a routerLink="/shop"><b>All Recipes</b></a></li>
+      <li class="nav-bar-route"><a routerLink="/recipes/all"><b>All Recipes</b></a></li>
       <li *ngIf="loggedUser$ | async" class="nav-bar-route"><a routerLink="/profile/create"><b>My Recipes</b></a></li>
       <li *ngIf="loggedUser$ | async" class="nav-bar-route"><a routerLink="/login"><b>Logout</b></a></li>
       <li *ngIf="!(loggedUser$ | async)" class="nav-bar-route"><a routerLink="/login"><b>Login</b></a></li>

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Recipe} from "../../shared/models/recipe";
-import {IngredientEntry} from "../../shared/models/ingredient-entry";
-import {Category} from "../../shared/models/category";
-import {RecipeService} from "../shared/recipe.service";
+import {Recipe} from "../../../shared/models/recipe";
+import {IngredientEntry} from "../../../shared/models/ingredient-entry";
+import {Category} from "../../../shared/models/category";
+import {RecipeService} from "../../shared/recipe.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Select} from "@ngxs/store";
-import {LoginState} from "../../login/shared/state/login.state";
+import {LoginState} from "../../../login/shared/state/login.state";
 import {Observable} from "rxjs";
-import {User} from "../../shared/models/user";
+import {User} from "../../../shared/models/user";
 import {Location} from "@angular/common";
-import {RecipeGetDto} from "../shared/dtos/recipe.get.dto";
+import {RecipeGetDto} from "../../shared/dtos/recipe.get.dto";
 import {take} from "rxjs/operators";
 
 @Component({

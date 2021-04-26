@@ -13,12 +13,14 @@ import {SharedModule} from "./shared/shared.module";
 import {NgxsModule} from "@ngxs/store";
 import {environment} from "../environments/environment";
 import {AuthInterceptor} from "./auth-guards/auth.interceptor";
+import { AllRecipesComponent } from './recipes/all-recipes/all-recipes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FrontpageComponent,
     LoginComponent,
+    AllRecipesComponent,
   ],
   imports: [
     BrowserModule,

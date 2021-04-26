@@ -1,15 +1,15 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {RecipeService} from "../shared/recipe.service";
+import {RecipeService} from "../../shared/recipe.service";
 import {Location} from "@angular/common";
 import {Router} from "@angular/router";
-import {Recipe} from "../../shared/models/recipe";
+import {Recipe} from "../../../shared/models/recipe";
 import {Select} from "@ngxs/store";
-import {LoginState} from "../../login/shared/state/login.state";
+import {LoginState} from "../../../login/shared/state/login.state";
 import {Observable} from "rxjs";
-import {User} from "../../shared/models/user";
-import {IngredientEntry} from "../../shared/models/ingredient-entry";
-import {Category} from "../../shared/models/category";
+import {User} from "../../../shared/models/user";
+import {IngredientEntry} from "../../../shared/models/ingredient-entry";
+import {Category} from "../../../shared/models/category";
 import {take} from "rxjs/operators";
 
 @Component({
