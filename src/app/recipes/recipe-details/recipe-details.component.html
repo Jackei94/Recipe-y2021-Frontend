@@ -1,4 +1,8 @@
+<div class="jumbotron">
 <div class="container">
+<progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
+
+<div class="container" *ngIf="!loading">
 <div class="row">
 
   <div class="col-sm-6">
@@ -8,11 +12,16 @@
     <br>
     <div id="ingredients">
       <section>
-        <div class="row">
-          <div class="col-sm-6">
-            <h6>{{recipe.ingredientEntries}}: {{recipe.ingredientEntries}} {{recipe.ingredientEntries}}</h6>
+        Select serving size:
+        <select class="custom-select">
+          <option selected>Open this select menu</option>
+          <option value="1">One person</option>
+          <option value="2">Two persons</option>
+          <option value="3">Three persons</option>
+        </select>
+          <div class="col-sm-6" *ngFor="let ingredient of recipe.ingredientEntries">
+            <h6>{{ingredient.name}}: {{ingredient.amount}} {{ingredient.measurementUnit}}</h6>
           </div>
-        </div>
       </section>
     </div>
   </div>
@@ -22,5 +31,6 @@
     <textarea readonly rows="10" cols="75">{{recipe.preparations}}</textarea>
   </div>
 
+</div>
 </div>
 </div>
