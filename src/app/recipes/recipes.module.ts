@@ -7,9 +7,9 @@ import {RecipeDetailsComponent} from './recipe-details/recipe-details.component'
 import {PaginationModule} from 'ngx-bootstrap/pagination';
 
 
-
 @NgModule({
   declarations: [AllRecipesComponent, RecipeDetailsComponent],
+
   imports: [
     CommonModule,
     RecipesRoutingModule,

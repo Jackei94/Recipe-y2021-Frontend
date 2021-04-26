@@ -7,8 +7,7 @@ import {RecipeDetailsComponent} from "../recipe-details/recipe-details.component
 
 const routes: Routes = [
   { path: 'create', component: RecipeAddComponent },
-  { path: 'update/:id', component: RecipeUpdateComponent },
-  { path: 'details/:id', component: RecipeDetailsComponent }
+  { path: 'update/:id', component: RecipeUpdateComponent }
   ];
 
 @NgModule({

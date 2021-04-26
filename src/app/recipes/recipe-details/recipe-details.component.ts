@@ -15,6 +15,7 @@ import {Subject} from "rxjs";
 export class RecipeDetailsComponent implements OnInit, OnDestroy {
 
   recipe: Recipe = null;
+
   loading: boolean = true;
   error: string = '';
 
@@ -34,11 +35,11 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
     const ID = this.route.snapshot.paramMap.get('id');
     this.recipeService.joinDetailsRoom(ID);
 
-    // const recipeGetDTO: RecipeGetDto = {recipeID: id}
-    // this.recipeService.getRecipeByID(recipeGetDTO).subscribe(
-    //   (recipe) => {this.recipe = recipe; this.initializeText();},
-    // (error) => {this.loading = false; this.error = error.error.message;});
+    const recipeDTO: RecipeGetDto = {recipeID: +ID};
 
+    this.recipeService.getRecipeByID(recipeDTO).subscribe(
+      (recipe) => {this.recipe = recipe; console.log(recipe)},
+      () => {this.loading = false});
   }
 
   initializeText(){
