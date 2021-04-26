@@ -19,7 +19,7 @@ export class AllRecipesComponent implements OnInit {
 
   totalItems: number;
   currentPage: number = 1;
-  itemsPrPage: number = 12;
+  itemsPrPage: number = 20;
   smallNumPages: number = 0;
 
   searchTerms = new Subject<string>();
