@@ -55,13 +55,17 @@ export class AuthenticationService {
     return this.http.post<LoginResponseDto>(environment.apiUrl + '/user/verifyToken', loginResponseDTO);
   }
 
-  getUserFromToken(token: string): User{
+  getUserFromToken(): User{
+
+    const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+    const token = loggedUser.token;
 
     if(token !== ''){
       const userID: number = JSON.parse(atob(token.split('.')[1])).ID;
       const username: string = JSON.parse(atob(token.split('.')[1])).username;
       return {ID: userID, username: username, password: '', salt: ''}
     }
+    
     return null;
   }
 

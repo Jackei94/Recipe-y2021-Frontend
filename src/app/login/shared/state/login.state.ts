@@ -70,12 +70,8 @@ export class LoginState {
 
   @Action(LoadUserFromStorage)
   loadUserFromStorage(ctx: StateContext<LoginStateModel>) {
-
-    this.authService.verifyToken().subscribe((loginResponseDTO) => {
-      const user: User = this.authService.getUserFromToken(loginResponseDTO.token);
-      ctx.dispatch(new UpdateUser(user));
-    }, (error) => {ctx.dispatch(new UpdateUser(null));});
-
+    const user: User = this.authService.getUserFromToken();
+    ctx.dispatch(new UpdateUser(user));
   }
 
   @Action(UpdateUser)
