@@ -20,6 +20,10 @@ export class RecipeService {
     return this.http.post<Recipe>(environment.apiUrl + '/recipe/create', recipe);
   }
 
+  getRecipes(filter: string): Observable<any>{
+    return this.http.get<Observable<any>>(environment.apiUrl + '/recipe/getRecipes' + filter);
+  }
+
   updateRecipe(recipe: Recipe): Observable<Recipe>{
     return this.http.put<Recipe>(environment.apiUrl + '/recipe/update', recipe);
   }
@@ -45,8 +49,6 @@ export class RecipeService {
   deleteImage(imageToDelete: any): Observable<any>{
     return this.http.post<any>('https://us-central1-recipeapp-d80f3.cloudfunctions.net/deleteFile', imageToDelete);
   }
-
-
 
   listenForUpdateChange(): Observable<Recipe>{
     return this.socket.fromEvent<Recipe>('recipeUpdated');
