@@ -20,7 +20,6 @@ import { AllRecipesComponent } from './recipes/all-recipes/all-recipes.component
     AppComponent,
     FrontpageComponent,
     LoginComponent,
-    AllRecipesComponent,
   ],
   imports: [
     BrowserModule,

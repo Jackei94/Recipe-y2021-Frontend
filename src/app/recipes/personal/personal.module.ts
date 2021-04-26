@@ -8,7 +8,7 @@ import { RecipeUpdateComponent } from './recipe-update/recipe-update.component';
 
 
 @NgModule({
-  declarations: [RecipeAddComponent, RecipeUpdateComponent, RecipeDetailsComponent],
+  declarations: [RecipeAddComponent, RecipeUpdateComponent],
   imports: [
     CommonModule,
     PersonalRoutingModule,
