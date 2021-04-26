@@ -1,1 +1,86 @@
-<p>all-recipes works!</p>
+<div class="jumbotron">
+  <div class="container">
+
+    <input #searchBox class="col-md-4" [ngModel]="searchTerm" (input)="search(searchBox.value)"/>
+
+    <label class="col-md-2">
+      Category:
+      <select class="form-control" [(ngModel)]="recipeCategory" (ngModelChange)="getRecipes()">
+        <option value="0">Alle typer</option>
+        <option *ngFor="let category of categories" value="{{category.ID}}">{{category.title}}</option>
+      </select>
+    </label>
+
+    <label class="col-md-2">
+      Sorterings type:
+      <select class="form-control" [(ngModel)]="sortingType" (ngModelChange)="getRecipes()">
+        <option value="ADDED">Newest</option>
+        <option value="ALF">Alphabetical</option>
+      </select>
+    </label>
+
+    <label class="col-md-2">
+      Sortering:
+      <select class="form-control" [(ngModel)]="sorting" (ngModelChange)="getRecipes()">
+        <option value="asc">Stigende</option>
+        <option value="desc">Faldende</option>
+      </select>
+    </label>
+
+    <label class="col-md-2">
+      Ting pr. side:
+      <select class="form-control" [(ngModel)]="itemsPrPage" (ngModelChange)="itemsPrPageUpdate()">
+        <option value="12">12</option>
+        <option value="24">24</option>
+        <option value="48">48</option>
+      </select>
+    </label>
+
+    <h3>Øl Sortiment</h3>
+    <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
+
+    <div class="container">
+      <div class="row row-cols-3 row-cols-md-2">
+
+        <div id="cards" class="col-sm-3" *ngFor="let recipes of recipes">
+          <div class="card">
+            <a routerLink="/recipe-details/{{recipes.ID}}">
+              <img src="{{recipes.imageURL}}" class="card-img-top" alt="..." >
+            </a>
+            <div class="card-body">
+              <h5 class="card-title-top">{{recipes.title}}</h5>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <div id="pages" class="row">
+        <pagination
+          [maxSize]="5"
+          [directionLinks]="false"
+          [totalItems]="totalItems"
+          [(ngModel)]="currentPage"
+          (pageChanged)="pageChanged($event)"
+          [itemsPerPage]="itemsPrPage"
+          (numPages)="smallNumPages = $event">
+        </pagination>
+      </div>
+
+      <div id="paging" class="row">
+        <pager
+          [totalItems]="totalItems"
+          [(ngModel)]="currentPage"
+          (pageChanged)="pageChanged($event)"
+          pageBtnClass="btn"
+          previousText="« Back"
+          [itemsPerPage]="itemsPrPage"
+          class="pull-left">
+        </pager>
+      </div>
+    </div>
+
+  </div>
+</div>

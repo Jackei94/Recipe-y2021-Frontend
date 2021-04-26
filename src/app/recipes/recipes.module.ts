@@ -4,6 +4,7 @@ import {RecipesRoutingModule} from './recipes-routing.module';
 import {SharedModule} from '../shared/shared.module';
 import {AllRecipesComponent} from './all-recipes/all-recipes.component';
 import {RecipeDetailsComponent} from './recipe-details/recipe-details.component';
+import {PaginationModule} from 'ngx-bootstrap/pagination';
 
 
 
@@ -12,7 +13,8 @@ import {RecipeDetailsComponent} from './recipe-details/recipe-details.component'
   imports: [
     CommonModule,
     RecipesRoutingModule,
-    SharedModule
+    SharedModule,
+    PaginationModule
   ]
 })
 export class RecipesModule { }
