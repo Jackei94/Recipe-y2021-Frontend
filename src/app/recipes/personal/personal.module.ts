@@ -3,16 +3,18 @@ import { CommonModule } from '@angular/common';
 import { RecipeAddComponent } from './recipe-add/recipe-add.component';
 import {PersonalRoutingModule} from "./personal-routing.module";
 import {SharedModule} from "../../shared/shared.module";
-import { RecipeDetailsComponent } from '../recipe-details/recipe-details.component';
 import { RecipeUpdateComponent } from './recipe-update/recipe-update.component';
+import {ProfileComponent} from "../../profile/profile.component";
+import {AlertModule} from "ngx-bootstrap/alert";
 
 
 @NgModule({
-  declarations: [RecipeAddComponent, RecipeUpdateComponent],
+  declarations: [RecipeAddComponent, RecipeUpdateComponent, ProfileComponent],
   imports: [
     CommonModule,
     PersonalRoutingModule,
-    SharedModule
+    SharedModule,
+    AlertModule,
   ]
 })
 
