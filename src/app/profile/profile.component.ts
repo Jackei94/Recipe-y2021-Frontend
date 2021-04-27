@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
     if (c.get('password').value !== c.get('passwordConfirm').value) {
       return {invalid: true};}}
 
-  loading: boolean = false;
+  loading: boolean = true;
   formLoading: boolean = false;
   error: string = '';
 
@@ -34,10 +34,19 @@ export class ProfileComponent implements OnInit {
   passwordUpdated: boolean = false;
   dismissTimeout = 5000;
 
+  user: User = null;
+
   constructor(private userService: UserService, private authService: AuthenticationService,
               private router: Router, private location: Location) { }
 
   ngOnInit(): void {
+    this.loadUser();
+  }
+
+  loadUser(){
+    const userID = this.authService.getID();
+    this.userService.getUserById(userID).subscribe((user) => {this.user = user; this.loading = false;},
+      (error) => {this.error = error.error.message; this.loading = false;})
   }
 
   updatePassword(): void{

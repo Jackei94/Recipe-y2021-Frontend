@@ -1,7 +1,7 @@
 <div class="jumbotron">
   <div class="profile">
 
-    <h1 align="center">Information</h1>
+    <h1 align="center">Profile of {{user.username}}</h1>
     <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
 
     <div class="container" *ngIf="!loading">
@@ -15,6 +15,10 @@
 
 
       <h6 id="errorMsg" align="center">{{error}}</h6>
+
+      <h4 class="col-sm-12">Update password</h4>
+      <br>
+
 
       <form [formGroup]="updateForm" (ngSubmit)="updatePassword()">
 
