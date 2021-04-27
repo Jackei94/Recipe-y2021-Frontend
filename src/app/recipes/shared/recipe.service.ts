@@ -25,6 +25,10 @@ export class RecipeService {
     return this.http.get<FilterList<Recipe>>(environment.apiUrl + '/recipe/getRecipes' + filter);
   }
 
+  getPersonalRecipes(filter: string): Observable<FilterList<Recipe>>{
+    return this.http.get<FilterList<Recipe>>(environment.apiUrl + '/recipe/getPersonalRecipes' + filter);
+  }
+
   updateRecipe(recipe: Recipe): Observable<Recipe>{
     return this.http.put<Recipe>(environment.apiUrl + '/recipe/update', recipe);
   }

@@ -1,7 +1,23 @@
-<div class="jumbotron">
+<div class="background">
   <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
-  <div *ngIf="!loading" class="container">
+  <div *ngIf="!loading">
 
+    <div id="events" class="jumbotron">
+    <div class="container">
+      <a href="/shop">
+        <img class="col-sm-4" src="https://firebasestorage.googleapis.com/v0/b/eb-sdm3.appspot.com/o/Dog.jpg?alt=media&token=af58837c-9718-401e-8434-eef5f58965f5">
+      </a>
+      <a href="/about-eb">
+        <img class="col-sm-4" src="https://firebasestorage.googleapis.com/v0/b/eb-sdm3.appspot.com/o/Food.jpg?alt=media&token=92ee551b-acea-43f6-b821-f6b66a81e04b">
+      </a>
+      <a href="/tasting">
+        <img class="col-sm-4" src="https://firebasestorage.googleapis.com/v0/b/eb-sdm3.appspot.com/o/Cat.jpg?alt=media&token=594b0117-f814-44d6-b185-efdcbd0fa960">
+      </a>
+    </div>
+    </div>
+
+    <div class="jumbotron">
+      <div class="container">
     <h1>New Recipes</h1>
 
     <div class="row row-cols-3 row-cols-md-2">
@@ -20,4 +36,6 @@
 
 
   </div>
+</div>
+</div>
 </div>

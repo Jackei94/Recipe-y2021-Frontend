@@ -5,6 +5,7 @@ import {Subject} from 'rxjs';
 import {RecipeService} from '../shared/recipe.service';
 import {ActivatedRoute} from '@angular/router';
 import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
+import {AuthenticationService} from '../../shared/services/authentication.service';
 
 @Component({
   selector: 'app-my-recipes',
@@ -16,6 +17,7 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
   recipes: Recipe[];
   categories: Category[];
   loading: boolean = true;
+  id: number;
 
   totalItems: number;
   currentPage: number = 1;
@@ -31,12 +33,13 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
 
   unsubscriber$ = new Subject();
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute) { }
+  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.searchTerms.pipe(debounceTime(300), distinctUntilChanged(),).
     subscribe((search) => {this.searchTerm = search; this.getRecipes()});
 
+    this.id = this.authService.getID();
     this.getCategories();
     this.getRecipes();
 
@@ -53,7 +56,7 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
 
   getRecipes(): void {
     const filter = `?currentPage=${this.currentPage}&itemsPrPage=${this.itemsPrPage}&name=${this.searchTerm}`
-      + `&sortingType=${this.sortingType}&sorting=${this.sorting}&category=${this.recipeCategory}`;
+      + `&sortingType=${this.sortingType}&sorting=${this.sorting}&category=${this.recipeCategory}&userID=${this.id}`;
     this.loading = true;
 
     this.recipeService.getRecipes(filter).subscribe((FilterList) => {
