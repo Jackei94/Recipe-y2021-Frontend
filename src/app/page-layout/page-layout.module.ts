@@ -7,6 +7,8 @@ import {PageLayoutRoutingModule} from "./page-layout-routing.module";
 import {NgxsModule} from "@ngxs/store";
 import {LoginState} from "../login/shared/state/login.state";
 import {SharedModule} from "../shared/shared.module";
+import {PopoverModule} from 'ngx-bootstrap/popover';
+import {ClickOutsideModule} from 'ng-click-outside';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,12 @@ import {SharedModule} from "../shared/shared.module";
     FooterComponent
   ],
   imports: [
-    CommonModule, PageLayoutRoutingModule, NgxsModule.forFeature([LoginState]), SharedModule
+    CommonModule,
+    PageLayoutRoutingModule,
+    NgxsModule.forFeature([LoginState]),
+    SharedModule,
+    PopoverModule.forRoot(),
+    ClickOutsideModule,
   ]
 })
 export class PageLayoutModule { }

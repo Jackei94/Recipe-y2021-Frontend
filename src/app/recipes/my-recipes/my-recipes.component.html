@@ -1,0 +1,87 @@
+<div class="jumbotron">
+  <div class="container">
+
+    <input #searchBox class="col-md-4" [ngModel]="searchTerm" (input)="search(searchBox.value)" placeholder="Search ..."/>
+
+    <label class="col-md-2">
+      Category:
+      <select class="form-control" [(ngModel)]="recipeCategory" (ngModelChange)="getRecipes()">
+        <option value="0">All categories</option>
+        <option *ngFor="let category of categories" value="{{category.ID}}">{{category.title}}</option>
+      </select>
+    </label>
+
+    <label class="col-md-2">
+      Sorting type:
+      <select class="form-control" [(ngModel)]="sortingType" (ngModelChange)="getRecipes()">
+        <option value="ADDED">Newest</option>
+        <option value="ALF">Alphabetical</option>
+      </select>
+    </label>
+
+    <label class="col-md-2">
+      Sorting:
+      <select class="form-control" [(ngModel)]="sorting" (ngModelChange)="getRecipes()">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </label>
+
+    <label class="col-md-2">
+      Recipes per page:
+      <select class="form-control" [(ngModel)]="itemsPrPage" (ngModelChange)="itemsPrPageUpdate()">
+        <option value="20">20</option>
+        <option value="40">40</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <h3>Recipes</h3>
+    <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
+
+    <div class="container">
+      <div class="row row-cols-3 row-cols-md-2">
+
+        <div id="cards" class="col-sm-3" *ngFor="let recipes of recipes">
+          <a routerLink="/recipes/details/{{recipes.ID}}" style="text-decoration: none; color: #183040">
+            <div class="card">
+              <img src="{{recipes.imageURL}}" class="card-img-top" alt="..." >
+              <button type="button" class="btn btn-danger">X</button>
+              <div class="card-body">
+                <h5 class="card-title-top">{{recipes.title}}</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <div id="pages" class="row">
+        <pagination
+          [maxSize]="5"
+          [directionLinks]="false"
+          [totalItems]="totalItems"
+          [(ngModel)]="currentPage"
+          (pageChanged)="pageChanged($event)"
+          [itemsPerPage]="itemsPrPage"
+          (numPages)="smallNumPages = $event">
+        </pagination>
+      </div>
+
+      <div id="paging" class="row">
+        <pager
+          [totalItems]="totalItems"
+          [(ngModel)]="currentPage"
+          (pageChanged)="pageChanged($event)"
+          pageBtnClass="btn"
+          previousText="« Back"
+          [itemsPerPage]="itemsPrPage"
+          class="pull-left">
+        </pager>
+      </div>
+    </div>
+
+  </div>
+</div>

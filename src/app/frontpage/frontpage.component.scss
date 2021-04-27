@@ -10,16 +10,37 @@
   border-radius: 0;
 }
 
+.container {
+  position: relative;
+}
+
+.container img {
+  width: 100%;
+}
+
+#events {
+  background-image: linear-gradient(rgba(beige,0.5), rgba(beige,0.5)), url("https://firebasestorage.googleapis.com/v0/b/eb-sdm3.appspot.com/o/foodbanner.jpeg?alt=media&token=dbd0e6e2-5ced-49ab-ae33-ffddd93154be");
+}
+
 h1 {
   color: #183040;
   text-align: center;
+}
+
+h2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: beige;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #183040;
 }
 
 h5 {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  text-align: center;
 }
 
 #cards {

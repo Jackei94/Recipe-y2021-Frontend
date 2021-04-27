@@ -1,0 +1,81 @@
+.jumbotron {
+  background-color: beige;
+  margin-bottom: 0px;
+  border-radius: 0;
+}
+
+.profile, .updateView{
+  background-color: beige;
+}
+
+h1, label {
+  color: #183040;
+}
+
+input, input:focus, textarea {
+  padding: 12px 20px;
+  background: white;
+  border: none!important;
+  color: #183040;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset!important;
+  -webkit-text-fill-color: #183040!important;
+}
+
+select {
+  background-color: white!important;
+  color: #183040!important;
+  border: none!important;
+}
+
+.container {
+  position: relative;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+form button{;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+form button:disabled{
+  cursor: not-allowed;
+  border: none;
+  background-color: rgba(96,96,96,0.20)
+}
+
+h6{
+  color: red;
+}
+
+input.ng-dirty.ng-invalid {
+  border: 1px solid red;
+}
+
+progressbar{
+  width: 300px;
+  margin-left: auto;
+  margin-right:auto;
+}
+
+.modal-header {
+  border-bottom: 0 none;
+}
+
+.modal-footer {
+  border-top: 0 none;
+}
+
+progressbar{
+  width: 300px;
+  margin-left: auto;
+  margin-right:auto;
+}
+

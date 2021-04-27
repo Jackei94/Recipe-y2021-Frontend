@@ -12,6 +12,8 @@ import {LoadUserFromStorage} from "../../login/shared/state/login.actions";
 })
 export class NavBarComponent implements OnInit {
 
+  profileOpen: boolean = false;
+
   @Select(LoginState.user)
   loggedUser$: Observable<User> | undefined;
 
@@ -21,4 +23,7 @@ export class NavBarComponent implements OnInit {
     this.store.dispatch(new LoadUserFromStorage());
   }
 
+  outsideClick(): void{
+    this.profileOpen = false;
+  }
 }

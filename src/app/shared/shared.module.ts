@@ -5,6 +5,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {HttpClientModule} from "@angular/common/http";
 import {Socket} from "ngx-socket-io";
+import {ModalModule} from "ngx-bootstrap/modal";
+import {AlertModule} from "ngx-bootstrap/alert";
 
 @Injectable({providedIn: 'root'})
 export class SocketRecipeApp extends Socket {
@@ -17,9 +19,21 @@ export class SocketRecipeApp extends Socket {
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,FontAwesomeModule, ReactiveFormsModule, ProgressbarModule, FormsModule,
+    CommonModule,
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    ProgressbarModule,
+    FormsModule,
+    ModalModule.forRoot()
   ],
-  exports: [CommonModule,FontAwesomeModule, ReactiveFormsModule, ProgressbarModule, FormsModule, HttpClientModule],
+  exports: [
+    CommonModule,
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    ProgressbarModule,
+    FormsModule,
+    HttpClientModule,
+  ],
   providers: [SocketRecipeApp]
 })
 
