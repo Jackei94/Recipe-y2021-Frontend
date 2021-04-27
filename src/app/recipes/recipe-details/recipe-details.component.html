@@ -1,37 +1,60 @@
 <div class="jumbotron">
-<progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
+  <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true"
+               [animate]="true">Loading...
+  </progressbar>
 
-<div class="container" *ngIf="!loading && found">
-<div class="row">
+  <div class="container" *ngIf="!loading && found">
+    <div class="row">
 
-  <div class="col-sm-6">
-    <h1 class=""><b>{{recipe.title}}</b></h1>
-    <p class="info">{{recipe.description}}</p>
-    <p class="info">by {{recipe.user.username}}</p>
-    <br>
-    <div id="ingredients">
-      <section>
-        Select serving size:
-        <select class="custom-select">
-          <option selected>Open this select menu</option>
-          <option value="1">One person</option>
-          <option value="2">Two persons</option>
-          <option value="3">Three persons</option>
-        </select>
-          <div class="col-sm-6" *ngFor="let ingredient of recipe.ingredientEntries">
-            <h6>{{ingredient.name}}: {{ingredient.amount}} {{ingredient.measurementUnit}}</h6>
-          </div>
-      </section>
+      <div class="col-sm-6">
+        <h1 class=""><b>{{recipe.title}}</b></h1>
+        <p class="info">{{recipe.description}}</p>
+        <p class="info">by {{recipe.user.username}}</p>
+        <br>
+        <div id="ingredients">
+          <section>
+
+
+
+
+              <div>
+                <label for="amount">Portion Size</label>
+                <button type="button" (click)="unCount()" class="btn btn-primary btn-sm decreaseBtn">-</button>
+
+                <input readonly type="number" [(ngModel)]="amount" name="amount" id="amount" min="1" max="100">
+
+                <button type="button" (click)="inCount()" class="btn btn-primary btn-sm increaseBtn">+</button> people
+              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="col-sm-6" *ngFor="let ingredient of recipe.ingredientEntries">
+              <h6>{{ingredient.name}}: {{ingredient.amount * amount}} {{ingredient.measurementUnit}}</h6>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <img class="col-sm-10" src="{{recipe.imageURL}}">
+        <textarea readonly rows="10" cols="75">{{recipe.preparations}}</textarea>
+      </div>
+
     </div>
   </div>
-
-  <div class="col-sm-6">
-    <img class="col-sm-10" src="{{recipe.imageURL}}">
-    <textarea readonly rows="10" cols="75">{{recipe.preparations}}</textarea>
-  </div>
-
-</div>
-</div>
 
   <div *ngIf="!found && !loading">
     <h1 class="text-center" style="color: black">Recipe not found</h1>

@@ -6,6 +6,7 @@ import {Location} from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Recipe} from "../../shared/models/recipe";
 import {Subject} from "rxjs";
+import {FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-recipe-details',
@@ -16,6 +17,11 @@ import {Subject} from "rxjs";
 export class RecipeDetailsComponent implements OnInit {
 
   recipe: Recipe = null;
+
+  amountControl: FormControl = new FormControl(1, [Validators.min(0), Validators.max(99)])
+
+  amount: number = 1;
+
 
   loading: boolean = true;
   found: boolean = true;
@@ -34,5 +40,13 @@ export class RecipeDetailsComponent implements OnInit {
     this.recipeService.getRecipeByID(recipeDTO).subscribe(
       (recipe) => {this.recipe = recipe; this.loading = false;},
       () => {this.loading = false; this.found = false;});
+  }
+
+  inCount() {
+    if(this.amount+1 <= 99){this.amount += 1;}
+  }
+
+  unCount() {
+    if(this.amount-1 >=0){this.amount -=1;}
   }
 }

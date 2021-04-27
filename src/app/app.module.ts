@@ -13,6 +13,7 @@ import {SharedModule} from "./shared/shared.module";
 import {NgxsModule} from "@ngxs/store";
 import {environment} from "../environments/environment";
 import {AuthInterceptor} from "./auth-guards/auth.interceptor";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -28,7 +29,7 @@ import {AuthInterceptor} from "./auth-guards/auth.interceptor";
     NgxsModule.forRoot([], {developmentMode: !environment.production}),
     FontAwesomeModule,
     PageLayoutModule,
-
+    FormsModule,
     SharedModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
