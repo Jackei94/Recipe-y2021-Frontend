@@ -1,6 +1,6 @@
 import {User} from "../../../shared/models/user";
 import {Action, Selector, State, StateContext} from "@ngxs/store";
-import {Injectable} from "@angular/core";
+import {Injectable, NgZone} from "@angular/core";
 import {
   LoadUserFromStorage,
   Login,
@@ -36,7 +36,8 @@ export interface LoginStateModel{
 @Injectable()
 export class LoginState {
 
-  constructor(private authService: AuthenticationService, private router: Router) {}
+  constructor(private authService: AuthenticationService, private router: Router,
+              private ngZone: NgZone) {}
 
   @Selector()
   static user(state: LoginStateModel): User{
@@ -90,7 +91,11 @@ export class LoginState {
       ctx.dispatch(new LoadUserFromStorage());
       if(login.saveLogin){this.authService.saveLogin(login.loginDTO);}
       else{this.authService.forgetLogin();}
-      this.router.navigate(['']);
+
+
+      this.ngZone.run(() => {this.router.navigate(['/home']);});
+
+
       ctx.dispatch(new UpdateError(''));},
       (error) => {ctx.dispatch(new UpdateError(error.error.message)); ctx.dispatch(new UpdateLoginLoading(false));},
       () => {ctx.dispatch(new UpdateLoginLoading(false));});
