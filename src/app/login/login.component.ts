@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   saveLogin: boolean = false;
 
-  constructor(private router: Router, private store: Store, private location: Location, private authService: AuthenticationService) { }
+  constructor( private store: Store, private location: Location, private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.store.dispatch(new Logout());
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.store.dispatch(new UpdateLoading(false));
-    this.loading$.subscribe((loading) => {console.log("Loading is: " + loading);})
+    this.loading$.subscribe((loading) => {})
   }
 
   login(): void{

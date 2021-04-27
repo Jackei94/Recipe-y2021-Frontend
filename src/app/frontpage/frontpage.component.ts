@@ -39,6 +39,10 @@ export class FrontpageComponent implements OnInit, OnDestroy {
       this.recipes = filterList.list; this.loading = false;}, () => {this.loading = false;})
   }
 
+  ionWillEnter(){
+
+  }
+
   ngOnDestroy(): void {
     this.unsubscriber$.next();
     this.unsubscriber$.complete();
