@@ -4,15 +4,26 @@
 
     <div id="events" class="jumbotron">
     <div class="container">
-      <a href="/shop">
-        <img class="col-sm-4" src="https://firebasestorage.googleapis.com/v0/b/eb-sdm3.appspot.com/o/Dog.jpg?alt=media&token=af58837c-9718-401e-8434-eef5f58965f5">
-      </a>
-      <a href="/about-eb">
-        <img class="col-sm-4" src="https://firebasestorage.googleapis.com/v0/b/eb-sdm3.appspot.com/o/Food.jpg?alt=media&token=92ee551b-acea-43f6-b821-f6b66a81e04b">
-      </a>
-      <a href="/tasting">
-        <img class="col-sm-4" src="https://firebasestorage.googleapis.com/v0/b/eb-sdm3.appspot.com/o/Cat.jpg?alt=media&token=594b0117-f814-44d6-b185-efdcbd0fa960">
-      </a>
+      <div class="row">
+        <div class="col-sm">
+          <a href="/recipes/all">
+            <h2 align="center">Take A Look At All Recipes</h2>
+            <img src="https://firebasestorage.googleapis.com/v0/b/eb-sdm3.appspot.com/o/Dog.jpg?alt=media&token=af58837c-9718-401e-8434-eef5f58965f5">
+          </a>
+        </div>
+        <div class="col-sm">
+          <a href="/profile/create">
+            <h2 align="center">Add Your Own Recipe</h2>
+            <img src="https://firebasestorage.googleapis.com/v0/b/eb-sdm3.appspot.com/o/Food.jpg?alt=media&token=92ee551b-acea-43f6-b821-f6b66a81e04b">
+          </a>
+        </div>
+        <div class="col-sm">
+          <a href="/tasting">
+            <h2 align="center">This one doesn't do anything yet</h2>
+            <img src="https://firebasestorage.googleapis.com/v0/b/eb-sdm3.appspot.com/o/Cat.jpg?alt=media&token=594b0117-f814-44d6-b185-efdcbd0fa960">
+          </a>
+        </div>
+      </div>
     </div>
     </div>
 
@@ -21,16 +32,15 @@
     <h1>New Recipes</h1>
 
     <div class="row row-cols-3 row-cols-md-2">
-      <div id="cards" class="col-sm-3" *ngFor="let recipe of recipes">
-        <div class="card">
-          <a routerLink="/recipes/details/{{recipe.ID}}">
-            <img src="{{recipe.imageURL}}" class="card-img-top" alt="...">
-          </a>
-
-          <div class="card-body">
-            <h5 class="card-title-top">{{recipe.title}}</h5>
+      <div id="cards" class="col-sm-3" *ngFor="let recipes of recipes">
+        <a routerLink="/recipes/details/{{recipes.ID}}" style="text-decoration: none; color: #183040">
+          <div class="card">
+            <img src="{{recipes.imageURL}}" class="card-img-top" alt="..." >
+            <div class="card-body">
+              <h5 class="card-title-top">{{recipes.title}}</h5>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
     </div>
 
