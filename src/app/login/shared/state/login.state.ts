@@ -11,6 +11,7 @@ import {
 } from "./login.actions";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../shared/services/authentication.service";
+import {UserService} from "../../../shared/services/user.service";
 
 export interface LoginStateModel{
   user: User;
@@ -36,8 +37,8 @@ export interface LoginStateModel{
 @Injectable()
 export class LoginState {
 
-  constructor(private authService: AuthenticationService, private router: Router,
-              private ngZone: NgZone) {}
+  constructor(private authService: AuthenticationService, private userService: UserService,
+              private router: Router, private ngZone: NgZone) {}
 
   @Selector()
   static user(state: LoginStateModel): User{
@@ -114,7 +115,7 @@ export class LoginState {
 
     ctx.dispatch(new UpdateRegisterLoading(true));
 
-    this.authService.register(register.loginDTO).subscribe((user) => {
+    this.userService.register(register.loginDTO).subscribe((user) => {
       ctx.dispatch(new Login(register.loginDTO, register.saveLogin));
       ctx.dispatch(new UpdateRegisterError(''));},
       (error) => {ctx.dispatch(new UpdateRegisterError(error.error.message)); ctx.dispatch(new UpdateRegisterLoading(false));},

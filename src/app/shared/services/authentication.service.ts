@@ -14,10 +14,6 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 
-  register(loginDTO: LoginDto): Observable<User>{
-    return this.http.post<User>(environment.apiUrl + '/user/register', loginDTO);
-  }
-
   login(loginDTO: LoginDto): Observable<boolean> {
     return this.http.post<LoginResponseDto>(environment.apiUrl + '/user/login', loginDTO)
       .pipe(map((loginResponseDTO) => {
@@ -65,7 +61,7 @@ export class AuthenticationService {
       const username: string = JSON.parse(atob(token.split('.')[1])).username;
       return {ID: userID, username: username, password: '', salt: ''}
     }
-    
+
     return null;
   }
 
