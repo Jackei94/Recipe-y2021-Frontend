@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {Recipe} from '../../shared/models/recipe';
 import {Category} from '../../shared/models/category';
 import {Subject} from 'rxjs';
@@ -6,6 +6,8 @@ import {RecipeService} from '../shared/recipe.service';
 import {ActivatedRoute} from '@angular/router';
 import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {AuthenticationService} from '../../shared/services/authentication.service';
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {RecipeDeleteDto} from "../shared/dtos/recipe.delete.dto";
 
 @Component({
   selector: 'app-my-recipes',
@@ -31,9 +33,13 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
   sortingType: string = 'ADDED';
   sorting: string = 'asc';
 
+  modalRef: BsModalRef;
+  selectedRecipe: Recipe;
+
   unsubscriber$ = new Subject();
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private authService: AuthenticationService) { }
+  constructor(private recipeService: RecipeService, private route: ActivatedRoute,
+              private authService: AuthenticationService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.searchTerms.pipe(debounceTime(300), distinctUntilChanged(),).
@@ -85,6 +91,33 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
 
   search(term: string): void {
     this.searchTerms.next(term);
+  }
+
+  deleteRecipe(recipeID: number): void{
+
+    if(!this.selectedRecipe.imageURL.includes('NoImage.png')){
+        let imageTitle: string = this.selectedRecipe.imageURL.substring(
+        this.selectedRecipe.imageURL.lastIndexOf("/o/") + 3,
+        this.selectedRecipe.imageURL.lastIndexOf("?alt")
+      );
+
+      let imageToDelete = {image: imageTitle}
+      this.recipeService.deleteImage(imageToDelete).subscribe();
+    }
+
+    const userID = this.authService.getID();
+    const recipeDeleteDTO: RecipeDeleteDto = {recipeID: recipeID, userID: userID}
+
+    this.loading = true;
+
+    this.recipeService.deleteRecipeByID(recipeDeleteDTO).subscribe((deleted) => {
+      this.recipeService.emitRecipeDelete(this.selectedRecipe); this.getRecipes(); this.loading = false;},
+      error => {this.loading = false;});
+  }
+
+  openDeleteModal(template: TemplateRef<any>, recipeToDelete: Recipe) {
+    this.selectedRecipe = recipeToDelete;
+    this.modalRef = this.modalService.show(template);
   }
 
   ngOnDestroy(): void {

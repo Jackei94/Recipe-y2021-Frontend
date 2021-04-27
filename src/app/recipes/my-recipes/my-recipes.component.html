@@ -42,13 +42,13 @@
     <div class="container">
       <div class="row row-cols-3 row-cols-md-2">
 
-        <div id="cards" class="col-sm-3" *ngFor="let recipes of recipes">
-          <a routerLink="/recipes/details/{{recipes.ID}}" style="text-decoration: none; color: #183040">
+        <div id="cards" class="col-sm-3" *ngFor="let recipe of recipes">
+          <a routerLink="/recipes/details/{{recipe.ID}}" style="text-decoration: none; color: #183040">
             <div class="card">
-              <img src="{{recipes.imageURL}}" class="card-img-top" alt="..." >
-              <button type="button" class="btn btn-danger">X</button>
+              <img src="{{recipe.imageURL}}" class="card-img-top" alt="..." >
+              <button type="button" class="btn btn-danger" (click)="openDeleteModal(deleteTemplate, recipe)">X</button>
               <div class="card-body">
-                <h5 class="card-title-top">{{recipes.title}}</h5>
+                <h5 class="card-title-top">{{recipe.title}}</h5>
               </div>
             </div>
           </a>
@@ -85,3 +85,23 @@
 
   </div>
 </div>
+
+
+
+
+<ng-template #deleteTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title w-100 text-center">Confirm</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Do you want to delete <b>{{selectedRecipe.title}}</b>?</p>
+    <div class="float-right">
+      <button (click)="modalRef.hide()" type="button" class="btn btn-secondary" >Cancel</button>
+      <button (click)="modalRef.hide(); deleteRecipe(selectedRecipe.ID);" type="button" class="btn btn-danger">Delete</button>
+    </div>
+  </div>
+</ng-template>
+

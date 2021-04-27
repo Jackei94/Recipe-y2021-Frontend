@@ -9,6 +9,7 @@ import {ListenDetailsDto} from "./dtos/listen.details.dto";
 import {Socket} from "ngx-socket-io";
 import {SocketRecipeApp} from "../../shared/shared.module";
 import {FilterList} from "../../shared/models/filterList";
+import {RecipeDeleteDto} from "./dtos/recipe.delete.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,10 @@ export class RecipeService {
     return this.http.post<Recipe>(environment.apiUrl + '/recipe/getById', recipeGetDTO);
   }
 
+  deleteRecipeByID(recipeDeleteDTO: RecipeDeleteDto): Observable<boolean>{
+    return this.http.post<boolean>(environment.apiUrl + '/recipe/deleteRecipe', recipeDeleteDTO)
+  }
+
   uploadImage(file: File): Observable<any>{
     const fd = new FormData();
     fd.append('image', file, file.name);
@@ -69,6 +74,10 @@ export class RecipeService {
 
   emitRecipeCreate(recipe: Recipe): void{
     this.socket.emit('createRecipe', recipe);
+  }
+
+  emitRecipeDelete(recipe: Recipe): void{
+    this.socket.emit('deleteRecipe', recipe);
   }
 
 }
