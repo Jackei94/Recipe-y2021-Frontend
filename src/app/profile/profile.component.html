@@ -5,6 +5,15 @@
     <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
 
     <div class="container" *ngIf="!loading">
+
+      <alert class="col-md-12" type="success" *ngIf="passwordUpdated" [dismissOnTimeout]="dismissTimeout" (onClosed)="passwordUpdated = false">
+        <strong>Password updated!</strong>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="passwordUpdated = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </alert>
+
+
       <h6 id="errorMsg" align="center">{{error}}</h6>
 
       <form [formGroup]="updateForm" (ngSubmit)="updatePassword()">

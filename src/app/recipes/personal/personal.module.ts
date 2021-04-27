@@ -5,6 +5,7 @@ import {PersonalRoutingModule} from "./personal-routing.module";
 import {SharedModule} from "../../shared/shared.module";
 import { RecipeUpdateComponent } from './recipe-update/recipe-update.component';
 import {ProfileComponent} from "../../profile/profile.component";
+import {AlertModule} from "ngx-bootstrap/alert";
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import {ProfileComponent} from "../../profile/profile.component";
   imports: [
     CommonModule,
     PersonalRoutingModule,
-    SharedModule
+    SharedModule,
+    AlertModule,
   ]
 })
 

@@ -30,10 +30,9 @@ export class ProfileComponent implements OnInit {
   formLoading: boolean = false;
   error: string = '';
 
-  user: User = null;
-  modalRef: BsModalRef;
   passwordUpdateLoading: boolean = false;
-  passwordError: string = '';
+  passwordUpdated: boolean = false;
+  dismissTimeout = 5000;
 
   constructor(private userService: UserService, private authService: AuthenticationService,
               private router: Router, private location: Location) { }
@@ -49,7 +48,10 @@ export class ProfileComponent implements OnInit {
 
     const updateUserDTO: UserUpdateDto = {userID: userID, password: passwordData.password, oldPassword: passwordData.oldPassword}
 
-    this.userService.updateUserPassword(updateUserDTO).subscribe(() => {this.passwordUpdateLoading = false;},
+    this.userService.updateUserPassword(updateUserDTO).subscribe(() => {
+      this.passwordUpdateLoading = false;
+      this.passwordUpdated = true;
+      this.updateForm.reset();},
       (error) => {this.error = error.error.message; this.passwordUpdateLoading = false;});
   }
 
