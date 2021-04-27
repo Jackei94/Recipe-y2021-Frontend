@@ -3,9 +3,17 @@
     <ul class= "col-sm-12">
       <li class="nav-bar-route"><a routerLink="/home"><b>Home</b></a></li>
       <li class="nav-bar-route"><a routerLink="/recipes/all"><b>All Recipes</b></a></li>
-      <li *ngIf="loggedUser$ | async" class="nav-bar-route"><a routerLink="/profile/create"><b>My Recipes</b></a></li>
-      <li *ngIf="loggedUser$ | async" class="nav-bar-route"><a routerLink="/login"><b>Logout</b></a></li>
-      <li *ngIf="!(loggedUser$ | async)" class="nav-bar-route"><a routerLink="/login"><b>Login</b></a></li>
+      <li *ngIf="!(loggedUser$ | async)" class="nav-bar-route" ><a routerLink="/login"><b>Login</b></a></li>
+      <li class="nav-bar-route" *ngIf="loggedUser$ | async" type="button" placement="bottom" [popover]="popTemplate" [isOpen]="profileOpen" triggers="" (click)="profileOpen = !profileOpen;" (clickOutside)="outsideClick()">
+        <a><b>Profile</b></a>
+      </li>
     </ul>
   </div>
 </div>
+
+<ng-template class="template"  #popTemplate>
+  <li class="pageover-route"><a (click)="profileOpen = false" routerLink="/recipes/my">My recipes</a></li>
+  <li class="pageover-route"><a (click)="profileOpen = false" routerLink="/profile/create">Add recipe</a></li>
+  <li class="pageover-route"><a (click)="profileOpen = false" routerLink="/profile">My profile</a></li>
+  <li class="pageover-route"><a (click)="profileOpen = false" routerLink="/login">Logout</a></li>
+</ng-template>

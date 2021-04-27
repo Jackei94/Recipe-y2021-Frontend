@@ -5,10 +5,11 @@ import {SharedModule} from '../shared/shared.module';
 import {AllRecipesComponent} from './all-recipes/all-recipes.component';
 import {RecipeDetailsComponent} from './recipe-details/recipe-details.component';
 import {PaginationModule} from 'ngx-bootstrap/pagination';
+import { MyRecipesComponent } from './my-recipes/my-recipes.component';
 
 
 @NgModule({
-  declarations: [AllRecipesComponent, RecipeDetailsComponent],
+  declarations: [AllRecipesComponent, RecipeDetailsComponent, MyRecipesComponent],
 
   imports: [
     CommonModule,
