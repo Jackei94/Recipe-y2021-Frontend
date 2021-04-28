@@ -152,7 +152,7 @@ export class RecipeUpdateComponent implements OnInit {
   }
 
   sendUpdateRequest(){
-    this.recipeService.updateRecipe(this.recipe).subscribe((recipe) => {this.recipeService.emitRecipeUpdate(recipe)},
+    this.recipeService.updateRecipe(this.recipe).subscribe((recipe) => {},
       (error) => {this.error = error.error.message; this.updateLoad = false;},
       () => {this.router.navigate(['/home']);});
   }

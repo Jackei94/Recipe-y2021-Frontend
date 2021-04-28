@@ -77,13 +77,13 @@
           <div id="ingredients" class="row">
 
             <div class="col-sm-3">
-              <h6>{{ingredient.name}}</h6>
+              <h5>{{ingredient.name}}</h5>
             </div>
             <div class="col-sm-3">
-              <h6>{{ingredient.amount}}</h6>
+              <h5>{{ingredient.amount}}</h5>
             </div>
             <div class="col-sm-3">
-              <h6>{{ingredient.measurementUnit}}</h6>
+              <h5>{{ingredient.measurementUnit}}</h5>
             </div>
             <div align="right" class="col-sm-3">
               <button type="button" class="btn btn-danger" (click)="removeIngredient(ingredient)">Remove Ingredient</button>
@@ -98,12 +98,12 @@
 
       <div class="form-group">
         <div class="col-sm-12">
-          <label for="preparations">Recipe preparations</label>
-          <textarea type="text" class="form-control" formControlName="preparations" id="preparations" placeholder="Enter recipe preparations"></textarea>
+          <label for="preparations">Recipe directions</label>
+          <textarea type="text" class="form-control" formControlName="preparations" id="preparations" placeholder="Enter recipe directions"></textarea>
         </div>
 
         <div class="col-sm-12">
-          <h6 *ngIf="recipeForm.get('preparations').invalid && recipeForm.get('preparations').dirty">Preparations must be between 10-1000 characters</h6>
+          <h6 *ngIf="recipeForm.get('preparations').invalid && recipeForm.get('preparations').dirty">Directions must be between 10-1000 characters</h6>
         </div>
       </div>
 

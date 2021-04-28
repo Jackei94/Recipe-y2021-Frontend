@@ -43,11 +43,13 @@ export class AllRecipesComponent implements OnInit, OnDestroy {
     this.recipeService.listenForUpdateChange().pipe(takeUntil(this.unsubscriber$)).
     subscribe((recipe) => {
       const placement = this.recipes.findIndex((r) => r.ID === recipe.ID)
-        if(placement !== -1){this.recipes[placement] = recipe;}},
-      (error) => {});
+        if(placement !== -1){this.recipes[placement] = recipe;}});
 
     this.recipeService.listenForCreate().pipe(takeUntil(this.unsubscriber$)).
-    subscribe(() => {this.getRecipes();}, (error) => {});
+    subscribe(() => {this.getRecipes();});
+
+    this.recipeService.listenForDeleteChange().pipe(takeUntil(this.unsubscriber$)).subscribe((recipe) => {
+      this.getRecipes();});
 
   }
 

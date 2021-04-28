@@ -69,8 +69,14 @@ h5 {
   justify-content: center;
 }
 
-#cards .btn {
+.container #delete {
   position: absolute;
   top: 5%;
   left: 80%;
+}
+
+.container #update {
+  position: absolute;
+  top: 5%;
+  left: 5%;
 }

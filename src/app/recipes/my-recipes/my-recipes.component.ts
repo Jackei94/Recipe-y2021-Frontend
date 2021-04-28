@@ -8,6 +8,7 @@ import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {AuthenticationService} from '../../shared/services/authentication.service';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {RecipeDeleteDto} from "../shared/dtos/recipe.delete.dto";
+import {faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-my-recipes',
@@ -38,6 +39,9 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
 
   unsubscriber$ = new Subject();
 
+  editIcon = faEdit;
+  deleteIcon = faTrashAlt;
+
   constructor(private recipeService: RecipeService, private route: ActivatedRoute,
               private authService: AuthenticationService, private modalService: BsModalService) { }
 
@@ -52,12 +56,11 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
     this.recipeService.listenForUpdateChange().pipe(takeUntil(this.unsubscriber$)).
     subscribe((recipe) => {
         const placement = this.recipes.findIndex((r) => r.ID === recipe.ID)
-        if(placement !== -1){this.recipes[placement] = recipe;}},
-      (error) => {});
+        if(placement !== -1){this.recipes[placement] = recipe;}});
 
     this.recipeService.listenForCreate().pipe(takeUntil(this.unsubscriber$)).
-    subscribe(() => {this.getRecipes();}, (error) => {});
-
+    subscribe(() => {this.getRecipes();});
+    
   }
 
   getRecipes(): void {
@@ -65,7 +68,7 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
       + `&sortingType=${this.sortingType}&sorting=${this.sorting}&category=${this.recipeCategory}&userID=${this.id}`;
     this.loading = true;
 
-    this.recipeService.getRecipes(filter).subscribe((FilterList) => {
+    this.recipeService.getPersonalRecipes(filter).subscribe((FilterList) => {
       this.totalItems = FilterList.totalItems;
       this.recipes = FilterList.list;
     }, error => {this.loading = false}, () => {this.loading = false; });
@@ -93,7 +96,7 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
     this.searchTerms.next(term);
   }
 
-  deleteRecipe(recipeID: number): void{
+  deleteRecipe(recipe: Recipe): void{
 
     if(!this.selectedRecipe.imageURL.includes('NoImage.png')){
         let imageTitle: string = this.selectedRecipe.imageURL.substring(
@@ -106,12 +109,12 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
     }
 
     const userID = this.authService.getID();
-    const recipeDeleteDTO: RecipeDeleteDto = {recipeID: recipeID, userID: userID}
+    const recipeDeleteDTO: RecipeDeleteDto = {recipe: recipe, userID: userID}
 
     this.loading = true;
 
     this.recipeService.deleteRecipeByID(recipeDeleteDTO).subscribe((deleted) => {
-      this.recipeService.emitRecipeDelete(this.selectedRecipe); this.getRecipes(); this.loading = false;},
+      this.getRecipes(); this.loading = false;},
       error => {this.loading = false;});
   }
 

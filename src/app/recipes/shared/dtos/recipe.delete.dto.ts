@@ -1,4 +1,6 @@
+import {Recipe} from "../../../shared/models/recipe";
+
 export interface RecipeDeleteDto{
-  recipeID: number
+  recipe: Recipe
   userID: number
 }

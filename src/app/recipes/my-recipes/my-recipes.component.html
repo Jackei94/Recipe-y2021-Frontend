@@ -44,15 +44,17 @@
       <div class="row row-cols-3 row-cols-md-2">
 
         <div id="cards" class="col-sm-3" *ngFor="let recipe of recipes">
+          <div class="card">
+            <button type="button" id="update" class="btn btn-info"><fa-icon [icon]="editIcon"></fa-icon></button>
+          <button type="button" id="delete" class="btn btn-danger" (click)="openDeleteModal(deleteTemplate, recipe)"><fa-icon [icon]="deleteIcon"></fa-icon></button>
           <a routerLink="/recipes/details/{{recipe.ID}}" style="text-decoration: none; color: #183040">
-            <div class="card">
               <img src="{{recipe.imageURL}}" class="card-img-top" alt="..." >
-              <button type="button" class="btn btn-danger" (click)="openDeleteModal(deleteTemplate, recipe)">X</button>
               <div class="card-body">
                 <h5 class="card-title-top">{{recipe.title}}</h5>
               </div>
-            </div>
           </a>
+            </div>
+
         </div>
 
       </div>
@@ -60,7 +62,7 @@
 
     <div class="col-md-12 text-center" *ngIf="!loading && recipes.length == 0">
       <h3>No recipes found!</h3>
-      <p style="text-align: center">You can always create a new recipe</p>
+      <p style="text-align: center">You can always create your own recipe</p>
       <button type="button" class="btn btn-outline-success text-center" routerLink="/profile/create">Create Recipe</button>
       <br/>
       <br/>
@@ -109,7 +111,7 @@
     <p>Do you want to delete <b>{{selectedRecipe.title}}</b>?</p>
     <div class="float-right">
       <button (click)="modalRef.hide()" type="button" class="btn btn-secondary" >Cancel</button>
-      <button (click)="modalRef.hide(); deleteRecipe(selectedRecipe.ID);" type="button" class="btn btn-danger">Delete</button>
+      <button (click)="modalRef.hide(); deleteRecipe(selectedRecipe);" type="button" class="btn btn-danger">Delete</button>
     </div>
   </div>
 </ng-template>

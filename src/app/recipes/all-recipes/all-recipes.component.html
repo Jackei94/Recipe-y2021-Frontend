@@ -36,7 +36,7 @@
       </select>
     </label>
 
-    <h3>Recipes</h3>
+    <h3 *ngIf="!loading && recipes.length > 0">Recipes</h3>
     <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
 
     <div class="container">
@@ -54,6 +54,14 @@
         </div>
 
       </div>
+    </div>
+
+    <div class="col-md-12 text-center" *ngIf="!loading && recipes.length == 0">
+      <h3>No recipes found!</h3>
+      <p style="text-align: center">You can always create your own recipe</p>
+      <button type="button" class="btn btn-outline-success text-center" routerLink="/profile/create">Create Recipe</button>
+      <br/>
+      <br/>
     </div>
 
     <div>
