@@ -23,7 +23,10 @@ export class FrontpageComponent implements OnInit, OnDestroy {
 
     this.recipeService.listenForCreate().pipe(takeUntil(this.unsubscriber$)).subscribe((recipe) => {
       this.recipes.splice(0, 0, recipe);
-      this.recipes.pop();
+      if(this.recipes.length > 4){
+        this.recipes.pop();
+      }
+
     });
 
     this.recipeService.listenForUpdateChange().pipe(takeUntil(this.unsubscriber$)).subscribe((recipe) => {
