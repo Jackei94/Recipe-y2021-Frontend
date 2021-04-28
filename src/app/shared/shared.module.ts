@@ -6,7 +6,6 @@ import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {HttpClientModule} from "@angular/common/http";
 import {Socket} from "ngx-socket-io";
 import {ModalModule} from "ngx-bootstrap/modal";
-import {AlertModule} from "ngx-bootstrap/alert";
 
 @Injectable({providedIn: 'root'})
 export class SocketRecipeApp extends Socket {

@@ -6,6 +6,7 @@ import {AllRecipesComponent} from './all-recipes/all-recipes.component';
 import {RecipeDetailsComponent} from './recipe-details/recipe-details.component';
 import {PaginationModule} from 'ngx-bootstrap/pagination';
 import { MyRecipesComponent } from './my-recipes/my-recipes.component';
+import {RatingModule} from 'ngx-bootstrap/rating';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MyRecipesComponent } from './my-recipes/my-recipes.component';
     CommonModule,
     RecipesRoutingModule,
     SharedModule,
-    PaginationModule
+    PaginationModule,
+    RatingModule
   ]
 })
 export class RecipesModule { }
