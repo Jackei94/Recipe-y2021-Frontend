@@ -9,7 +9,9 @@
       <div class="col-sm-6">
         <h1 class=""><b>{{recipe.title}}</b></h1>
         <p class="info">{{recipe.description}}</p>
-        <p class="info">by {{recipe.user.username}}</p>
+        <p class="info">By: {{recipe.user.username}}</p>
+        <p class="rating"><rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
+                   (onHover)="hoveringOver($event)" (onLeave)="resetStar()"></rating></p>
         <br>
         <div id="ingredients">
           <section>

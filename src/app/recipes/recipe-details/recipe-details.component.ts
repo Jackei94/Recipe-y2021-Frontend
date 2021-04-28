@@ -22,9 +22,13 @@ export class RecipeDetailsComponent implements OnInit {
 
   amount: number = 1;
 
-
   loading: boolean = true;
   found: boolean = true;
+
+  max = 5;
+  rate = 0;
+  isReadonly = false;
+  overStar: number | undefined;
 
   constructor(private recipeService: RecipeService, private location: Location,
               private router: Router, private route: ActivatedRoute) { }
@@ -48,5 +52,13 @@ export class RecipeDetailsComponent implements OnInit {
 
   unCount() {
     if(this.amount-1 >=0){this.amount -=1;}
+  }
+
+  hoveringOver(value: number): void {
+    this.overStar = value;
+  }
+
+  resetStar(): void {
+    this.overStar = void 0;
   }
 }

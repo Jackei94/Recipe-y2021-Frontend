@@ -43,14 +43,17 @@
       <div class="row row-cols-3 row-cols-md-2">
 
         <div id="cards" class="col-sm-3" *ngFor="let recipes of recipes">
+          <div class="card">
           <a routerLink="/recipes/details/{{recipes.ID}}" style="text-decoration: none; color: #183040">
-            <div class="card">
+
               <img src="{{recipes.imageURL}}" class="card-img-top" alt="..." >
               <div class="card-body">
                 <h5 class="card-title-top">{{recipes.title}}</h5>
               </div>
-            </div>
+
           </a>
+            <p class="card-text" align="center"></p>
+          </div>
         </div>
 
       </div>
