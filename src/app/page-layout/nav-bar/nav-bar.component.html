@@ -5,7 +5,7 @@
       <li class="nav-bar-route"><a routerLink="/recipes/all"><b>All Recipes</b></a></li>
       <li *ngIf="!(loggedUser$ | async)" class="nav-bar-route" ><a routerLink="/login"><b>Login</b></a></li>
       <li class="nav-bar-route" *ngIf="loggedUser$ | async" type="button" placement="bottom" [popover]="popTemplate" [isOpen]="profileOpen" triggers="" (click)="profileOpen = !profileOpen;" (clickOutside)="outsideClick()">
-        <a><b>Profile</b></a>
+        <a><b>Profile <fa-icon [icon]="menuIcon"></fa-icon></b></a>
       </li>
     </ul>
   </div>

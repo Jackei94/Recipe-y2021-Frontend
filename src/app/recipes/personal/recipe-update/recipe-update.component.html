@@ -1,7 +1,7 @@
 <div class="jumbotron">
   <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
   <div class="container" *ngIf="!loading && found">
-    <h1 class="col-sm-12">Create Recipe</h1>
+    <h1 class="col-sm-12">Update Recipe</h1>
 
     <h6 id="errorMsg" align="center">{{error}}</h6>
 
@@ -135,7 +135,7 @@
         <progressbar class="progress" *ngIf="updateLoad" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
 
         <div class="col-sm-12">
-          <a href="{{imageURL}}" *ngIf="!updateLoad && imageURL !== ''">Uploaded image</a>
+          <a href="{{imageURL}}" *ngIf="!updateLoad && imageURL !== ''">Uploaded image </a>
           <button type="button" class="btn btn-outline-danger" *ngIf="!updateLoad && imageURL !== ''" (click)="clearPreviousImage()">X</button>
         </div>
       </div>

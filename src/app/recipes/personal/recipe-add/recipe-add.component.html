@@ -135,7 +135,7 @@
         <progressbar class="progress" *ngIf="imageLoad" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
 
         <div class="col-sm-12">
-          <a href="{{imageURL}}" *ngIf="!imageLoad && imageURL !== ''">Uploaded image</a>
+          <a href="{{imageURL}}" *ngIf="!imageLoad && imageURL !== ''">Uploaded image </a>
           <button type="button" class="btn btn-outline-danger" *ngIf="!imageLoad && imageURL !== ''" (click)="deleteImage()">X</button>
         </div>
       </div>
