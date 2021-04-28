@@ -8,6 +8,7 @@ import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {AuthenticationService} from '../../shared/services/authentication.service';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {RecipeDeleteDto} from "../shared/dtos/recipe.delete.dto";
+import {faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-my-recipes',
@@ -37,6 +38,9 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
   selectedRecipe: Recipe;
 
   unsubscriber$ = new Subject();
+
+  editIcon = faEdit;
+  deleteIcon = faTrashAlt;
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute,
               private authService: AuthenticationService, private modalService: BsModalService) { }

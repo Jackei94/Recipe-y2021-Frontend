@@ -43,15 +43,17 @@
       <div class="row row-cols-3 row-cols-md-2">
 
         <div id="cards" class="col-sm-3" *ngFor="let recipe of recipes">
+          <div class="card">
+            <button type="button" id="update" class="btn btn-info"><fa-icon [icon]="editIcon"></fa-icon></button>
+          <button type="button" id="delete" class="btn btn-danger" (click)="openDeleteModal(deleteTemplate, recipe)"><fa-icon [icon]="deleteIcon"></fa-icon></button>
           <a routerLink="/recipes/details/{{recipe.ID}}" style="text-decoration: none; color: #183040">
-            <div class="card">
               <img src="{{recipe.imageURL}}" class="card-img-top" alt="..." >
-              <button type="button" class="btn btn-danger" (click)="openDeleteModal(deleteTemplate, recipe)">X</button>
               <div class="card-body">
                 <h5 class="card-title-top">{{recipe.title}}</h5>
               </div>
-            </div>
           </a>
+            </div>
+
         </div>
 
       </div>

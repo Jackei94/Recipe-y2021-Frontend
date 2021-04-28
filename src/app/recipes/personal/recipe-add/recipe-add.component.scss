@@ -41,22 +41,27 @@ option {
   padding: 20px;
 }
 
-.create, .add{;
+.create, .add {;
   padding: 12px 20px;
   text-decoration: none;
   font-size: 16px;
   margin: 4px 2px;
 }
 
-form button:disabled{
+form button:disabled {
   cursor: not-allowed;
   border: none;
   background-color: rgba(20,20,20,0.20)
 }
 
-h6{
+h5 {
   padding: 12px 20px;
   color: #183040;
+}
+
+h6 {
+  padding: 12px 20px;
+  color: red;
 }
 
 #ingredients {
@@ -68,7 +73,7 @@ input.ng-dirty.ng-invalid {
   border: 1px solid red;
 }
 
-progressbar{
+progressbar {
   width: 300px;
   margin-left: auto;
   margin-right:auto;
