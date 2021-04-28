@@ -61,12 +61,16 @@ export class RecipeService {
     return this.http.post<any>('https://us-central1-recipeapp-d80f3.cloudfunctions.net/deleteFile', imageToDelete);
   }
 
+  listenForCreate(): Observable<Recipe>{
+    return this.socket.fromEvent<Recipe>('recipeCreated');
+  }
+
   listenForUpdateChange(): Observable<Recipe>{
     return this.socket.fromEvent<Recipe>('recipeUpdated');
   }
 
-  listenForCreate(): Observable<Recipe>{
-    return this.socket.fromEvent<Recipe>('recipeCreated');
+  listenForDeleteChange(): Observable<Recipe>{
+    return this.socket.fromEvent<Recipe>('recipeDeleted');
   }
 
 }
