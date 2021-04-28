@@ -30,10 +30,15 @@ export class FrontpageComponent implements OnInit, OnDestroy {
       const placement = this.recipes.findIndex((r) => r.ID === recipe.ID)
       if(placement !== -1){this.recipes[placement] = recipe;}
     });
+
+    this.recipeService.listenForDeleteChange().pipe(takeUntil(this.unsubscriber$)).subscribe((recipe) => {
+      const placement = this.recipes.findIndex((r) => r.ID === recipe.ID)
+      if(placement !== -1){this.getRecipes();}
+    })
   }
 
   getRecipes(){
-    const filter = `?currentPage=1&itemsPrPage=4&sortingType=ADDED&sorting=desc`;
+    const filter = `?currentPage=1&itemsPrPage=4&sortingType=ADDED&sorting=DESC`;
 
     this.recipeService.getRecipes(filter).subscribe((filterList) => {
       this.recipes = filterList.list; this.loading = false;}, () => {this.loading = false;})

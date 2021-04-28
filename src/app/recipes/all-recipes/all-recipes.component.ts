@@ -27,7 +27,7 @@ export class AllRecipesComponent implements OnInit, OnDestroy {
 
   recipeCategory: number = 0;
   sortingType: string = 'ADDED';
-  sorting: string = 'asc';
+  sorting: string = 'ASC';
 
   unsubscriber$ = new Subject();
 
