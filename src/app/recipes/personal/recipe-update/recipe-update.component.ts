@@ -68,7 +68,7 @@ export class RecipeUpdateComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
 
     this.loggedUser$.pipe(take(1)).subscribe((user) => {
-      const recipeGetDTO: RecipeGetDto = {recipeID: id, userID: user.ID}
+      const recipeGetDTO: RecipeGetDto = {recipeID: id, userIDOwner: user.ID}
       this.recipeService.getPersonalRecipeByID(recipeGetDTO).subscribe(
         (recipe) => {this.recipe = recipe; this.initializeText();},
         (error) => {this.found = false; this.loading = false; this.error = error.error.message;})

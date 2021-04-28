@@ -10,8 +10,7 @@
         <h1 class=""><b>{{recipe.title}}</b></h1>
         <p class="info">{{recipe.description}}</p>
         <p class="info">By: <a style="color: black" routerLink="/recipes/my/{{recipe.user.ID}}"><b>{{recipe.user.username}}</b></a></p>
-        <p class="rating"><rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
-                   (onHover)="hoveringOver($event)" (onLeave)="resetStar()"></rating></p>
+        <p *ngIf="userID" class="rating"><rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()" (click)="giveRating(rate)"></rating></p>
         <br>
         <div id="ingredients">
           <section>

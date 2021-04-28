@@ -54,14 +54,15 @@ export class AuthenticationService {
   getUserFromToken(): User{
 
     const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-    const token = loggedUser.token;
-
-    if(token !== ''){
-      const userID: number = JSON.parse(atob(token.split('.')[1])).ID;
-      const username: string = JSON.parse(atob(token.split('.')[1])).username;
-      return {ID: userID, username: username, password: '', salt: ''}
+    if(loggedUser !== null)
+    {
+      const token = loggedUser.token;
+      if(token !== '' || token !== null){
+        const userID: number = JSON.parse(atob(token.split('.')[1])).ID;
+        const username: string = JSON.parse(atob(token.split('.')[1])).username;
+        return {ID: userID, username: username, password: '', salt: ''}
+      }
     }
-
     return null;
   }
 

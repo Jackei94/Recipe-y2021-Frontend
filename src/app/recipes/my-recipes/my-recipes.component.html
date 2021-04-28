@@ -16,6 +16,7 @@
       <select class="form-control" [(ngModel)]="sortingType" (ngModelChange)="getRecipes()">
         <option value="ADDED">Newest</option>
         <option value="ALF">Alphabetical</option>
+        <option value="RATING">Rating</option>
       </select>
     </label>
 
@@ -52,6 +53,7 @@
               <img src="{{recipe.imageURL}}" class="card-img-top" alt="..." >
               <div class="card-body">
                 <h5 class="card-title-top">{{recipe.title}}</h5>
+                <h5 class="card-text">{{recipe.averageRating}}/5</h5>
               </div>
           </a>
             </div>

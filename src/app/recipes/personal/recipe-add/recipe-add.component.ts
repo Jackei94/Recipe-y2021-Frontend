@@ -127,7 +127,9 @@ export class RecipeAddComponent implements OnInit {
         imageURL: this.imageURL,
         user: user,
         ingredientEntries: recipeData.ingredients,
-        category: {ID: recipeData.category, title: ''}
+        category: {ID: recipeData.category, title: ''},
+        personalRating: 0,
+        averageRating: 0
       }
 
       this.recipeService.addRecipe(recipe).subscribe((createdRecipe) => {},

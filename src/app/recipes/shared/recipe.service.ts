@@ -10,6 +10,7 @@ import {Socket} from "ngx-socket-io";
 import {SocketRecipeApp} from "../../shared/shared.module";
 import {FilterList} from "../../shared/models/filterList";
 import {RecipeDeleteDto} from "./dtos/recipe.delete.dto";
+import {Rating} from "../../shared/models/rating";
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,11 @@ export class RecipeService {
     return this.http.post<boolean>(environment.apiUrl + '/recipe/deleteRecipe', recipeDeleteDTO)
   }
 
+  giveRating(rating: Rating): Observable<Recipe>{
+    return this.http.post<Recipe>(environment.apiUrl + '/recipe/giveRating', rating);
+  }
+
+
   uploadImage(file: File): Observable<any>{
     const fd = new FormData();
     fd.append('image', file, file.name);
@@ -60,6 +66,8 @@ export class RecipeService {
   deleteImage(imageToDelete: any): Observable<any>{
     return this.http.post<any>('https://us-central1-recipeapp-d80f3.cloudfunctions.net/deleteFile', imageToDelete);
   }
+
+
 
   listenForCreate(): Observable<Recipe>{
     return this.socket.fromEvent<Recipe>('recipeCreated');
@@ -71,6 +79,10 @@ export class RecipeService {
 
   listenForDeleteChange(): Observable<Recipe>{
     return this.socket.fromEvent<Recipe>('recipeDeleted');
+  }
+
+  listenForRateChange(): Observable<Rating>{
+    return this.socket.fromEvent<Rating>('recipeRatingUpdated');
   }
 
 }

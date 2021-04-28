@@ -7,6 +7,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Recipe} from "../../shared/models/recipe";
 import {Subject} from "rxjs";
 import {FormControl, Validators} from "@angular/forms";
+import {AuthenticationService} from "../../shared/services/authentication.service";
+import {Rating} from "../../shared/models/rating";
 
 @Component({
   selector: 'app-recipe-details',
@@ -14,7 +16,7 @@ import {FormControl, Validators} from "@angular/forms";
   styleUrls: ['./recipe-details.component.scss']
 })
 
-export class RecipeDetailsComponent implements OnInit {
+export class RecipeDetailsComponent implements OnInit, OnDestroy {
 
   recipe: Recipe = null;
 
@@ -30,19 +32,36 @@ export class RecipeDetailsComponent implements OnInit {
   isReadonly = false;
   overStar: number | undefined;
 
-  constructor(private recipeService: RecipeService, private location: Location,
-              private router: Router, private route: ActivatedRoute) { }
+  userID: number | undefined;
+
+  unsubscriber$ = new Subject();
+
+  constructor(private recipeService: RecipeService, private authService: AuthenticationService,
+              private location: Location, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.userID = this.authService.getID();
     this.getRecipe();
+
+    this.recipeService.listenForUpdateChange().pipe(takeUntil(this.unsubscriber$))
+      .subscribe((recipe) => {
+      if (this.found && this.recipe.ID == recipe.ID) {
+        this.recipe.averageRating = recipe.averageRating;
+      }});
+
+    this.recipeService.listenForRateChange().pipe(takeUntil(this.unsubscriber$))
+      .subscribe((rating) => {
+        if(this.userID != null && this.userID == rating.userID){
+          this.rate = rating.rating; this.recipe.personalRating = rating.rating;
+        }});
   }
 
   getRecipe(): void{
     const ID = this.route.snapshot.paramMap.get('id');
-    const recipeDTO: RecipeGetDto = {recipeID: +ID};
+    const recipeDTO: RecipeGetDto = {recipeID: +ID, userIDRating: this.userID};
 
     this.recipeService.getRecipeByID(recipeDTO).subscribe(
-      (recipe) => {this.recipe = recipe; this.loading = false;},
+      (recipe) => {this.recipe = recipe; this.loading = false; this.rate = recipe.personalRating; console.log(recipe.personalRating);},
       () => {this.loading = false; this.found = false;});
   }
 
@@ -59,6 +78,16 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   resetStar(): void {
-    this.overStar = void 0;
+    this.overStar = 0;
+  }
+
+  giveRating(ratingValue: number): void {
+    const rating: Rating = {rating: ratingValue, recipeID: this.recipe.ID, userID: this.userID}
+    this.recipeService.giveRating(rating).subscribe(() => {});
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscriber$.next();
+    this.unsubscriber$.complete();
   }
 }
