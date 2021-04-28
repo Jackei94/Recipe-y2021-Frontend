@@ -14,24 +14,46 @@
         <div id="ingredients">
           <section>
 
-              <div>
-                <label for="amount">Portion Size</label>
+
+
+            <h3>Ingredients</h3>
+            <label for="amount">Portion Size</label>
+              <div class="container row">
                 <button type="button" (click)="unCount()" class="btn btn-primary btn-sm decreaseBtn">-</button>
 
+                <div id="add">
                 <input readonly type="number" [(ngModel)]="amount" name="amount" id="amount" min="1" max="100">
+                </div>
 
-                <button type="button" (click)="inCount()" class="btn btn-primary btn-sm increaseBtn">+</button> people
+                <button type="button" (click)="inCount()" class="btn btn-primary btn-sm increaseBtn">+</button>
+                <div>
+                  <label id="servings">servings</label>
+                </div>
               </div>
 
-            <div class="col-sm-6" *ngFor="let ingredient of recipe.ingredientEntries">
-              <h6>{{ingredient.name}}: {{ingredient.amount * amount}} {{ingredient.measurementUnit}}</h6>
+
+
+            <div *ngFor="let ingredient of recipe.ingredientEntries">
+              <div class="row">
+
+                <div class="col-sm-4">
+                  <h6>{{ingredient.name}}</h6>
+                </div>
+                <div class="col-sm-2" align="right">
+                  <h6>{{ingredient.amount * amount}}</h6>
+                </div>
+                <div class="col-sm-3">
+                  <h6>{{ingredient.measurementUnit}}</h6>
+                </div>
+                </div>
             </div>
           </section>
         </div>
       </div>
 
       <div class="col-sm-6">
-        <img class="col-sm-10" src="{{recipe.imageURL}}">
+        <img src="{{recipe.imageURL}}">
+        <h3 id="dTitle">Directions</h3>
         <textarea readonly rows="10" cols="75">{{recipe.preparations}}</textarea>
       </div>
 
