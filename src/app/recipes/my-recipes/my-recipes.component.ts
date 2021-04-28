@@ -65,7 +65,7 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
       + `&sortingType=${this.sortingType}&sorting=${this.sorting}&category=${this.recipeCategory}&userID=${this.id}`;
     this.loading = true;
 
-    this.recipeService.getRecipes(filter).subscribe((FilterList) => {
+    this.recipeService.getPersonalRecipes(filter).subscribe((FilterList) => {
       this.totalItems = FilterList.totalItems;
       this.recipes = FilterList.list;
     }, error => {this.loading = false}, () => {this.loading = false; });
@@ -93,7 +93,7 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
     this.searchTerms.next(term);
   }
 
-  deleteRecipe(recipeID: number): void{
+  deleteRecipe(recipe: Recipe): void{
 
     if(!this.selectedRecipe.imageURL.includes('NoImage.png')){
         let imageTitle: string = this.selectedRecipe.imageURL.substring(
@@ -106,12 +106,12 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
     }
 
     const userID = this.authService.getID();
-    const recipeDeleteDTO: RecipeDeleteDto = {recipeID: recipeID, userID: userID}
+    const recipeDeleteDTO: RecipeDeleteDto = {recipe: recipe, userID: userID}
 
     this.loading = true;
 
     this.recipeService.deleteRecipeByID(recipeDeleteDTO).subscribe((deleted) => {
-      this.recipeService.emitRecipeDelete(this.selectedRecipe); this.getRecipes(); this.loading = false;},
+      this.getRecipes(); this.loading = false;},
       error => {this.loading = false;});
   }
 

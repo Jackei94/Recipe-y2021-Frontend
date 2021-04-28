@@ -109,7 +109,7 @@
     <p>Do you want to delete <b>{{selectedRecipe.title}}</b>?</p>
     <div class="float-right">
       <button (click)="modalRef.hide()" type="button" class="btn btn-secondary" >Cancel</button>
-      <button (click)="modalRef.hide(); deleteRecipe(selectedRecipe.ID);" type="button" class="btn btn-danger">Delete</button>
+      <button (click)="modalRef.hide(); deleteRecipe(selectedRecipe);" type="button" class="btn btn-danger">Delete</button>
     </div>
   </div>
 </ng-template>

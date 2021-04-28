@@ -69,16 +69,4 @@ export class RecipeService {
     return this.socket.fromEvent<Recipe>('recipeCreated');
   }
 
-  emitRecipeUpdate(recipe: Recipe): void{
-    this.socket.emit('updateRecipe', recipe);
-  }
-
-  emitRecipeCreate(recipe: Recipe): void{
-    this.socket.emit('createRecipe', recipe);
-  }
-
-  emitRecipeDelete(recipe: Recipe): void{
-    this.socket.emit('deleteRecipe', recipe);
-  }
-
 }
