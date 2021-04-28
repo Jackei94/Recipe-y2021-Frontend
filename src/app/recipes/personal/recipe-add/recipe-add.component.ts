@@ -130,8 +130,7 @@ export class RecipeAddComponent implements OnInit {
         category: {ID: recipeData.category, title: ''}
       }
 
-      this.recipeService.addRecipe(recipe).subscribe((createdRecipe) => {
-        this.recipeService.emitRecipeCreate(createdRecipe);},
+      this.recipeService.addRecipe(recipe).subscribe((createdRecipe) => {},
         (error) => {this.error = error.error.message; this.loading = false;},
         () => {this.created = true; this.router.navigate(['home']);});
     });
