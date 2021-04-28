@@ -2,3 +2,38 @@
   background-color: beige;
 }
 
+input, input:focus {
+  padding: 6px 10px;
+  background: white;
+  border: none!important;
+  color: #183040;
+}
+
+button{;
+  padding: 6px 10px;
+  text-decoration: none;
+  font-size: 12px;
+  margin: 4px 2px;
+}
+
+#add {
+  padding-top: 2px;
+}
+
+img, textarea  {
+  padding: 12px;
+  width: 100%;
+  height: auto;
+}
+
+#dTitle {
+  padding-left: 12px;
+}
+textarea {
+  border-style: none;
+  background-color: beige;
+}
+
+#servings {
+  padding: 6px 0 0 2px;
+}
