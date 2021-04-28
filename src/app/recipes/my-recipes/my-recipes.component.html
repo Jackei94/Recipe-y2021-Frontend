@@ -22,8 +22,8 @@
     <label class="col-md-2">
       Sorting:
       <select class="form-control" [(ngModel)]="sorting" (ngModelChange)="getRecipes()">
-        <option value="asc">Ascending</option>
-        <option value="desc">Descending</option>
+        <option value="ASC">Ascending</option>
+        <option value="DESC">Descending</option>
       </select>
     </label>
 
@@ -36,10 +36,11 @@
       </select>
     </label>
 
-    <h3>Recipes</h3>
+    <h3 *ngIf="!loading && recipes.length > 0">Recipes</h3>
+
     <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
 
-    <div class="container">
+    <div class="container" *ngIf="!loading">
       <div class="row row-cols-3 row-cols-md-2">
 
         <div id="cards" class="col-sm-3" *ngFor="let recipe of recipes">
@@ -55,6 +56,14 @@
         </div>
 
       </div>
+    </div>
+
+    <div class="col-md-12 text-center" *ngIf="!loading && recipes.length == 0">
+      <h3>No recipes found!</h3>
+      <p style="text-align: center">You can always create a new recipe</p>
+      <button type="button" class="btn btn-outline-success text-center" routerLink="/profile/create">Create Recipe</button>
+      <br/>
+      <br/>
     </div>
 
     <div>

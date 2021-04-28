@@ -31,7 +31,7 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
 
   recipeCategory: number = 0;
   sortingType: string = 'ADDED';
-  sorting: string = 'asc';
+  sorting: string = 'ASC';
 
   modalRef: BsModalRef;
   selectedRecipe: Recipe;

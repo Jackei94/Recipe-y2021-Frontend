@@ -33,7 +33,7 @@ export class FrontpageComponent implements OnInit, OnDestroy {
   }
 
   getRecipes(){
-    const filter = `?currentPage=1&itemsPrPage=4&sortingType=ADDED&sorting=desc`;
+    const filter = `?currentPage=1&itemsPrPage=4&sortingType=ADDED&sorting=DESC`;
 
     this.recipeService.getRecipes(filter).subscribe((filterList) => {
       this.recipes = filterList.list; this.loading = false;}, () => {this.loading = false;})
