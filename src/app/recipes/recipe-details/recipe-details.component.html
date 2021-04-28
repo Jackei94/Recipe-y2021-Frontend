@@ -9,13 +9,10 @@
       <div class="col-sm-6">
         <h1 class=""><b>{{recipe.title}}</b></h1>
         <p class="info">{{recipe.description}}</p>
-        <p class="info">by {{recipe.user.username}}</p>
+        <p class="info">by <a style="color: black" routerLink="/recipes/my/{{recipe.user.ID}}"><b>{{recipe.user.username}}</b></a></p>
         <br>
         <div id="ingredients">
           <section>
-
-
-
 
               <div>
                 <label for="amount">Portion Size</label>
@@ -25,21 +22,6 @@
 
                 <button type="button" (click)="inCount()" class="btn btn-primary btn-sm increaseBtn">+</button> people
               </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             <div class="col-sm-6" *ngFor="let ingredient of recipe.ingredientEntries">
               <h6>{{ingredient.name}}: {{ingredient.amount * amount}} {{ingredient.measurementUnit}}</h6>

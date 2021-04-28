@@ -6,6 +6,8 @@ import {User} from "../models/user";
 import {environment} from "../../../environments/environment";
 import {UserUpdateDto} from "../../profile/shared/dtos/user.update.dto";
 import {UserGetDto} from "../../profile/shared/dtos/user.get.dto";
+import {map} from "rxjs/operators";
+import {UserInfoDto} from "../../profile/shared/dtos/user.info.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,10 @@ export class UserService {
 
   getUserById(ID: number): Observable<User>{
     return this.http.get<User>(environment.apiUrl + `/user/getByID?userID=${ID}`);
+  }
+
+  getUsername(ID: number): Observable<UserInfoDto>{
+    return this.http.get<UserInfoDto>(environment.apiUrl + `/user/getInfoByID?userID=${ID}`);
   }
 
   updateUserPassword(userUpdateDTO: UserUpdateDto): Observable<boolean>{

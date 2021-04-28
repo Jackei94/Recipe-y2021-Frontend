@@ -1,5 +1,5 @@
 <div class="jumbotron">
-  <div class="container">
+  <div *ngIf="found" class="container">
 
     <input #searchBox class="col-md-4" [ngModel]="searchTerm" (input)="search(searchBox.value)" placeholder="Search ..."/>
 
@@ -36,7 +36,8 @@
       </select>
     </label>
 
-    <h3 *ngIf="!loading && recipes.length > 0">Recipes</h3>
+    <h3 *ngIf="!loading && recipes.length > 0 && !profileView">Recipes</h3>
+    <h3 *ngIf="!loading && recipes.length > 0 && profileView">Recipes for <b>{{username}}</b></h3>
 
     <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
 
@@ -45,8 +46,8 @@
 
         <div id="cards" class="col-sm-3" *ngFor="let recipe of recipes">
           <div class="card">
-            <button type="button" id="update" class="btn btn-info"><fa-icon [icon]="editIcon"></fa-icon></button>
-          <button type="button" id="delete" class="btn btn-danger" (click)="openDeleteModal(deleteTemplate, recipe)"><fa-icon [icon]="deleteIcon"></fa-icon></button>
+            <button *ngIf="!profileView" type="button" id="update" class="btn btn-info" routerLink="/profile/update/{{recipe.ID}}"><fa-icon [icon]="editIcon"></fa-icon></button>
+            <button *ngIf="!profileView" type="button" id="delete" class="btn btn-danger" (click)="openDeleteModal(deleteTemplate, recipe)"><fa-icon [icon]="deleteIcon"></fa-icon></button>
           <a routerLink="/recipes/details/{{recipe.ID}}" style="text-decoration: none; color: #183040">
               <img src="{{recipe.imageURL}}" class="card-img-top" alt="..." >
               <div class="card-body">
@@ -60,8 +61,16 @@
       </div>
     </div>
 
-    <div class="col-md-12 text-center" *ngIf="!loading && recipes.length == 0">
+    <div class="col-md-12 text-center" *ngIf="!loading && recipes.length == 0 && !profileView">
       <h3>No recipes found!</h3>
+      <p style="text-align: center">You can always create your own recipe</p>
+      <button type="button" class="btn btn-outline-success text-center" routerLink="/profile/create">Create Recipe</button>
+      <br/>
+      <br/>
+    </div>
+
+    <div class="col-md-12 text-center" *ngIf="!loading && recipes.length == 0 && profileView">
+      <h3>No such recipes found for user <b>{{username}}</b></h3>
       <p style="text-align: center">You can always create your own recipe</p>
       <button type="button" class="btn btn-outline-success text-center" routerLink="/profile/create">Create Recipe</button>
       <br/>
@@ -95,6 +104,11 @@
     </div>
 
   </div>
+
+  <div *ngIf="!found">
+    <h1 class="text-center" style="color: black">User not found</h1>
+  </div>
+
 </div>
 
 

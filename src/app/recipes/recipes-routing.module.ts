@@ -7,6 +7,7 @@ import {MyRecipesComponent} from './my-recipes/my-recipes.component';
 const routes: Routes = [
   {path: 'all', component: AllRecipesComponent},
   {path: 'my', component: MyRecipesComponent},
+  {path: 'my/:id', component: MyRecipesComponent},
   {path: 'details/:id', component: RecipeDetailsComponent},
 
 ];
