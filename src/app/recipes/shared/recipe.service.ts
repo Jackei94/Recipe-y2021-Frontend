@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Recipe} from "../../shared/models/recipe";
 import {environment} from "../../../environments/environment";
 import {Category} from "../../shared/models/category";
@@ -16,7 +16,6 @@ import {Rating} from "../../shared/models/rating";
   providedIn: 'root'
 })
 export class RecipeService {
-
 
   constructor(private http: HttpClient, private socket: SocketRecipeApp) { }
 
@@ -49,7 +48,13 @@ export class RecipeService {
   }
 
   deleteRecipeByID(recipeDeleteDTO: RecipeDeleteDto): Observable<boolean>{
-    return this.http.post<boolean>(environment.apiUrl + '/recipe/deleteRecipe', recipeDeleteDTO)
+
+    const options = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'}),
+      body: recipeDeleteDTO
+    }
+
+    return this.http.delete<boolean>(environment.apiUrl + '/recipe/deleteRecipe', options)
   }
 
   giveRating(rating: Rating): Observable<Recipe>{

@@ -26,8 +26,8 @@ export class AuthenticationService {
       }));
   }
 
-  logout(): void {
-    localStorage.removeItem('loggedUser');
+  getLoginInformation(): LoginDto{
+    return JSON.parse(localStorage.getItem('loginForm'));
   }
 
   getToken(): string {
@@ -66,7 +66,6 @@ export class AuthenticationService {
     return null;
   }
 
-
   getID(): number{
     const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     if (loggedUser !== null){
@@ -85,8 +84,8 @@ export class AuthenticationService {
     localStorage.removeItem('loginForm');
   }
 
-  getLoginInformation(): LoginDto{
-    return JSON.parse(localStorage.getItem('loginForm'));
+  logout(): void {
+    localStorage.removeItem('loggedUser');
   }
 
 }

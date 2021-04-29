@@ -1,8 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
 import {Select, Store} from "@ngxs/store";
-import {UserService} from "../shared/services/user.service";
 import {LoginState} from "./shared/state/login.state";
 import {Observable} from "rxjs";
 import {Location} from '@angular/common';
@@ -12,7 +10,6 @@ import {
   Register,
   UpdateError,
   UpdateLoading,
-  UpdateLoginLoading,
   UpdateRegisterError
 } from "./shared/state/login.actions";
 import {LoginDto} from "./shared/dtos/login.dto";
@@ -25,23 +22,6 @@ import {AuthenticationService} from "../shared/services/authentication.service";
 })
 
 export class LoginComponent implements OnInit, OnDestroy {
-
-  loginForm = new FormGroup({
-    username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
-  });
-
-  registerForm = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(24)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(8)])
-  }, {validators: [this.passwordConfirming]});
-
-  passwordConfirming(c: AbstractControl): { invalid: boolean } {
-    if (c.get('password').value !== c.get('passwordConfirm').value) {
-      return {invalid: true};
-    }
-  }
 
   @Select(LoginState.loading)
   loading$: Observable<boolean> | undefined;
@@ -59,6 +39,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   registerError$: Observable<string> |undefined
 
   saveLogin: boolean = false;
+
+  loginForm = new FormGroup({
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
+  });
+
+  registerForm = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(24)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(8)])
+  }, {validators: [this.passwordConfirming]});
 
   constructor( private store: Store, private location: Location, private authService: AuthenticationService) { }
 
@@ -79,6 +70,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     const loginData = this.loginForm.value;
     const loginDTO: LoginDto = {username: loginData.username, password: loginData.password}
     this.store.dispatch(new Login(loginDTO, this.saveLogin));
+  }
+
+  passwordConfirming(c: AbstractControl): { invalid: boolean } {
+    if (c.get('password').value !== c.get('passwordConfirm').value) {
+      return {invalid: true};
+    }
   }
 
   register(): void{

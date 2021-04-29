@@ -5,8 +5,6 @@ import {Observable} from "rxjs";
 import {User} from "../models/user";
 import {environment} from "../../../environments/environment";
 import {UserUpdateDto} from "../../profile/shared/dtos/user.update.dto";
-import {UserGetDto} from "../../profile/shared/dtos/user.get.dto";
-import {map} from "rxjs/operators";
 import {UserInfoDto} from "../../profile/shared/dtos/user.info.dto";
 
 @Injectable({
@@ -31,7 +29,5 @@ export class UserService {
   updateUserPassword(userUpdateDTO: UserUpdateDto): Observable<boolean>{
     return this.http.put<boolean>(environment.apiUrl + '/user/updatePassword', userUpdateDTO);
   }
-
-
 
 }

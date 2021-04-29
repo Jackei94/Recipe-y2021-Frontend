@@ -23,6 +23,19 @@ export class RecipeAddComponent implements OnInit {
     this.ngOnDestroy();
   }
 
+  imageURL: string = '';
+  invalidImageURL: string = 'https://firebasestorage.googleapis.com/v0/b/eb-sdm3.appspot.com/o/NoImage.png?alt=media&token=9f213b80-6356-4f8e-83b6-301936912a6e';
+  loading: boolean = true;
+  imageLoad: boolean = false;
+  error: string = '';
+
+  ingredients: IngredientEntry[] = [];
+  categories: Category[] = [];
+
+  @Select(LoginState.user)
+  loggedUser$: Observable<User> | undefined;
+  created: boolean = false;
+
   recipeForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(32)]),
     description: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]),
@@ -38,19 +51,6 @@ export class RecipeAddComponent implements OnInit {
     measurementUnit: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]),
   });
 
-  imageURL: string = '';
-  invalidImageURL: string = 'https://firebasestorage.googleapis.com/v0/b/eb-sdm3.appspot.com/o/NoImage.png?alt=media&token=9f213b80-6356-4f8e-83b6-301936912a6e';
-  loading: boolean = true;
-  imageLoad: boolean = false;
-  error: string = '';
-
-  ingredients: IngredientEntry[] = [];
-  categories: Category[] = [];
-
-  @Select(LoginState.user)
-  loggedUser$: Observable<User> | undefined;
-  created: boolean = false;
-
   constructor(private recipeService: RecipeService, private location: Location, private router: Router) { }
 
   ngOnInit(): void {
@@ -58,56 +58,9 @@ export class RecipeAddComponent implements OnInit {
     this.getCategories();
   }
 
-  ngOnDestroy(): void{
-    if(!this.created && this.imageURL !== ''){localStorage.setItem('loadedImage', JSON.stringify({image: this.imageURL}))}
-    else{localStorage.removeItem('loadedImage')}
-  }
-
   getCategories(): void{
     this.recipeService.getRecipeCategories().subscribe((categories) => {
       this.categories = categories;}, (error) => {this.error = error.error.message; this.loading = false;}, () => {this.loading = false;})
-  }
-
-  onFileChange(event){
-
-    if(event.target.files.length === 0){
-      if(this.imageURL !== ''){
-        this.deleteImage();}}
-
-    else{
-
-      this.imageLoad = true;
-
-      if(this.imageURL !== ''){
-        this.deleteImage();
-      }
-
-      let selectedFile: File = <File>event.target.files[0];
-
-      this.recipeService.uploadImage(selectedFile).subscribe((response) => {
-          let urls: string[] = response.message;
-          this.imageURL = urls[0];},
-        (error) => {this.error = error.error;}, () => {this.imageLoad = false;});
-    }
-  }
-
-  deleteImage(){
-    this.imageLoad = true;
-
-    let imageTitle: string = this.imageURL.substring(
-      this.imageURL.lastIndexOf("/o/") + 3,
-      this.imageURL.lastIndexOf("?alt")
-    );
-
-    let imageToDelete = {image: imageTitle}
-
-    this.recipeService.deleteImage(imageToDelete).subscribe((response) => {},
-      (error) => {this.imageLoad = false; this.error = error.error.messages;},
-      () => {
-        this.recipeForm.patchValue({imageURL: ''});
-        this.imageURL = '';
-        this.imageLoad = false;
-      });
   }
 
   createRecipe(): void{
@@ -158,8 +111,55 @@ export class RecipeAddComponent implements OnInit {
     this.recipeForm.patchValue({ingredients: this.ingredients});
   }
 
+  deleteImage(){
+    this.imageLoad = true;
+
+    let imageTitle: string = this.imageURL.substring(
+      this.imageURL.lastIndexOf("/o/") + 3,
+      this.imageURL.lastIndexOf("?alt")
+    );
+
+    let imageToDelete = {image: imageTitle}
+
+    this.recipeService.deleteImage(imageToDelete).subscribe((response) => {},
+      (error) => {this.imageLoad = false; this.error = error.error.messages;},
+      () => {
+        this.recipeForm.patchValue({imageURL: ''});
+        this.imageURL = '';
+        this.imageLoad = false;
+      });
+  }
+
+  onFileChange(event){
+
+    if(event.target.files.length === 0){
+      if(this.imageURL !== ''){
+        this.deleteImage();}
+
+    }else{
+
+      this.imageLoad = true;
+
+      if(this.imageURL !== ''){
+        this.deleteImage();
+      }
+
+      let selectedFile: File = <File>event.target.files[0];
+
+      this.recipeService.uploadImage(selectedFile).subscribe((response) => {
+          let urls: string[] = response.message;
+          this.imageURL = urls[0];},
+        (error) => {this.error = error.error;}, () => {this.imageLoad = false;});
+    }
+  }
+
   goBack(): void{
     this.location.back();
+  }
+
+  ngOnDestroy(): void{
+    if(!this.created && this.imageURL !== ''){localStorage.setItem('loadedImage', JSON.stringify({image: this.imageURL}))}
+    else{localStorage.removeItem('loadedImage')}
   }
 
 }
