@@ -82,7 +82,8 @@ export class RecipeAddComponent implements OnInit {
         ingredientEntries: recipeData.ingredients,
         category: {ID: recipeData.category, title: ''},
         personalRating: 0,
-        averageRating: 0
+        averageRating: 0,
+        isFavorite: false
       }
 
       this.recipeService.addRecipe(recipe).subscribe((createdRecipe) => {},
