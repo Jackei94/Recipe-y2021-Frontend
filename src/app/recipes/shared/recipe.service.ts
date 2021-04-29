@@ -5,8 +5,6 @@ import {Recipe} from "../../shared/models/recipe";
 import {environment} from "../../../environments/environment";
 import {Category} from "../../shared/models/category";
 import {RecipeGetDto} from "./dtos/recipe.get.dto";
-import {ListenDetailsDto} from "./dtos/listen.details.dto";
-import {Socket} from "ngx-socket-io";
 import {SocketRecipeApp} from "../../shared/shared.module";
 import {FilterList} from "../../shared/models/filterList";
 import {RecipeDeleteDto} from "./dtos/recipe.delete.dto";
