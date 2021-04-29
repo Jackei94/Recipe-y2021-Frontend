@@ -15,6 +15,7 @@
           <div class="rating row">
             <p *ngIf="userID"><rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()" (click)="giveRating(rate)"></rating></p>
             <button type="button" class="btn btn-success like"><fa-icon [icon]="likeIcon"></fa-icon></button>
+            <button type="button" class="btn btn-danger like"><fa-icon [icon]="dislikeIcon"></fa-icon></button>
           </div>
         </div>
 
