@@ -61,7 +61,7 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
     const recipeDTO: RecipeGetDto = {recipeID: +ID, userIDRating: this.userID};
 
     this.recipeService.getRecipeByID(recipeDTO).subscribe(
-      (recipe) => {this.recipe = recipe; this.loading = false; this.rate = recipe.personalRating; console.log(recipe.personalRating);},
+      (recipe) => {this.recipe = recipe; this.loading = false; this.rate = recipe.personalRating;},
       () => {this.loading = false; this.found = false;});
   }
 
