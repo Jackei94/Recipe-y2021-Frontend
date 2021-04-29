@@ -121,23 +121,6 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
       (error) => {this.error = error.error.message; this.loading = false; this.found = false;});
   }
 
-  pageChanged($event: any): void {
-    if ($event.page !== this.currentPage){
-      this.currentPage = $event.page;
-      this.getRecipes();
-    }
-  }
-
-  itemsPrPageUpdate(): void{
-    this.smallNumPages = Math.ceil(this.totalItems / this.itemsPrPage);
-    this.currentPage = 1;
-    this.getRecipes();
-  }
-
-  search(term: string): void {
-    this.searchTerms.next(term);
-  }
-
   deleteRecipe(recipe: Recipe): void{
 
     if(!this.selectedRecipe.imageURL.includes('NoImage.png')){
@@ -163,6 +146,23 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
   openDeleteModal(template: TemplateRef<any>, recipeToDelete: Recipe) {
     this.selectedRecipe = recipeToDelete;
     this.modalRef = this.modalService.show(template);
+  }
+
+  pageChanged($event: any): void {
+    if ($event.page !== this.currentPage){
+      this.currentPage = $event.page;
+      this.getRecipes();
+    }
+  }
+
+  itemsPrPageUpdate(): void{
+    this.smallNumPages = Math.ceil(this.totalItems / this.itemsPrPage);
+    this.currentPage = 1;
+    this.getRecipes();
+  }
+
+  search(term: string): void {
+    this.searchTerms.next(term);
   }
 
   ngOnDestroy(): void {

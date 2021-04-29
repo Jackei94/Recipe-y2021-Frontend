@@ -20,21 +20,6 @@ import {take} from "rxjs/operators";
 })
 export class RecipeUpdateComponent implements OnInit {
 
-  recipeForm = new FormGroup({
-    title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(32)]),
-    description: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]),
-    preparations: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]),
-    imageURL: new FormControl(''),
-    category: new FormControl('', [Validators.required]),
-    ingredients: new FormControl([], [Validators.required, Validators.minLength(1)])
-  });
-
-  ingredientForm = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(32)]),
-    amount: new FormControl('', [Validators.required, Validators.min(0), Validators.max(10000)]),
-    measurementUnit: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]),
-  });
-
   recipe: Recipe = null;
   ingredients: IngredientEntry[] = [];
   categories: Category[] = [];
@@ -51,6 +36,21 @@ export class RecipeUpdateComponent implements OnInit {
 
   @Select(LoginState.user)
   loggedUser$: Observable<User>;
+
+  recipeForm = new FormGroup({
+    title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(32)]),
+    description: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]),
+    preparations: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]),
+    imageURL: new FormControl(''),
+    category: new FormControl('', [Validators.required]),
+    ingredients: new FormControl([], [Validators.required, Validators.minLength(1)])
+  });
+
+  ingredientForm = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(32)]),
+    amount: new FormControl('', [Validators.required, Validators.min(0), Validators.max(10000)]),
+    measurementUnit: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]),
+  });
 
   constructor(private recipeService: RecipeService, private location: Location,
               private router: Router, private route: ActivatedRoute) { }
@@ -92,26 +92,11 @@ export class RecipeUpdateComponent implements OnInit {
     }
   }
 
-  onFileChange(event){
-    if(event.target.files.length === 0) {this.selectedImage = null;}
-    else{this.selectedImage = <File>event.target.files[0];}
-    this.changed = true;
+  sendUpdateRequest(){
+    this.recipeService.updateRecipe(this.recipe).subscribe((recipe) => {},
+      (error) => {this.error = error.error.message; this.updateLoad = false;},
+      () => {this.router.navigate(['/home']);});
   }
-
-  deleteImage(){
-
-    if(!this.recipe.imageURL.includes('NoImage.png')){
-      let imageTitle: string = this.recipe.imageURL.substring(
-        this.recipe.imageURL.lastIndexOf("/o/") + 3,
-        this.recipe.imageURL.lastIndexOf("?alt"));
-
-      let imageToDelete = {image: imageTitle}
-
-      this.recipeService.deleteImage(imageToDelete).subscribe((response) => {},
-        (error) => {this.error = error.error.message;});
-    }
-  }
-
 
   updateRecipe(): void{
 
@@ -130,12 +115,12 @@ export class RecipeUpdateComponent implements OnInit {
 
         if(this.selectedImage){
           this.recipeService.uploadImage(this.selectedImage).subscribe((response) => {
-            let urls: string[] = response.message;
-            this.imageURL = urls[0];},
+              let urls: string[] = response.message;
+              this.imageURL = urls[0];},
             (error) => {this.error = error.error.message},
             () => {
-            this.recipe.imageURL = this.imageURL;
-            this.sendUpdateRequest();
+              this.recipe.imageURL = this.imageURL;
+              this.sendUpdateRequest();
             });
         }
 
@@ -151,10 +136,18 @@ export class RecipeUpdateComponent implements OnInit {
       }});
   }
 
-  sendUpdateRequest(){
-    this.recipeService.updateRecipe(this.recipe).subscribe((recipe) => {},
-      (error) => {this.error = error.error.message; this.updateLoad = false;},
-      () => {this.router.navigate(['/home']);});
+  deleteImage(){
+
+    if(!this.recipe.imageURL.includes('NoImage.png')){
+      let imageTitle: string = this.recipe.imageURL.substring(
+        this.recipe.imageURL.lastIndexOf("/o/") + 3,
+        this.recipe.imageURL.lastIndexOf("?alt"));
+
+      let imageToDelete = {image: imageTitle}
+
+      this.recipeService.deleteImage(imageToDelete).subscribe((response) => {},
+        (error) => {this.error = error.error.message;});
+    }
   }
 
   createIngredient(): void{
@@ -179,6 +172,12 @@ export class RecipeUpdateComponent implements OnInit {
 
   clearPreviousImage(){
     this.imageURL = this.invalidImageURL;
+    this.changed = true;
+  }
+
+  onFileChange(event){
+    if(event.target.files.length === 0) {this.selectedImage = null;}
+    else{this.selectedImage = <File>event.target.files[0];}
     this.changed = true;
   }
 
