@@ -9,27 +9,40 @@ input, input:focus {
   color: #183040;
 }
 
-button{;
+h3 {
+  color: #183040;
+}
+
+.title {
+  padding-top: 16px;
+}
+
+.counting {
   padding: 6px 10px;
   text-decoration: none;
   font-size: 12px;
   margin: 4px 2px;
 }
 
+.like {
+  margin: 10px 30px 20px;
+}
+
 #add {
   padding-top: 2px;
 }
 
-img, textarea  {
-  padding: 12px;
+img, p.info  {
   width: 100%;
   height: auto;
+  max-height: 500px;
+  padding-top: 12px;
 }
 
-#dTitle {
-  padding-left: 12px;
-}
 textarea {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
   border-style: none;
   background-color: beige;
 }
@@ -38,6 +51,16 @@ textarea {
   padding: 6px 0 0 2px;
 }
 
+.rating {
+  position: absolute;
+  margin-top: -20px;
+  right: 0;
+}
+
 rating {
-  font-size: 50px;
+  font-size: 40px;
+}
+
+.col-sm-6 {
+  padding: 0 15px;
 }

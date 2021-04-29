@@ -56,7 +56,6 @@ export class RecipeService {
     return this.http.post<Recipe>(environment.apiUrl + '/recipe/giveRating', rating);
   }
 
-
   uploadImage(file: File): Observable<any>{
     const fd = new FormData();
     fd.append('image', file, file.name);

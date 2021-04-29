@@ -9,6 +9,7 @@ import {Subject} from "rxjs";
 import {FormControl, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {Rating} from "../../shared/models/rating";
+import {faHeart} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-recipe-details',
@@ -35,6 +36,8 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
   userID: number | undefined;
 
   unsubscriber$ = new Subject();
+
+  likeIcon = faHeart;
 
   constructor(private recipeService: RecipeService, private authService: AuthenticationService,
               private location: Location, private router: Router, private route: ActivatedRoute) { }

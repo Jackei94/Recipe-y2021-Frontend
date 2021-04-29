@@ -8,11 +8,11 @@
     <form [formGroup]="recipeForm" (ngSubmit)="updateRecipe()">
       <div class="form-group">
         <div class="col-sm-12">
-          <label for="title">Recipe Title</label>
+          <label for="title">Recipe title</label>
           <input type="text" class="form-control" formControlName="title" id="title" placeholder="Enter recipe title" maxlength="32" pattern="^(?!.* {2})(?=\S)(?=.*\S$)[a-zA-Z æøåÆØÅ0-9 &]+$">
         </div>
 
-        <div class="col-sm-12">
+        <div class="col-sm-12 validate">
           <h6 *ngIf="recipeForm.get('title').invalid && recipeForm.get('title').dirty">Recipe title must be between 5-32 characters</h6>
         </div>
       </div>
@@ -24,7 +24,7 @@
           <input type="text" class="form-control" formControlName="description" id="description" placeholder="Enter recipe description">
         </div>
 
-        <div class="col-sm-12">
+        <div class="col-sm-12 validate">
           <h6 *ngIf="recipeForm.get('description').invalid && recipeForm.get('description').dirty">Recipe description must be between 10-1000 characters</h6>
         </div>
       </div>
@@ -50,7 +50,9 @@
               <input type="number" class="form-control" formControlName="amount" id="amount" placeholder="Enter ingredient amount" min="1" max="10000">
             </div>
 
-            <h6 *ngIf="ingredientForm.get('amount').invalid && ingredientForm.get('amount').dirty">Ingredient amount must be between 1-10000</h6>
+            <div class="validate">
+              <h6 *ngIf="ingredientForm.get('amount').invalid && ingredientForm.get('amount').dirty">Ingredient amount must be between 1-10000</h6>
+            </div>
           </div>
 
           <div class="form-group col-sm-3">
@@ -59,7 +61,9 @@
               <input type="text" class="form-control" formControlName="measurementUnit" id="measureunit" placeholder="Enter measure unit">
             </div>
 
-            <h6 *ngIf="ingredientForm.get('measurementUnit').invalid && ingredientForm.get('measurementUnit').dirty">Ingredient measure required</h6>
+            <div class="validate">
+              <h6 *ngIf="ingredientForm.get('measurementUnit').invalid && ingredientForm.get('measurementUnit').dirty">Ingredient measure required</h6>
+            </div>
           </div>
 
           <div align="right" id="add" class="form-group col-sm-3">
@@ -77,13 +81,13 @@
           <div id="ingredients" class="row">
 
             <div class="col-sm-3">
-              <h6>{{ingredient.name}}</h6>
+              <h6 class="ingredient">{{ingredient.name}}</h6>
             </div>
             <div class="col-sm-3">
-              <h6>{{ingredient.amount}}</h6>
+              <h6 class="ingredient">{{ingredient.amount}}</h6>
             </div>
             <div class="col-sm-3">
-              <h6>{{ingredient.measurementUnit}}</h6>
+              <h6 class="ingredient">{{ingredient.measurementUnit}}</h6>
             </div>
             <div align="right" class="col-sm-3">
               <button type="button" class="btn btn-danger" (click)="removeIngredient(ingredient)">Remove Ingredient</button>
@@ -102,7 +106,7 @@
           <textarea type="text" class="form-control" formControlName="preparations" id="preparations" placeholder="Enter recipe preparations"></textarea>
         </div>
 
-        <div class="col-sm-12">
+        <div class="col-sm-12 validate">
           <h6 *ngIf="recipeForm.get('preparations').invalid && recipeForm.get('preparations').dirty">Preparations must be between 10-1000 characters</h6>
         </div>
       </div>
@@ -119,7 +123,7 @@
           </select>
         </div>
 
-        <div class="col-sm-12">
+        <div class="col-sm-12 validate">
           <h6 *ngIf="recipeForm.get('category').invalid && recipeForm.get('category').dirty">Select category</h6>
         </div>
       </div>

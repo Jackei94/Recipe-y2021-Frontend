@@ -54,19 +54,18 @@ form button:disabled {
   background-color: rgba(20,20,20,0.20)
 }
 
-h5 {
-  padding: 12px 20px;
-  color: #183040;
-}
-
 h6 {
-  padding: 12px 20px;
   color: red;
 }
 
 #ingredients {
   border-left-style: dotted;
   border-width: 2px;
+}
+
+.ingredient {
+  padding: 12px 20px;
+  color: #183040;
 }
 
 input.ng-dirty.ng-invalid {
@@ -85,4 +84,10 @@ progressbar {
 
 #add {
   padding-top: 30px;
+}
+
+.validate {
+  padding-top: 4px;
+  min-height: 13px;
+  max-height: 13px;
 }
