@@ -9,6 +9,7 @@ import {SocketRecipeApp} from "../../shared/shared.module";
 import {FilterList} from "../../shared/models/filterList";
 import {RecipeDeleteDto} from "./dtos/recipe.delete.dto";
 import {Rating} from "../../shared/models/rating";
+import {FavoriteDto} from './dtos/favorite.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,20 @@ export class RecipeService {
     return this.http.post<Recipe>(environment.apiUrl + '/recipe/giveRating', rating);
   }
 
+  favoriteRecipe(favoriteDTO: FavoriteDto): Observable<boolean>{
+    return this.http.post<boolean>(environment.apiUrl + '/recipe/favorite', favoriteDTO);
+  }
+
+  unfavoriteRecipe(favoriteDTO: FavoriteDto): Observable<boolean>{
+
+    const options = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'}),
+      body: favoriteDTO
+    }
+
+    return this.http.delete<boolean>(environment.apiUrl + '/recipe/unfavorite', options);
+  }
+
   uploadImage(file: File): Observable<any>{
     const fd = new FormData();
     fd.append('image', file, file.name);
@@ -85,6 +100,10 @@ export class RecipeService {
 
   listenForRateChange(): Observable<Rating>{
     return this.socket.fromEvent<Rating>('recipeRatingUpdated');
+  }
+
+  listenForFavoriteUpdate(): Observable<FavoriteDto>{
+    return this.socket.fromEvent<FavoriteDto>('recipeFavoriteUpdate');
   }
 
 }

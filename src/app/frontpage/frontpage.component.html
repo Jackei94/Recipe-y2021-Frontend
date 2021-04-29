@@ -19,7 +19,7 @@
         </div>
         <div class="col-sm">
           <a href="/recipes/my">
-            <h2 align="center">Your Recipes</h2>
+            <h2 align="center">Your<br>Recipes</h2>
             <img src="https://firebasestorage.googleapis.com/v0/b/recipeapp-d80f3.appspot.com/o/foodSimpleLogin.jpg?alt=media&token=5866b121-09a0-4ceb-90a6-ef6f69b6a79c">
           </a>
         </div>
@@ -38,7 +38,7 @@
             <img src="{{recipes.imageURL}}" class="card-img-top" alt="..." >
             <div class="card-body">
               <h5 class="card-title-top">{{recipes.title}}</h5>
-              <h5 class="card-text">{{recipes.averageRating}}/5</h5>
+              <h5 class="card-text"><fa-icon [icon]="starIcon"></fa-icon> Rated - {{recipes.averageRating}} / 5 </h5>
             </div>
           </div>
         </a>

@@ -9,7 +9,8 @@ import {Subject} from "rxjs";
 import {FormControl, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {Rating} from "../../shared/models/rating";
-import {faHeart, faHeartBroken} from "@fortawesome/free-solid-svg-icons";
+import {faHeart, faHeartBroken, faStar} from "@fortawesome/free-solid-svg-icons";
+import {FavoriteDto} from '../shared/dtos/favorite.dto';
 
 @Component({
   selector: 'app-recipe-details',
@@ -39,6 +40,7 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
 
   likeIcon = faHeart;
   dislikeIcon = faHeartBroken;
+  starIcon = faStar;
 
   constructor(private recipeService: RecipeService, private authService: AuthenticationService,
               private location: Location, private router: Router, private route: ActivatedRoute) { }
@@ -58,6 +60,12 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
         if(this.userID != null && this.userID == rating.userID){
           this.rate = rating.rating; this.recipe.personalRating = rating.rating;
         }});
+
+    this.recipeService.listenForFavoriteUpdate().pipe(takeUntil(this.unsubscriber$))
+      .subscribe((favoriteDTO) => {
+        if(this.userID != null && this.userID == favoriteDTO.userID){
+          this.recipe.isFavorite = favoriteDTO.favorite;
+        }});
   }
 
   getRecipe(): void{
@@ -65,7 +73,8 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
     const recipeDTO: RecipeGetDto = {recipeID: +ID, userIDRating: this.userID};
 
     this.recipeService.getRecipeByID(recipeDTO).subscribe(
-      (recipe) => {this.recipe = recipe; this.loading = false; this.rate = recipe.personalRating;},
+      (recipe) => {
+        this.recipe = recipe; this.loading = false; this.rate = recipe.personalRating;},
       () => {this.loading = false; this.found = false;});
   }
 
@@ -88,6 +97,16 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
   giveRating(ratingValue: number): void {
     const rating: Rating = {rating: ratingValue, recipeID: this.recipe.ID, userID: this.userID}
     this.recipeService.giveRating(rating).subscribe(() => {});
+  }
+
+  favoriteRecipe(): void{
+    const favoriteDTO: FavoriteDto = {favorite: true, recipeID: this.recipe.ID, userID: this.userID}
+    this.recipeService.favoriteRecipe(favoriteDTO).subscribe(() => {});
+  }
+
+  unfavoriteRecipe(): void{
+    const favoriteDTO: FavoriteDto = {favorite: false, recipeID: this.recipe.ID, userID: this.userID}
+    this.recipeService.unfavoriteRecipe(favoriteDTO).subscribe(() => {});
   }
 
   ngOnDestroy(): void {

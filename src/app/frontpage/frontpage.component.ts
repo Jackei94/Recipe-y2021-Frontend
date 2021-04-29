@@ -3,6 +3,7 @@ import {Recipe} from "../shared/models/recipe";
 import {RecipeService} from "../recipes/shared/recipe.service";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
+import {faStar} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-frontpage',
@@ -15,6 +16,8 @@ export class FrontpageComponent implements OnInit, OnDestroy {
   loading: boolean = true;
 
   unsubscriber$ = new Subject();
+
+  starIcon = faStar;
 
   constructor(private recipeService: RecipeService) { }
 
