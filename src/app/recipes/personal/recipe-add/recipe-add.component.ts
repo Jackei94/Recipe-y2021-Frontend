@@ -11,6 +11,7 @@ import {User} from "../../../shared/models/user";
 import {IngredientEntry} from "../../../shared/models/ingredient-entry";
 import {Category} from "../../../shared/models/category";
 import {take} from "rxjs/operators";
+import {faChevronCircleLeft} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-recipe-add',
@@ -35,6 +36,8 @@ export class RecipeAddComponent implements OnInit {
   @Select(LoginState.user)
   loggedUser$: Observable<User> | undefined;
   created: boolean = false;
+
+  circleLeft = faChevronCircleLeft;
 
   recipeForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(32)]),

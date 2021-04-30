@@ -14,6 +14,7 @@ import {
 } from "./shared/state/login.actions";
 import {LoginDto} from "./shared/dtos/login.dto";
 import {AuthenticationService} from "../shared/services/authentication.service";
+import {faChevronCircleLeft} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-login',
@@ -39,6 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   registerError$: Observable<string> |undefined
 
   saveLogin: boolean = false;
+  circleLeft = faChevronCircleLeft;
 
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),

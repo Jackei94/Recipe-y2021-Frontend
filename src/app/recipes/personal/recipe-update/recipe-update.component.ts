@@ -12,6 +12,7 @@ import {User} from "../../../shared/models/user";
 import {Location} from "@angular/common";
 import {RecipeGetDto} from "../../shared/dtos/recipe.get.dto";
 import {take} from "rxjs/operators";
+import {faChevronCircleLeft} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-recipe-update',
@@ -26,6 +27,7 @@ export class RecipeUpdateComponent implements OnInit {
 
   selectedImage: File = null;
 
+
   imageURL: string = '';
   invalidImageURL: string = 'https://firebasestorage.googleapis.com/v0/b/eb-sdm3.appspot.com/o/NoImage.png?alt=media&token=9f213b80-6356-4f8e-83b6-301936912a6e';
   loading: boolean = true;
@@ -33,6 +35,8 @@ export class RecipeUpdateComponent implements OnInit {
   error: string = '';
   changed: boolean = false;
   found: boolean = true;
+
+  circleLeft = faChevronCircleLeft;
 
   @Select(LoginState.user)
   loggedUser$: Observable<User>;
