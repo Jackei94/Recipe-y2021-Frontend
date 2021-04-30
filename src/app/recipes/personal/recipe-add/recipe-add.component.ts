@@ -175,7 +175,13 @@ export class RecipeAddComponent implements OnInit {
   }
 
   selectRandomIcon(){
-    const randomPosition = Math.floor(Math.random() * (this.randomIcons.length - 1));
+    let randomPosition = Math.floor(Math.random() * (this.randomIcons.length - 1));
+
+    while(this.selectedIcon == this.randomIcons[randomPosition]){
+      randomPosition = Math.floor(Math.random() * (this.randomIcons.length - 1));
+    }
+
+
     this.selectedIcon = this.randomIcons[randomPosition];
   }
 
