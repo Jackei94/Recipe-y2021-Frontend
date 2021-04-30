@@ -118,23 +118,6 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   getCategories(): void{
     this.recipeService.getRecipeCategories().subscribe((categories) => {
       this.categories = categories;}, (error) => {}, () => {})

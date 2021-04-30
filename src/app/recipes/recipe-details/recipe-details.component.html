@@ -22,9 +22,11 @@
 
       <div class="col-sm-6">
         <div class="container row">
-        <button *ngIf="!recipe.isFavorite" (click)="favoriteRecipe()" type="button" class="btn btn-success like"><fa-icon [icon]="likeIcon"></fa-icon> Favorite</button>
-        <button *ngIf="recipe.isFavorite" (click)="unfavoriteRecipe()" type="button" class="btn btn-danger like"><fa-icon [icon]="dislikeIcon"></fa-icon> Unfavorite</button>
-        <p class="rating" *ngIf="userID && userID !== recipe.user.ID"><rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()" (click)="giveRating(rate)"></rating></p>
+          <button *ngIf="!recipe.isFavorite" (click)="favoriteRecipe()" type="button" class="btn btn-success customButton"><fa-icon [icon]="likeIcon"></fa-icon> Favorite</button>
+          <button *ngIf="recipe.isFavorite" (click)="unfavoriteRecipe()" type="button" class="btn btn-danger customButton"><fa-icon [icon]="dislikeIcon"></fa-icon> Unfavorite</button>
+          <p class="rating" *ngIf="userID && userID !== recipe.user.ID"><rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()" (click)="giveRating(rate)"></rating></p>
+          <button *ngIf="recipe.user.ID == userID" type="button" id="update" class="btn btn-info customButton" routerLink="/profile/update/{{recipe.ID}}"><fa-icon [icon]="editIcon"></fa-icon> Update</button>
+          <button *ngIf="recipe.user.ID == userID" type="button" id="delete" class="btn btn-danger customButton" (click)="openDeleteModal(deleteTemplate, recipe)"><fa-icon [icon]="deleteIcon"></fa-icon> Delete</button>
         </div>
 
         <div class="ingredients">
@@ -55,16 +57,34 @@
             </div>
           </div>
         </div>
-
         <h3 class="title">Directions</h3>
         <textarea readonly rows="10" cols="75">{{recipe.preparations}}</textarea>
 
-        </div>
       </div>
-    <button class="btn btn-info" (click)="goBack();"><fa-icon [icon]="circleLeft"></fa-icon> Go back</button>
     </div>
+    <button class="btn btn-info" (click)="goBack();"><fa-icon [icon]="circleLeft"></fa-icon> Go back</button>
   </div>
 
   <div *ngIf="!found && !loading">
     <h1 class="text-center" style="color: black">Recipe not found</h1>
   </div>
+
+</div>
+
+
+
+<ng-template #deleteTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title w-100 text-center">Confirm</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Do you want to delete <b>{{recipe.title}}</b>?</p>
+    <div class="float-right">
+      <button (click)="modalRef.hide()" type="button" class="btn btn-secondary" >Cancel</button>
+      <button (click)="modalRef.hide(); deleteRecipe();" type="button" class="btn btn-danger">Delete</button>
+    </div>
+  </div>
+</ng-template>

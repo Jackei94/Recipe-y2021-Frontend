@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {take, takeUntil} from "rxjs/operators";
 import {RecipeGetDto} from "../shared/dtos/recipe.get.dto";
 import {RecipeService} from "../shared/recipe.service";
@@ -8,11 +8,22 @@ import {Recipe} from "../../shared/models/recipe";
 import {Subject} from "rxjs";
 import {FormControl, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../shared/services/authentication.service";
-import {RatingDto} from "../../shared/dtos/rating.dto";
-import {faChevronCircleLeft, faHeart, faHeartBroken, faStar, faAngleDown, faAngleUp} from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronCircleLeft,
+  faHeart,
+  faHeartBroken,
+  faStar,
+  faAngleDown,
+  faAngleUp,
+  faEdit,
+  faTrashAlt
+} from '@fortawesome/free-solid-svg-icons';
 import {FavoriteDto} from '../shared/dtos/favorite.dto';
 import {UserService} from "../../shared/services/user.service";
 import {RatingService} from "../shared/rating.service";
+import {RatingDto} from '../shared/dtos/rating.dto';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {RecipeDeleteDto} from '../shared/dtos/recipe.delete.dto';
 
 @Component({
   selector: 'app-recipe-details',
@@ -38,18 +49,23 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
 
   userID: number | undefined;
 
+  modalRef: BsModalRef;
+
   unsubscriber$ = new Subject();
 
   likeIcon = faHeart;
   dislikeIcon = faHeartBroken;
   starIcon = faStar;
+  editIcon = faEdit;
+  deleteIcon = faTrashAlt;
   downIcon = faAngleDown;
   upIcon = faAngleUp;
   circleLeft = faChevronCircleLeft;
 
   constructor(private recipeService: RecipeService, private authService: AuthenticationService,
               private location: Location, private router: Router, private route: ActivatedRoute,
-              private userService: UserService, private ratingService: RatingService) { }
+              private modalService: BsModalService, private userService: UserService,
+              private ratingService: RatingService) { }
 
   ngOnInit(): void {
     this.userID = this.authService.getID();
@@ -80,6 +96,27 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
       (recipe) => {
         this.recipe = recipe; this.loading = false; this.rate = recipe.personalRating;},
       () => {this.loading = false; this.found = false;});
+  }
+
+  deleteRecipe(): void{
+
+    if(!this.recipe.imageURL.includes('NoImage.png')){
+      let imageTitle: string = this.recipe.imageURL.substring(
+        this.recipe.imageURL.lastIndexOf("/o/") + 3,
+        this.recipe.imageURL.lastIndexOf("?alt")
+      );
+
+      let imageToDelete = {image: imageTitle}
+      this.recipeService.deleteImage(imageToDelete).subscribe();
+    }
+
+    const recipeDeleteDTO: RecipeDeleteDto = {recipe: this.recipe, userID: this.userID}
+
+    this.loading = true;
+
+    this.recipeService.deleteRecipeByID(recipeDeleteDTO).subscribe((deleted) => {
+        this.goBack();},
+      error => {this.loading = false;});
   }
 
   inCount() {
@@ -117,6 +154,10 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
   unfavoriteRecipe(): void{
     const favoriteDTO: FavoriteDto = {favorite: false, recipeID: this.recipe.ID, userID: this.userID}
     this.recipeService.unfavoriteRecipe(favoriteDTO).subscribe(() => {});
+  }
+
+  openDeleteModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
   goBack(): void{

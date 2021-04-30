@@ -131,7 +131,7 @@
       </div>
 
       <div class="col text-center">
-        <button class="btn btn-success create" type="submit" [disabled]="!recipeForm.valid || updateLoad">Update</button>
+        <button class="btn btn-success create" type="submit" [disabled]="!recipeForm.valid || updateLoad">Update <fa-icon [icon]="selectedIcon" [fixedWidth]="true"></fa-icon></button>
       </div>
     </form>
     <button class="btn btn-info" (click)="goBack();"><fa-icon [icon]="circleLeft"></fa-icon> Go back</button>

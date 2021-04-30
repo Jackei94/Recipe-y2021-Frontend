@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Recipe} from "../../../shared/models/recipe";
 import {IngredientEntry} from "../../../shared/models/ingredient-entry";
@@ -7,19 +7,28 @@ import {RecipeService} from "../../shared/recipe.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Select} from "@ngxs/store";
 import {LoginState} from "../../../login/shared/state/login.state";
-import {Observable} from "rxjs";
+import {interval, Observable, Subscription} from 'rxjs';
 import {User} from "../../../shared/models/user";
 import {Location} from "@angular/common";
 import {RecipeGetDto} from "../../shared/dtos/recipe.get.dto";
 import {take} from "rxjs/operators";
-import {faChevronCircleLeft} from "@fortawesome/free-solid-svg-icons";
+import {
+  faBacon,
+  faChevronCircleLeft, faCocktail, faCoffee,
+  faCookie,
+  faFish,
+  faHamburger,
+  faHotdog,
+  faPizzaSlice,
+  faUtensils, faWineBottle
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-recipe-update',
   templateUrl: './recipe-update.component.html',
   styleUrls: ['./recipe-update.component.scss']
 })
-export class RecipeUpdateComponent implements OnInit {
+export class RecipeUpdateComponent implements OnInit, OnDestroy {
 
   recipe: Recipe = null;
   ingredients: IngredientEntry[] = [];
@@ -36,7 +45,10 @@ export class RecipeUpdateComponent implements OnInit {
   changed: boolean = false;
   found: boolean = true;
 
+  selectedIcon = null
+  randomIcons = [faUtensils, faHamburger, faPizzaSlice, faBacon, faHotdog, faFish, faCookie, faCocktail, faWineBottle, faCoffee]
   circleLeft = faChevronCircleLeft;
+  iconRandomSelect: Subscription;
 
   @Select(LoginState.user)
   loggedUser$: Observable<User>;
@@ -57,9 +69,14 @@ export class RecipeUpdateComponent implements OnInit {
   });
 
   constructor(private recipeService: RecipeService, private location: Location,
-              private router: Router, private route: ActivatedRoute) { }
+              private router: Router, private route: ActivatedRoute)
+  {
+    const source = interval(2000);
+    this.iconRandomSelect = source.subscribe(val => this.selectRandomIcon());
+  }
 
   ngOnInit(): void {
+    this.selectRandomIcon();
     this.getCategories();
   }
 
@@ -185,8 +202,23 @@ export class RecipeUpdateComponent implements OnInit {
     this.changed = true;
   }
 
+  selectRandomIcon(){
+    let randomPosition = Math.floor(Math.random() * (this.randomIcons.length - 1));
+
+    while(this.selectedIcon == this.randomIcons[randomPosition]){
+      randomPosition = Math.floor(Math.random() * (this.randomIcons.length - 1));
+    }
+
+
+    this.selectedIcon = this.randomIcons[randomPosition];
+  }
+
   goBack(): void{
     this.location.back();
+  }
+
+  ngOnDestroy(): void{
+    this.iconRandomSelect.unsubscribe();
   }
 
 }
