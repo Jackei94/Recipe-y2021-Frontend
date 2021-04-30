@@ -75,9 +75,6 @@
           </div>
         </form>
 
-
-
-
       <div>
         <section *ngFor="let ingredient of ingredients">
           <div id="ingredients" class="row">
@@ -99,9 +96,6 @@
         </section>
       </div>
 
-
-
-
       <div class="form-group">
         <div class="col-sm-12">
           <label for="preparations">Recipe directions</label>
@@ -112,9 +106,6 @@
           <h6 *ngIf="recipeForm.get('preparations').invalid && recipeForm.get('preparations').dirty">Directions must be between 10-1000 characters</h6>
         </div>
       </div>
-
-
-
 
       <div class="form-group">
         <div class="col-sm-12">
@@ -129,8 +120,6 @@
           <h6 *ngIf="recipeForm.get('category').invalid && recipeForm.get('category').dirty">Select category</h6>
         </div>
       </div>
-
-
 
       <div class="form-group">
         <div class="col-sm-12">
@@ -147,7 +136,7 @@
       </div>
 
       <div class="col text-center">
-        <button class="btn btn-success create" type="submit" [disabled]="!recipeForm.valid || imageLoad">Create</button>
+        <button class="btn btn-success create" type="submit" [disabled]="!recipeForm.valid || imageLoad">Create <fa-icon [icon]="selectedIcon"></fa-icon></button>
       </div>
     </form>
     <button class="btn btn-info" (click)="goBack();"><fa-icon [icon]="circleLeft"></fa-icon> Go back</button>

@@ -6,12 +6,20 @@ import {Router} from "@angular/router";
 import {Recipe} from "../../../shared/models/recipe";
 import {Select} from "@ngxs/store";
 import {LoginState} from "../../../login/shared/state/login.state";
-import {Observable} from "rxjs";
+import {interval, Observable, Subscription} from "rxjs";
 import {User} from "../../../shared/models/user";
 import {IngredientEntry} from "../../../shared/models/ingredient-entry";
 import {Category} from "../../../shared/models/category";
 import {take} from "rxjs/operators";
-import {faChevronCircleLeft} from "@fortawesome/free-solid-svg-icons";
+import {
+  faBacon,
+  faChevronCircleLeft, faCocktail, faCoffee, faCookie, faFish,
+  faHamburger,
+  faHotdog,
+  faPizzaSlice,
+  faUtensils, faWineBottle
+} from "@fortawesome/free-solid-svg-icons";
+import {Icon} from "@fortawesome/fontawesome-svg-core";
 
 @Component({
   selector: 'app-recipe-add',
@@ -37,7 +45,10 @@ export class RecipeAddComponent implements OnInit {
   loggedUser$: Observable<User> | undefined;
   created: boolean = false;
 
+  selectedIcon = null
+  randomIcons = [faUtensils, faHamburger, faPizzaSlice, faBacon, faHotdog, faFish, faCookie, faCocktail, faWineBottle, faCoffee]
   circleLeft = faChevronCircleLeft;
+  iconRandomSelect: Subscription;
 
   recipeForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(32)]),
@@ -54,11 +65,17 @@ export class RecipeAddComponent implements OnInit {
     measurementUnit: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]),
   });
 
-  constructor(private recipeService: RecipeService, private location: Location, private router: Router) { }
+  constructor(private recipeService: RecipeService, private location: Location,
+              private router: Router)
+  {
+    const source = interval(2000);
+    this.iconRandomSelect = source.subscribe(val => this.selectRandomIcon());
+  }
 
   ngOnInit(): void {
     this.imageURL = (localStorage.getItem('loadedImage') !== null) ? JSON.parse(localStorage.getItem('loadedImage')).image : '';
     this.getCategories();
+    this.selectRandomIcon();
   }
 
   getCategories(): void{
@@ -157,6 +174,11 @@ export class RecipeAddComponent implements OnInit {
     }
   }
 
+  selectRandomIcon(){
+    const randomPosition = Math.floor(Math.random() * (this.randomIcons.length - 1));
+    this.selectedIcon = this.randomIcons[randomPosition];
+  }
+
   goBack(): void{
     this.location.back();
   }
@@ -164,6 +186,7 @@ export class RecipeAddComponent implements OnInit {
   ngOnDestroy(): void{
     if(!this.created && this.imageURL !== ''){localStorage.setItem('loadedImage', JSON.stringify({image: this.imageURL}))}
     else{localStorage.removeItem('loadedImage')}
+    this.iconRandomSelect.unsubscribe();
   }
 
 }
