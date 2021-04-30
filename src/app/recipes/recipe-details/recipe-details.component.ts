@@ -8,11 +8,11 @@ import {Recipe} from "../../shared/models/recipe";
 import {Subject} from "rxjs";
 import {FormControl, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../shared/services/authentication.service";
-import {RatingDto} from "../../shared/dtos/rating.dto";
 import {faChevronCircleLeft, faHeart, faHeartBroken, faStar, faAngleDown, faAngleUp} from "@fortawesome/free-solid-svg-icons";
 import {FavoriteDto} from '../shared/dtos/favorite.dto';
 import {UserService} from "../../shared/services/user.service";
 import {RatingService} from "../shared/rating.service";
+import {RatingDto} from "../shared/dtos/rating.dto";
 
 @Component({
   selector: 'app-recipe-details',
