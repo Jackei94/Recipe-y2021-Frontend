@@ -8,7 +8,7 @@ import {RecipeGetDto} from "./dtos/recipe.get.dto";
 import {SocketRecipeApp} from "../../shared/shared.module";
 import {FilterList} from "../../shared/models/filterList";
 import {RecipeDeleteDto} from "./dtos/recipe.delete.dto";
-import {Rating} from "../../shared/models/rating";
+import {RatingDto} from "./dtos/rating.dto";
 import {FavoriteDto} from './dtos/favorite.dto';
 
 @Injectable({
@@ -56,10 +56,6 @@ export class RecipeService {
     return this.http.delete<boolean>(environment.apiUrl + '/recipe/deleteRecipe', options)
   }
 
-  giveRating(rating: Rating): Observable<Recipe>{
-    return this.http.post<Recipe>(environment.apiUrl + '/recipe/giveRating', rating);
-  }
-
   favoriteRecipe(favoriteDTO: FavoriteDto): Observable<boolean>{
     return this.http.post<boolean>(environment.apiUrl + '/recipe/favorite', favoriteDTO);
   }
@@ -96,10 +92,6 @@ export class RecipeService {
 
   listenForDeleteChange(): Observable<Recipe>{
     return this.socket.fromEvent<Recipe>('recipeDeleted');
-  }
-
-  listenForRateChange(): Observable<Rating>{
-    return this.socket.fromEvent<Rating>('recipeRatingUpdated');
   }
 
   listenForFavoriteUpdate(): Observable<FavoriteDto>{
