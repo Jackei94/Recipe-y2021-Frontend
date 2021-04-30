@@ -8,8 +8,9 @@ import {debounceTime, distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {AuthenticationService} from '../../shared/services/authentication.service';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {RecipeDeleteDto} from "../shared/dtos/recipe.delete.dto";
-import {faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faHeart, faHeartBroken, faStar, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import {UserService} from "../../shared/services/user.service";
+import {FavoriteDto} from "../shared/dtos/favorite.dto";
 
 @Component({
   selector: 'app-my-recipes',
@@ -40,6 +41,7 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
   recipeCategory: number = 0;
   sortingType: string = 'ADDED';
   sorting: string = 'ASC';
+  showFavorites: boolean = false;
 
   modalRef: BsModalRef;
   selectedRecipe: Recipe;
@@ -48,6 +50,9 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
 
   editIcon = faEdit;
   deleteIcon = faTrashAlt;
+  starIcon = faStar;
+  likeIcon = faHeart;
+  dislikeIcon = faHeartBroken;
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute,
               private authService: AuthenticationService, private modalService: BsModalService,
@@ -58,6 +63,7 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
     subscribe((search) => {this.searchTerm = search; this.getRecipes()});
 
     this.userID = this.authService.getID();
+    this.userService.joinPersonalRoom(this.userID);
 
     if(this.route.snapshot.paramMap.get('id') != null){
       this.profileID = +this.route.snapshot.paramMap.get('id');
@@ -80,33 +86,54 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
     this.recipeService.listenForCreate().pipe(takeUntil(this.unsubscriber$)).
     subscribe(() => {this.getRecipes();});
 
+    this.recipeService.listenForFavoriteUpdate().pipe(takeUntil(this.unsubscriber$)).
+    subscribe((favoriteDTO) => {this.getRecipes()});
+
   }
 
   getRecipes(): void {
 
+    let filter = `?currentPage=${this.currentPage}&itemsPrPage=${this.itemsPrPage}&name=${this.searchTerm}`
+      + `&sortingType=${this.sortingType}&sorting=${this.sorting}&category=${this.recipeCategory}`;
+
     if(this.profileView)
     {
-      const filter = `?currentPage=${this.currentPage}&itemsPrPage=${this.itemsPrPage}&name=${this.searchTerm}`
-        + `&sortingType=${this.sortingType}&sorting=${this.sorting}&category=${this.recipeCategory}&userID=${this.profileID}`;
-      this.loading = true;
+      filter += `&userID=${this.profileID}`;
+      if(this.userID) {filter += `&userIDFavorite=${this.userID}&showFavorites=${this.showFavorites}`;}
+    }
 
+    else {filter += `&userID=${this.userID}&userIDFavorite=${this.userID}&showFavorites=${this.showFavorites}`;}
+
+    if(this.profileView && !this.userID){
       this.recipeService.getRecipes(filter).subscribe((FilterList) => {
         this.totalItems = FilterList.totalItems;
         this.recipes = FilterList.list;
-      }, error => {this.loading = false; console.log(error.error.message);}, () => {this.loading = false; });
+      }, error => {this.loading = false;}, () => {this.loading = false; });
     }
-
-    else {
-      const filter = `?currentPage=${this.currentPage}&itemsPrPage=${this.itemsPrPage}&name=${this.searchTerm}`
-        + `&sortingType=${this.sortingType}&sorting=${this.sorting}&category=${this.recipeCategory}&userID=${this.userID}`;
-      this.loading = true;
-
+    else{
       this.recipeService.getPersonalRecipes(filter).subscribe((FilterList) => {
         this.totalItems = FilterList.totalItems;
         this.recipes = FilterList.list;
       }, error => {this.loading = false}, () => {this.loading = false; });
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   getCategories(): void{
     this.recipeService.getRecipeCategories().subscribe((categories) => {
@@ -141,6 +168,16 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
     this.recipeService.deleteRecipeByID(recipeDeleteDTO).subscribe((deleted) => {
       this.getRecipes(); this.loading = false;},
       error => {this.loading = false;});
+  }
+
+  favoriteRecipe(recipeID: number): void{
+    const favoriteDTO: FavoriteDto = {favorite: true, recipeID: recipeID, userID: this.userID}
+    this.recipeService.favoriteRecipe(favoriteDTO).subscribe(() => {});
+  }
+
+  unfavoriteRecipe(recipeID: number): void{
+    const favoriteDTO: FavoriteDto = {favorite: false, recipeID: recipeID, userID: this.userID}
+    this.recipeService.unfavoriteRecipe(favoriteDTO).subscribe(() => {});
   }
 
   openDeleteModal(template: TemplateRef<any>, recipeToDelete: Recipe) {

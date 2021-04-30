@@ -32,13 +32,13 @@
     <h1>New Recipes</h1>
 
     <div class="row row-cols-3 row-cols-md-2">
-      <div id="cards" class="col-sm-3" *ngFor="let recipes of recipes">
-        <a routerLink="/recipes/details/{{recipes.ID}}" style="text-decoration: none; color: #183040">
+      <div id="cards" class="col-sm-3" *ngFor="let recipe of recipes">
+        <a routerLink="/recipes/details/{{recipe.ID}}" style="text-decoration: none; color: #183040">
           <div class="card">
-            <img src="{{recipes.imageURL}}" class="card-img-top" alt="..." >
+            <img src="{{recipe.imageURL}}" class="card-img-top" alt="..." >
             <div class="card-body">
-              <h5 class="card-title-top">{{recipes.title}}</h5>
-              <h5 class="card-text"><fa-icon [icon]="starIcon"></fa-icon> Rated - {{recipes.averageRating}} / 5 </h5>
+              <h5 class="card-title-top">{{recipe.title}}</h5>
+              <h5 class="card-text"><fa-icon [icon]="starIcon"></fa-icon> Rated - {{recipe.averageRating}} / 5 </h5>
             </div>
           </div>
         </a>

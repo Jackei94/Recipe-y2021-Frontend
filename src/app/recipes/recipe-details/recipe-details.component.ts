@@ -11,6 +11,7 @@ import {AuthenticationService} from "../../shared/services/authentication.servic
 import {Rating} from "../../shared/models/rating";
 import {faHeart, faHeartBroken, faStar} from "@fortawesome/free-solid-svg-icons";
 import {FavoriteDto} from '../shared/dtos/favorite.dto';
+import {UserService} from "../../shared/services/user.service";
 
 @Component({
   selector: 'app-recipe-details',
@@ -43,10 +44,12 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
   starIcon = faStar;
 
   constructor(private recipeService: RecipeService, private authService: AuthenticationService,
-              private location: Location, private router: Router, private route: ActivatedRoute) { }
+              private location: Location, private router: Router, private route: ActivatedRoute,
+              private userService: UserService) { }
 
   ngOnInit(): void {
     this.userID = this.authService.getID();
+    this.userService.joinPersonalRoom(this.userID);
     this.getRecipe();
 
     this.recipeService.listenForUpdateChange().pipe(takeUntil(this.unsubscriber$))
@@ -62,10 +65,7 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
         }});
 
     this.recipeService.listenForFavoriteUpdate().pipe(takeUntil(this.unsubscriber$))
-      .subscribe((favoriteDTO) => {
-        if(this.userID != null && this.userID == favoriteDTO.userID){
-          this.recipe.isFavorite = favoriteDTO.favorite;
-        }});
+      .subscribe((favoriteDTO) => {this.recipe.isFavorite = favoriteDTO.favorite;});
   }
 
   getRecipe(): void{
