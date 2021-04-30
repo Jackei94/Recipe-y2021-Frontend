@@ -9,7 +9,7 @@ import {Subject} from "rxjs";
 import {FormControl, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {Rating} from "../../shared/models/rating";
-import {faHeart, faHeartBroken, faStar} from "@fortawesome/free-solid-svg-icons";
+import {faHeart, faHeartBroken, faStar, faAngleDown, faAngleUp} from "@fortawesome/free-solid-svg-icons";
 import {FavoriteDto} from '../shared/dtos/favorite.dto';
 import {UserService} from "../../shared/services/user.service";
 
@@ -42,6 +42,8 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
   likeIcon = faHeart;
   dislikeIcon = faHeartBroken;
   starIcon = faStar;
+  downIcon = faAngleDown;
+  upIcon = faAngleUp;
 
   constructor(private recipeService: RecipeService, private authService: AuthenticationService,
               private location: Location, private router: Router, private route: ActivatedRoute,

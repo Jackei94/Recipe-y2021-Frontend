@@ -70,3 +70,74 @@ h5 {
   right: 20px;
   justify-content: center;
 }
+
+.customButton {
+  width: 44px;
+  height: 38px;
+}
+
+#fav, #unfav {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+}
+
+/* Custom Check Box */
+/* Hide the browser's default checkbox */
+#showFavorites {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  cursor: pointer;
+  top: 2px;
+  left: 0;
+  height: 30px;
+  width: 30px;
+  background-color: white;
+}
+
+/* On mouse-over, add a grey background color */
+.checkmark:hover {
+  background-color: #dddddd;
+}
+
+/* When the checkbox is checked, add a blue background */
+input:checked ~ .checkmark {
+  background-color: #17A2B8;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkmark:after {
+  left: 10px;
+  top: 5px;
+  width: 10px;
+  height: 15px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.checkboxLabel {
+  padding: 6px 0 0 30px;
+}

@@ -14,6 +14,12 @@ h3 {
   color: #183040;
 }
 
+.personalRating {
+  position: absolute;
+  right: 0;
+  margin-right: 15px;
+}
+
 .counting {
   padding: 6px 10px;
   text-decoration: none;
@@ -45,10 +51,8 @@ textarea {
 }
 
 .rating {
-  position: absolute;
   padding-right: 15px;
   margin-top: -20px;
-  right: 0;
 }
 
 rating {
@@ -57,6 +61,7 @@ rating {
 
 .like {
   margin-top: -5px;
+  height: 38px;
 }
 
 .col-sm-6 {

@@ -37,8 +37,11 @@
       </select>
     </label>
 
-    <input *ngIf="userID" type="checkbox" class="checkbox" id="showFavorites" name="showFavorites" [checked]="showFavorites" [(ngModel)]="showFavorites" [ngModelOptions]="{standalone: true}" (ngModelChange)="getRecipes()">
-    <label *ngIf="userID" class="checkboxLabel" for="showFavorites">Shows Favorites Only</label>
+    <label class="container">
+      <input *ngIf="userID" type="checkbox" id="showFavorites" [checked]="showFavorites" [(ngModel)]="showFavorites" [ngModelOptions]="{standalone: true}" (ngModelChange)="getRecipes()">
+      <span class="checkmark"></span>
+      <label *ngIf="userID" class="checkboxLabel" for="showFavorites">Show Your Favorites Only</label>
+    </label>
 
     <h3 *ngIf="!loading && recipes.length > 0">Recipes</h3>
     <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
@@ -48,8 +51,8 @@
 
         <div id="cards" class="col-sm-3" *ngFor="let recipe of recipes">
           <div class="card">
-            <button *ngIf="!recipe.isFavorite" (click)="favoriteRecipe(recipe.ID)" type="button" class="btn btn-success like"><fa-icon [icon]="likeIcon"></fa-icon> Favorite</button>
-            <button *ngIf="recipe.isFavorite" (click)="unfavoriteRecipe(recipe.ID)" type="button" class="btn btn-danger like"><fa-icon [icon]="dislikeIcon"></fa-icon> Unfavorite</button>
+            <button *ngIf="!recipe.isFavorite" (click)="favoriteRecipe(recipe.ID)" type="button" id="fav" class="btn btn-success customButton"><fa-icon [icon]="likeIcon"></fa-icon></button>
+            <button *ngIf="recipe.isFavorite" (click)="unfavoriteRecipe(recipe.ID)" type="button" id="unfav" class="btn btn-danger customButton"><fa-icon [icon]="dislikeIcon"></fa-icon></button>
           <a routerLink="/recipes/details/{{recipe.ID}}" style="text-decoration: none; color: #183040">
 
               <img src="{{recipe.imageURL}}" class="card-img-top" alt="..." >

@@ -5,14 +5,15 @@
 
   <div class="container" *ngIf="!loading && found">
 
-    <h1 class=""><b>{{recipe.title}} - <fa-icon [icon]="starIcon"></fa-icon>{{recipe.averageRating}}</b></h1>
+    <h1 class=""><b>{{recipe.title}}</b></h1>
 
     <div class="row">
       <div class="col-sm-6">
 
         <div class="container row">
           <h5 class="info">By: <a style="text-decoration: none; color: black" routerLink="/recipes/my/{{recipe.user.ID}}"><b>{{recipe.user.username}}</b></a></h5>
-          <p class="rating" *ngIf="userID && userID !== recipe.user.ID"><rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()" (click)="giveRating(rate)"></rating></p>
+          <h5 class="personalRating"><fa-icon [icon]="starIcon"></fa-icon><b> {{recipe.averageRating}}</b></h5>
+
         </div>
 
         <img src="{{recipe.imageURL}}">
@@ -20,18 +21,21 @@
       </div>
 
       <div class="col-sm-6">
+        <div class="container row">
         <button *ngIf="!recipe.isFavorite" (click)="favoriteRecipe()" type="button" class="btn btn-success like"><fa-icon [icon]="likeIcon"></fa-icon> Favorite</button>
         <button *ngIf="recipe.isFavorite" (click)="unfavoriteRecipe()" type="button" class="btn btn-danger like"><fa-icon [icon]="dislikeIcon"></fa-icon> Unfavorite</button>
+        <p class="rating" *ngIf="userID && userID !== recipe.user.ID"><rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()" (click)="giveRating(rate)"></rating></p>
+        </div>
 
         <div class="ingredients">
           <h3>Ingredients</h3>
           <label for="amount">Portion Size</label>
           <div class="container row">
-            <button type="button" (click)="unCount()" class="btn btn-primary btn-sm counting">-</button>
+            <button type="button" (click)="unCount()" class="btn btn-primary btn-sm counting"><fa-icon [icon]="downIcon"></fa-icon></button>
             <div id="add">
               <input readonly type="number" [(ngModel)]="amount" name="amount" id="amount" min="1" max="100">
             </div>
-            <button type="button" (click)="inCount()" class="btn btn-primary btn-sm counting">+</button>
+            <button type="button" (click)="inCount()" class="btn btn-primary btn-sm counting"><fa-icon [icon]="upIcon"></fa-icon></button>
             <div>
               <label id="servings">servings</label>
             </div>
