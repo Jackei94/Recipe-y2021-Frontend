@@ -47,7 +47,7 @@ export class AllRecipesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.searchTerms.pipe(debounceTime(300), distinctUntilChanged(),).
-    subscribe((search) => {this.searchTerm = search; this.getRecipes()});
+    subscribe((search) => {this.searchTerm = search; this.loading = true; this.getRecipes()});
 
     this.userID = this.authService.getID();
     this.userService.joinPersonalRoom(this.userID);
