@@ -8,10 +8,11 @@ import {Recipe} from "../../shared/models/recipe";
 import {Subject} from "rxjs";
 import {FormControl, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../shared/services/authentication.service";
-import {Rating} from "../../shared/models/rating";
+import {RatingDto} from "../shared/dtos/rating.dto";
 import {faHeart, faHeartBroken, faStar} from "@fortawesome/free-solid-svg-icons";
 import {FavoriteDto} from '../shared/dtos/favorite.dto';
 import {UserService} from "../../shared/services/user.service";
+import {RatingService} from "../shared/rating.service";
 
 @Component({
   selector: 'app-recipe-details',
@@ -45,7 +46,7 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
 
   constructor(private recipeService: RecipeService, private authService: AuthenticationService,
               private location: Location, private router: Router, private route: ActivatedRoute,
-              private userService: UserService) { }
+              private userService: UserService, private ratingService: RatingService) { }
 
   ngOnInit(): void {
     this.userID = this.authService.getID();
@@ -58,7 +59,7 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
         this.recipe.averageRating = recipe.averageRating;
       }});
 
-    this.recipeService.listenForRateChange().pipe(takeUntil(this.unsubscriber$))
+    this.ratingService.listenForRateChange().pipe(takeUntil(this.unsubscriber$))
       .subscribe((rating) => {
         if(this.userID != null && this.userID == rating.userID){
           this.rate = rating.rating; this.recipe.personalRating = rating.rating;
@@ -95,13 +96,13 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
   }
 
   giveRating(ratingValue: number): void {
-    const rating: Rating = {rating: ratingValue, recipeID: this.recipe.ID, userID: this.userID}
+    const rating: RatingDto = {rating: ratingValue, recipeID: this.recipe.ID, userID: this.userID}
 
     if(this.recipe.personalRating == ratingValue){
-      this.recipeService.deleteRating(rating).subscribe(() => {});
+      this.ratingService.deleteRating(rating).subscribe(() => {});
     }
     else{
-      this.recipeService.giveRating(rating).subscribe(() => {});
+      this.ratingService.giveRating(rating).subscribe(() => {});
     }
   }
 
