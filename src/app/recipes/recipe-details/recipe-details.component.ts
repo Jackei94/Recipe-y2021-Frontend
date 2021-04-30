@@ -96,7 +96,13 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
 
   giveRating(ratingValue: number): void {
     const rating: Rating = {rating: ratingValue, recipeID: this.recipe.ID, userID: this.userID}
-    this.recipeService.giveRating(rating).subscribe(() => {});
+
+    if(this.recipe.personalRating == ratingValue){
+      this.recipeService.deleteRating(rating).subscribe(() => {});
+    }
+    else{
+      this.recipeService.giveRating(rating).subscribe(() => {});
+    }
   }
 
   favoriteRecipe(): void{

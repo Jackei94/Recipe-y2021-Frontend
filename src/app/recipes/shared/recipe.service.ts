@@ -60,6 +60,16 @@ export class RecipeService {
     return this.http.post<Recipe>(environment.apiUrl + '/recipe/giveRating', rating);
   }
 
+  deleteRating(rating: Rating): Observable<Recipe>{
+
+    const options = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'}),
+      body: rating
+    }
+
+    return this.http.delete<Recipe>(environment.apiUrl + '/recipe/deleteRating', options);
+  }
+
   favoriteRecipe(favoriteDTO: FavoriteDto): Observable<boolean>{
     return this.http.post<boolean>(environment.apiUrl + '/recipe/favorite', favoriteDTO);
   }
