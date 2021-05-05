@@ -60,7 +60,7 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.searchTerms.pipe(debounceTime(300), distinctUntilChanged(),).
-    subscribe((search) => {this.searchTerm = search; this.loading = true; this.getRecipes()});
+    subscribe((search) => {this.searchTerm = search; this.loading = true; this.getRecipes(true)});
 
     this.userID = this.authService.getID();
     this.userService.joinPersonalRoom(this.userID);
@@ -71,11 +71,11 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
       this.loadProfile();
 
       this.recipeService.listenForDeleteChange().pipe(takeUntil(this.unsubscriber$)).subscribe((recipe) => {
-        this.getRecipes();});
+        this.getRecipes(false);});
     }
     else{
       this.getCategories();
-      this.getRecipes();
+      this.getRecipes(true);
     }
 
     this.recipeService.listenForUpdateChange().pipe(takeUntil(this.unsubscriber$)).
@@ -84,14 +84,16 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
         if(placement !== -1){this.recipes[placement] = recipe;}});
 
     this.recipeService.listenForCreate().pipe(takeUntil(this.unsubscriber$)).
-    subscribe(() => {this.getRecipes();});
+    subscribe(() => {this.getRecipes(false);});
 
     this.recipeService.listenForFavoriteUpdate().pipe(takeUntil(this.unsubscriber$)).
-    subscribe((favoriteDTO) => {this.getRecipes()});
+    subscribe((favoriteDTO) => {this.getRecipes(false)});
 
   }
 
-  getRecipes(): void {
+  getRecipes(shouldLoad: boolean): void {
+
+    this.loading = shouldLoad
 
     let filter = `?currentPage=${this.currentPage}&itemsPrPage=${this.itemsPrPage}&name=${this.searchTerm}`
       + `&sortingType=${this.sortingType}&sorting=${this.sorting}&category=${this.recipeCategory}`;
@@ -127,7 +129,7 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
     this.userService.getUsername(this.profileID).subscribe((userInfoDTO) => {
       this.username = userInfoDTO.username;
       this.getCategories();
-      this.getRecipes();},
+      this.getRecipes(true);},
       (error) => {this.error = error.error.message; this.loading = false; this.found = false;});
   }
 
@@ -149,7 +151,7 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.recipeService.deleteRecipeByID(recipeDeleteDTO).subscribe((deleted) => {
-      this.getRecipes(); this.loading = false;},
+      this.getRecipes(true); this.loading = false;},
       error => {this.loading = false;});
   }
 
@@ -171,14 +173,14 @@ export class MyRecipesComponent implements OnInit, OnDestroy {
   pageChanged($event: any): void {
     if ($event.page !== this.currentPage){
       this.currentPage = $event.page;
-      this.getRecipes();
+      this.getRecipes(true);
     }
   }
 
   itemsPrPageUpdate(): void{
     this.smallNumPages = Math.ceil(this.totalItems / this.itemsPrPage);
     this.currentPage = 1;
-    this.getRecipes();
+    this.getRecipes(true);
   }
 
   search(term: string): void {

@@ -5,7 +5,7 @@
 
     <label class="col-md-2">
       Category:
-      <select class="form-control" [(ngModel)]="recipeCategory" (ngModelChange)="getRecipes()">
+      <select class="form-control" [(ngModel)]="recipeCategory" (ngModelChange)="getRecipes(true)">
         <option value="0">All categories</option>
         <option *ngFor="let category of categories" value="{{category.ID}}">{{category.title}}</option>
       </select>
@@ -13,7 +13,7 @@
 
     <label class="col-md-2">
       Sorting type:
-      <select class="form-control" [(ngModel)]="sortingType" (ngModelChange)="getRecipes()">
+      <select class="form-control" [(ngModel)]="sortingType" (ngModelChange)="getRecipes(true)">
         <option value="ADDED">Newest</option>
         <option value="ALF">Alphabetical</option>
         <option value="RATING">RatingDto</option>
@@ -22,7 +22,7 @@
 
     <label class="col-md-2">
       Sorting:
-      <select class="form-control" [(ngModel)]="sorting" (ngModelChange)="getRecipes()">
+      <select class="form-control" [(ngModel)]="sorting" (ngModelChange)="getRecipes(true)">
         <option value="ASC">Ascending</option>
         <option value="DESC">Descending</option>
       </select>
@@ -37,11 +37,13 @@
       </select>
     </label>
 
-    <label class="container">
-      <input *ngIf="userID" type="checkbox" id="showFavorites" [checked]="showFavorites" [(ngModel)]="showFavorites" [ngModelOptions]="{standalone: true}" (ngModelChange)="getRecipes()">
-      <span class="checkmark"></span>
-      <label *ngIf="userID" class="checkboxLabel" for="showFavorites">Show Your Favorites Only</label>
-    </label>
+    <div *ngIf="userID" class="container">
+      <label>
+        <input type="checkbox" id="showFavorites" [checked]="showFavorites" [(ngModel)]="showFavorites" [ngModelOptions]="{standalone: true}" (ngModelChange)="getRecipes(true)"/>
+        <span class="checkmark"></span>
+      </label>
+      <label class="checkboxLabel" for="showFavorites">Show Your Favorites Only</label>
+    </div>
 
     <h3 *ngIf="!loading && recipes.length > 0">Recipes</h3>
     <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
