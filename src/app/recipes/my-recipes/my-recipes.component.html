@@ -63,7 +63,7 @@
             <img src="{{recipe.imageURL}}" class="card-img-top" alt="..." >
               <div class="card-body">
                 <h5 class="card-title-top">{{recipe.title}}</h5>
-                <h5 class="card-text"><fa-icon [icon]="starIcon"></fa-icon> Rated - {{recipe.averageRating}} / 5 </h5>
+                <h5 class="card-text"><fa-icon [icon]="starIcon"></fa-icon> Rated - {{calculateRating(recipe.averageRating)}} / 5 </h5>
               </div>
           </a>
             </div>

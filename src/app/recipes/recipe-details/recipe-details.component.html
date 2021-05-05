@@ -12,7 +12,7 @@
 
         <div class="container row">
           <h5 class="info">By: <a style="text-decoration: none; color: black" routerLink="/recipes/my/{{recipe.user.ID}}"><b>{{recipe.user.username}}</b></a></h5>
-          <h5 class="personalRating"><fa-icon [icon]="starIcon"></fa-icon><b> {{recipe.averageRating}}</b></h5>
+          <h5 class="personalRating"><fa-icon [icon]="starIcon"></fa-icon><b> {{calculateRating(recipe.averageRating)}}</b></h5>
 
         </div>
 

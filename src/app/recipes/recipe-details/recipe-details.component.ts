@@ -160,6 +160,11 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
     this.modalRef = this.modalService.show(template);
   }
 
+  calculateRating(rating: number): number{
+    const roundedValue = Math.round(rating);
+    return (rating == roundedValue) ? roundedValue : rating;
+  }
+
   goBack(): void{
     this.location.back();
   }
@@ -168,4 +173,5 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
     this.unsubscriber$.next();
     this.unsubscriber$.complete();
   }
+
 }

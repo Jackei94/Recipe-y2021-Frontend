@@ -127,6 +127,11 @@ export class AllRecipesComponent implements OnInit, OnDestroy {
     this.searchTerms.next(term);
   }
 
+  calculateRating(rating: number): number{
+    const roundedValue = Math.round(rating);
+    return (rating == roundedValue) ? roundedValue : rating;
+  }
+
   ngOnDestroy(): void {
     this.unsubscriber$.next();
     this.unsubscriber$.complete();

@@ -50,9 +50,16 @@ export class FrontpageComponent implements OnInit, OnDestroy {
       this.recipes = filterList.list; this.loading = false;}, () => {this.loading = false;})
   }
 
+  calculateRating(rating: number): number{
+    const roundedValue = Math.round(rating);
+    return (rating == roundedValue) ? roundedValue : rating;
+  }
+
   ngOnDestroy(): void {
     this.unsubscriber$.next();
     this.unsubscriber$.complete();
   }
+
+
 
 }
