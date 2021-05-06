@@ -20,6 +20,7 @@ import {
   faUtensils, faWineBottle
 } from "@fortawesome/free-solid-svg-icons";
 import {Icon} from "@fortawesome/fontawesome-svg-core";
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-recipe-add',
@@ -183,6 +184,10 @@ export class RecipeAddComponent implements OnInit {
 
 
     this.selectedIcon = this.randomIcons[randomPosition];
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.ingredients, event.previousIndex, event.currentIndex);
   }
 
   goBack(): void{

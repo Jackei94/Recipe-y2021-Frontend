@@ -6,6 +6,7 @@ import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {HttpClientModule} from "@angular/common/http";
 import {Socket} from "ngx-socket-io";
 import {ModalModule} from "ngx-bootstrap/modal";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @Injectable({providedIn: 'root'})
 export class SocketRecipeApp extends Socket {
@@ -32,6 +33,7 @@ export class SocketRecipeApp extends Socket {
     ProgressbarModule,
     FormsModule,
     HttpClientModule,
+    DragDropModule
   ],
   providers: [SocketRecipeApp]
 })

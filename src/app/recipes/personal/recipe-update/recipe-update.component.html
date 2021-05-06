@@ -70,10 +70,12 @@
         </div>
       </form>
 
-      <div>
-        <section *ngFor="let ingredient of ingredients">
-          <div id="ingredients" class="row">
+      <div class="drop-list" cdkDropList (cdkDropListDropped)="drop($event)">
+        <div class="drop-box" *ngFor="let ingredient of ingredients" cdkDrag>
+          <div class="placeholder" *cdkDragPlaceholder> </div>
 
+
+          <div id="ingredients" class="row">
             <div class="col-sm-3">
               <h6 class="ingredient">{{ingredient.name}}</h6>
             </div>
@@ -88,7 +90,7 @@
             </div>
 
           </div>
-        </section>
+        </div>
       </div>
 
       <div class="form-group">
