@@ -11,7 +11,7 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
 @Injectable({providedIn: 'root'})
 export class SocketRecipeApp extends Socket {
   constructor() {
-    super({ url: 'http://localhost:3100', options: {} });
+    super({ url: 'https://recipe-app-backend.herokuapp.com/', options: {} });
   }
 }
 

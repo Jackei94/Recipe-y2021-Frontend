@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://localhost:44336/api'
+  apiUrl: 'https://recipe-app-backend.herokuapp.com'
 };
