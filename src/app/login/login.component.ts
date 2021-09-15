@@ -65,7 +65,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.store.dispatch(new UpdateLoading(false));
-    this.loading$.subscribe((loading) => {})
   }
 
   login(): void{

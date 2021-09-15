@@ -90,7 +90,7 @@ export class RecipeUpdateComponent implements OnInit, OnDestroy {
     const id = +this.route.snapshot.paramMap.get('id');
 
     this.loggedUser$.pipe(take(1)).subscribe((user) => {
-      const recipeGetDTO: RecipeGetDto = {recipeID: id, userIDOwner: user.ID}
+      const recipeGetDTO: RecipeGetDto = {recipeID: id, userID: user.ID}
       this.recipeService.getPersonalRecipeByID(recipeGetDTO).subscribe(
         (recipe) => {this.recipe = recipe; this.initializeText();},
         (error) => {this.found = false; this.loading = false; this.error = error.error.message;})
@@ -209,7 +209,6 @@ export class RecipeUpdateComponent implements OnInit, OnDestroy {
     while(this.selectedIcon == this.randomIcons[randomPosition]){
       randomPosition = Math.floor(Math.random() * (this.randomIcons.length - 1));
     }
-
 
     this.selectedIcon = this.randomIcons[randomPosition];
   }

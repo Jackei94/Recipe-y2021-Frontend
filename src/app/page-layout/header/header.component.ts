@@ -13,14 +13,4 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  searchRedirect(event: KeyboardEvent): void{
-    this.router.routeReuseStrategy.shouldReuseRoute = function() {
-      return false;
-    };
-
-    let searchString: string = (event.target as HTMLInputElement).value.trim();
-    this.router.navigate(['/shop/', searchString]);
-  }
-
-
 }

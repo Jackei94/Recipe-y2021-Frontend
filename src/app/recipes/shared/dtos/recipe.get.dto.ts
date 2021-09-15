@@ -1,5 +1,5 @@
 export interface RecipeGetDto{
   recipeID: number
-  userIDOwner?: number
+  userID?: number
   userIDRating?: number
 }

@@ -8,7 +8,6 @@ import {RecipeGetDto} from "./dtos/recipe.get.dto";
 import {SocketRecipeApp} from "../../shared/shared.module";
 import {FilterList} from "../../shared/models/filterList";
 import {RecipeDeleteDto} from "./dtos/recipe.delete.dto";
-import {RatingDto} from "./dtos/rating.dto";
 import {FavoriteDto} from './dtos/favorite.dto';
 
 @Injectable({

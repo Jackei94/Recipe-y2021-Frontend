@@ -1,10 +1,12 @@
 <div class="jumbotron">
   <div class="profile">
 
-    <h1 align="center">Profile of {{user.username}}</h1>
+
     <progressbar class="progress center-block" *ngIf="loading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>
 
     <div class="container" *ngIf="!loading">
+
+      <h1 align="center">Profile of {{user.username}}</h1>
 
       <alert class="col-md-12" type="success" *ngIf="passwordUpdated" [dismissOnTimeout]="dismissTimeout" (onClosed)="passwordUpdated = false">
         <strong>Password updated!</strong>
@@ -71,68 +73,4 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-<!--<ng-template #updateTemplate>-->
-<!--  <div  class="updateView modal-header">-->
-<!--    <h1 class="modal-title w-100 text-center"><b>Update password</b>?</h1>-->
-<!--    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">-->
-<!--      <span aria-hidden="true">&times;</span>-->
-<!--    </button>-->
-<!--  </div>-->
-
-<!--  <div class="updateView modal-body">-->
-<!--    <h6 align="center">{{passwordError}}</h6>-->
-<!--    <form [formGroup]="updateForm" (ngSubmit)="updatePassword()">-->
-
-<!--      <div class="form-group">-->
-<!--        <div class="col text-center">-->
-<!--          <label for="oldPassword">Current password</label>-->
-<!--          <input type="password" class="form-control" formControlName="oldPassword" id="oldPassword" placeholder="Enter current password...">-->
-<!--        </div>-->
-
-<!--        <div class="col text-center">-->
-<!--          <h6 *ngIf="updateForm.get('oldPassword').invalid && updateForm.get('oldPassword').dirty">Password is required</h6>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <div class="form-group">-->
-<!--        <div class="col text-center">-->
-<!--          <label for="passwordRegister">Password</label>-->
-<!--          <input type="password" class="form-control" formControlName="password" id="passwordRegister" placeholder="Enter new password...">-->
-<!--        </div>-->
-
-<!--        <div class="col text-center">-->
-<!--          <h6 *ngIf="updateForm.get('password').invalid && updateForm.get('password').dirty">Password is required (min. 8 characters)</h6>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <div class="form-group">-->
-<!--        <div class="col text-center">-->
-<!--          <label for="passwordConfirm">Repeat password</label>-->
-<!--          <input type="password" class="form-control" formControlName="passwordConfirm" id="passwordConfirm" placeholder="Repeat new password...">-->
-<!--        </div>-->
-
-<!--        <div class="col text-center">-->
-<!--          <h6 *ngIf="updateForm.get('passwordConfirm').dirty && updateForm.hasError('invalid')">Password must be identical</h6>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <progressbar class="progress" *ngIf="passwordUpdateLoading" max="100" [value]="100" type="success" [striped]="true" [animate]="true">Loading...</progressbar>-->
-
-<!--      <div class="col text-center">-->
-<!--        <button (click)="modalRef.hide();" type="button" class="btn btn-secondary" >Cancel</button>-->
-<!--        <button class="btn btn-success" type="submit" [disabled]="!updateForm.valid || passwordUpdateLoading">Update</button>-->
-<!--      </div>-->
-
-<!--    </form>-->
-<!--  </div>-->
-<!--</ng-template>-->
 

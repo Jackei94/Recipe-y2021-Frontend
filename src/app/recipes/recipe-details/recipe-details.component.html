@@ -26,7 +26,7 @@
           <button *ngIf="recipe.isFavorite" (click)="unfavoriteRecipe()" type="button" class="btn btn-danger customButton"><fa-icon [icon]="dislikeIcon"></fa-icon> Unfavorite</button>
           <p class="rating" *ngIf="userID && userID !== recipe.user.ID"><rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()" (click)="giveRating(rate)"></rating></p>
           <button *ngIf="recipe.user.ID == userID" type="button" id="update" class="btn btn-info customButton" routerLink="/profile/update/{{recipe.ID}}"><fa-icon [icon]="editIcon"></fa-icon> Update</button>
-          <button *ngIf="recipe.user.ID == userID" type="button" id="delete" class="btn btn-danger customButton" (click)="openDeleteModal(deleteTemplate, recipe)"><fa-icon [icon]="deleteIcon"></fa-icon> Delete</button>
+          <button *ngIf="recipe.user.ID == userID" type="button" id="delete" class="btn btn-danger customButton" (click)="openDeleteModal(deleteTemplate)"><fa-icon [icon]="deleteIcon"></fa-icon> Delete</button>
         </div>
 
         <div class="ingredients">
